@@ -1,0 +1,5 @@
+const canadianRegistryIntro = `
+<h1>Canadian Registry List</h1>
+`;
+
+export default canadianRegistryIntro;

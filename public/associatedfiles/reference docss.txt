@@ -1,0 +1,7 @@
+http://preservationtutorial.library.cornell.edu/intro/intro-08.html
+
+https://images.maritimehistoryofthegreatlakes.ca/108701/data?g=d&n=2
+
+https://www.digitalocean.com/community/tutorials/vuejs-vue-media-queries
+
+https://vuejs.org/v2/cookbook/practical-use-of-scoped-slots.html
