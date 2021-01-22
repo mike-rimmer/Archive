@@ -1,15 +1,24 @@
 <template>
   <div
+    id="printMe"
     class="detailcard"
     :record="record"
   >
+    <div class="d-none d-print-block">
+      <h3 style="text-align:center; margin-bottom:0px">
+        With the Compliments of
+      </h3>
+      <h3 style="text-align:center;">
+        the <br>Marine Musuem of the Great Lakes at Kingston
+      </h3>
+    </div>
     <p>
       <span class="label">Vessel Name: </span>
-      {{ record.Name1 }}
+      {{ record.Vessel }}
     </p>
     <p>
       <span class="label">MillsNum: </span>
-      {{ record.MillsNumber }}
+      {{ record.MillsNum }}
     </p>
     <p>
       <span class="label">Propulsion: </span>
@@ -21,11 +30,11 @@
     </p>
     <p>
       <span class="label">Dimensions: </span>
-      {{ record.dimensions }}
+      {{ record.Dimensions }}
     </p>
     <p>
       <span class="label">Where Built: </span>
-      {{ record.whereBuilt }} {{ record.builtDate }}
+      {{ record.WhereBuilt }} {{ record.BuiltDate }}
     </p>
     <h4
       v-if="record.Name2"
@@ -82,7 +91,7 @@
       >
         Date Closed:
       </span>
-      {{ record.dateClosed }}
+      {{ record.DateClosed }}
     </p>
     <p>
       <span
@@ -91,14 +100,14 @@
       >
         Reason Closed:
       </span>
-      {{ record.reasonClosed }}
+      {{ record.ReasonClosedEvent }}
     </p>
     <p>
       <span
         key="1445"
         class="label"
       >Place Closed: </span>
-      {{ record.placeClosed }}
+      {{ record.PlaceClosed }}
     </p>
     <p>
       <span
@@ -110,34 +119,53 @@
       <span
         class="label"
       >Remarks: </span>
-      {{ record.remarks }}
+      {{ record.Remarks }}
     </p>
     <hr>
-    <p>
-      <span
-        class="label"
-      >Addendum: </span>
-      <!-- {{record.addendum}} -->
+    <p class="label">
+      Addendum:
     </p>
-    <p>{{ record.addendum }}</p>
-
-    <div
-      class="btnchoice"
-    >
-      <button
-        @click="CloseDetailPopUp"
+    <p class="addendum">
+      {{ record.Addendum }}
+    </p>
+    <v-row justify-lg="center">
+      <div
+        class="btnchoice d-print-none"
       >
-        Close Details
-      </button>
-    </div>
+        <v-btn
+          absolute
+          top
+          right
+          x-small
+          @click="CloseDetailPopUp"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+
+        <v-btn
+          @click="addItem2Store"
+        >
+          <v-icon>mdi-cart-plus</v-icon>
+          Cart
+        </v-btn>
+
+        <v-btn
+          @click="printCard"
+        >
+          <v-icon>mdi-printer</v-icon>
+          Print
+        </v-btn>
+      </div>
+    </v-row>
   </div>
 </template>
 
 <script>
 import Bus from '@/services/Bus'
-
 export default {
-  components: {},
+  components: {
+
+  },
 
   props: {
     record: {
@@ -148,39 +176,56 @@ export default {
   data() {
     return {
       visible: false,
+      centerText:"center"
+
     }
   },
 
   methods: {
+
     CloseDetailPopUp() {
-      this.visible = false
+      // this.visible = false
       Bus.$emit('closeDetailFrm')
     },
-  },
+
+    addItem2Store(){
+      Bus.$emit("addItemToMillsStore", this.record)
+
+      Bus.$emit('closeDetailFrm')
+    },
+
+    printCard(){
+      this.$htmlToPaper('printMe')
+      Bus.$emit('closeDetailFrm')
+      },
+
+
+
+    }
 }
 </script>
 
 <style scoped>
 .detailcard {
-  position: relative;
+  position: absolute;
   /* width: auto; */
   box-sizing: border-box;
-  background-image: url('../assets/parchment1.jpg');
+  background-color: lightgray;
+  /* background-image: url('../assets/parchment1.jpg'); */
   background-size: cover;
   padding: 1em;
-  line-height: 1em;
-  left: 0px;
-  top: 20px;
-  /* width: 800px; */
+  line-height: .6em;
+  left: 120px;
+  top: 120px;
+  width: 500px;
   border-radius: 10px;
   box-shadow: 5px 5px 10px 2px rgba(20, 20, 20, 0.5);
   z-index: 500;
 }
 
-/* .addendum {
-  padding: 1em;
-  width: 500px;
-} */
+.addendum {
+  line-height: 1.1em;
+}
 
 .label {
   font-weight: bold;
@@ -198,8 +243,8 @@ hr {
   margin: 0.5em;
   padding: 0.5em 1em 0.5em 1em;
   color: rgb(56, 43, 9);
-  border-top-style: solid;
-  border-bottom-style: solid;
+  /* border-top-style: solid;
+  border-bottom-style: solid; */
 }
 
 ul {

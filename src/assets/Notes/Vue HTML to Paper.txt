@@ -1,0 +1,2 @@
+https://randomcodetips.com/vue-html-to-paper/
+https://github.com/mycurelabs/vue-html-to-paper

@@ -1,18 +1,26 @@
 <template>
-  <div id="popup">
+  <div
+    id="popup"
+  >
     <h3>
-      <slot name="msg" />
+      <slot />
     </h3>
   </div>
 </template>
 
 <script>
 export default {
+  name:"Popup",
   props: {
-    showPopup: {
-      type: Boolean,
-      default: false,
-    },
+    // msg: {
+    //   type: String,
+    //   default: '',
+    // },
+  },
+  data() {
+    return {
+      msg2: 'Hi from inside the Slot',
+    }
   },
 }
 </script>

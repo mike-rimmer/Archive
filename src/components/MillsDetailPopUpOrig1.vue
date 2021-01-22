@@ -128,11 +128,11 @@
       <div
         class="btnchoice"
       >
-        <button
+        <!-- <button
           @click="visible = !visible"
         >
           {{ visible? 'Hide Addendum' : 'Show Addendum' }}
-        </button>
+        </button> -->
 
         <button
           @click="CloseDetailPopUp"

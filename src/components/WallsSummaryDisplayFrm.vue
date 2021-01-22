@@ -1,76 +1,97 @@
 <template>
-  <div class="summaryfrm">
-    <div class="sticky">
-      <h3 style="margin-bottom:1em;">
-        Mills Summary Form
+  <!--
+**********
+Note: This Form receives a prop 'wallsData' containing records from the server
+The records can be sorted asc/dec by clicking the applicable column header
+If a user click on a row a function is called to fetch the detailed info from the server which is then displayed on Card 'millsDetailsPopUp'.
+**********
+-->
+  <div class="summaryfrm color grey lighten-2">
+    <div>
+      <h3>
+        {{ title }}
       </h3>
-      <transition name="fade">
-        <MillsDetailPopUp
+
+      <div>
+        <v-data-table
+          dense
+          :headers="headers"
+          :items="wallsData"
+          height="450"
+          class="elevation-6"
+          :items-per-page="rowsPerPage"
+          @click:row="getDetailedRecord"
+        />
+      </div>
+
+      <v-scale-transition
+        origin="center center"
+      >
+        <BaseDetailPopUp
           v-show="showDetailFrm"
           :record="detailData"
         />
-      </transition>
+      </v-scale-transition>
     </div>
-    <transition name="fade">
-      <v-data-table
-        dense
-        :headers="headers"
-        :items="millsData"
-        :items-per-page="20"
-        :search="search"
-        :disable-pagination="true"
-        class="elevation-6"
-        sm="12"
-        @click:row="handleClick"
-      />
-    </transition>
   </div>
 </template>
 
 <script>
-import MillsDetailPopUp from '@/components/MillsDetailPopUp.vue'
-import millsData from '@/data/datasource'
-import Bus from '@/services/Bus'
-import APIServices from '@/services/ApiServices'
-
+import millsData from '@/data/datasource';
+import Bus from '@/services/Bus';
+import APIServices from '@/services/ApiServices';
+import BaseDetailPopUp from '@/components/BaseDetailPopUp';
 export default {
   components: {
-    MillsDetailPopUp,
+    BaseDetailPopUp
   },
+
   props: {
-    millsData: Array,
+    wallsData: {
+      type:Array,
+      default: ()=>{
+        return []
+      }
+    },
+
+    title:{
+      type:String,
+      default:''
+    }
   },
+
   data() {
     return {
       search: '',
       headers: [
-        { text: 'Mills #', value: 'mills' },
-        { text: 'Vessel Name', value: 'vesselName' },
-        { text: 'Official #', value: 'officialNum' },
+        { text: 'Id', value: 'id' },
+        { text: 'Vessel Name', value: 'vessel' },
+        { text: 'Registration #', value: 'registration' },
         { text: 'Where Built', value: 'whereBuilt' },
-        { text: 'Date Built', value: 'dateBuilt' },
         { text: 'Reason Closed', value: 'reasonClosed' },
       ],
       showDetailFrm: false,
       // Used to initially test the v-data-table
       millsDatatest: millsData.testData,
-      // detailData: millsData.detailTestData[0],
       detailData: {},
+      rowsPerPage:12
     }
   },
   mounted() {
     Bus.$on('closeDetailFrm', () => {
       this.showDetailFrm = false
     })
+
+
   },
   methods: {
-    handleClick(rowData) {
-      const millsRecord = rowData.mills
-      this.getMillsDetailFromServer(millsRecord)
+    getDetailedRecord(rowData) {
+      const id = rowData.id
+      this.getWallsDetailFromServer(id)
     },
 
-    getMillsDetailFromServer(millsRecord) {
-      APIServices.getMillsDetailByMills(`'${millsRecord}'`)
+    getWallsDetailFromServer(id) {
+      APIServices.getWallsDetailByID(`'${id}'`)
         .then((response) => {
           if (!response.data.message) {
             this.fetchResults = ''
@@ -88,8 +109,9 @@ export default {
           this.showPopUp = true
         })
     },
-  },
+  }
 }
+
 </script>
 
 <style scoped>
@@ -100,23 +122,26 @@ h3 {
   position: relative;
   border-radius: 10px;
   box-sizing: border-box;
-  margin-top: 1em;
-  padding: 0 1em 0 1em;
-  background-color: rgb(86, 134, 146);
+  padding: 1em;
   width: 100%;
-  height: 80vh;
-  overflow-y: auto;
+  /* height: 80vh;
+  overflow-y: auto; */
 }
 
-.sticky {
-  padding-top: 0;
-  margin-top: 0;
-  padding-left: 0;
-  top: 0;
-  height: 40px;
-  background-color: rgb(86, 134, 146);
+/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
+.v-data-table >>> .sticky-header {
   position: sticky;
+  top: 0px;
+  height: 30px;
+  font-weight: bold;
+  background-color: lightgrey;
+  /* document.documentElement.style.setProperty('--toolbarHeight', height)  */
 }
+
+.v-data-table{
+  font-size:.8em;
+}
+
 
 .fade-enter-active,
 .fade-leave-active {

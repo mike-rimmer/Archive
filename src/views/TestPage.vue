@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <MillsQryFrm :about-registry="about" />
-  </div>
+  <BaseMessage :message="msg" />
 </template>
 
 <script>
-import MillsQryFrm from '@/components/MillsQryFrm.vue'
+import BaseMessage from '@/components/BaseMessage.vue'
 export default {
   components: {
-    MillsQryFrm,
+    BaseMessage,
   },
   data() {
     return {
-      about: 'Registry Testing',
+      msg: 'This is a Page to be used for Testing!',
     }
   },
 }

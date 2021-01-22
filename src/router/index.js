@@ -1,21 +1,39 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Growth from '../views/Growth.vue';
+import Mills from '../views/Mills.vue';
+import CRL from '../views/CRL.vue';
+import SOL from '../views/SOL.vue';
+import CSL from '../views/CSL.vue';
+import Wallace from '../views/Wallace.vue';
 import Forged from '../views/Forged.vue';
+import Snyder from '../views/Snyder.vue'
 import TestPage from '../views/TestPage.vue'
+import Growth from '../views/Growth.vue'
+import Home from '../views/Home.vue';
+import Store from '../views/Store.vue';
+import Cart from '../views/Cart.vue';
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'Mills',
+    component: Mills,
   },
   {
-    path: '/growth',
-    name: 'Growth',
-    component: Growth,
+    path: '/CRL',
+    name: 'CRL',
+    component: CRL,
+  },
+  {
+    path: '/CSL',
+    name: 'CSL',
+    component: CSL,
+  },
+  {
+    path: '/SOL',
+    name: 'SOL',
+    component: SOL,
   },
   {
     path: '/forged',
@@ -23,10 +41,31 @@ const routes = [
     component: Forged,
   },
   {
+    path: '/wallace',
+    name: 'Wallace',
+    component: Wallace,
+  },
+  {
+    path: '/snyder',
+    name: 'Snyder',
+    component: Snyder,
+  },
+  {
     path: '/test',
-    name: 'Test',
+    name: 'TestPage',
     component: TestPage,
   },
+  {
+    path: '/growth',
+    name: 'growth',
+    component: Growth,
+  },
+
+  // { path: '/', name: 'home', component: Home },
+  // { path: '/store', name: 'store', component: Store },
+  // { path: '/cart', name: 'cart', component: Cart },
+  // { path: '/checkout', name: 'checkout', component: CheckOut },
+  // { path: '/thankyou', name: 'thankyou', component: ThankYou },
 ];
 
 const router = new VueRouter({

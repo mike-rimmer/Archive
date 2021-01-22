@@ -45,25 +45,25 @@ export default {
             {
               visible: false,
               title: 'Mills',
-              link: '/mills',
+              route: '/mills',
               children: [],
             },
             {
               visible: false,
               title: 'Wallis',
-              link: '/wallis',
+              route: '/wallis',
               childern: [],
             },
             {
               visible: false,
               title: 'Canada Ship Lines',
-              link: '/csl',
+              route: '/csl',
               children: [],
             },
             {
               visible: false,
               title: 'Snyder',
-              link: '/snyder',
+              route: '/snyder',
               children: [],
             },
           ],
@@ -111,6 +111,6 @@ export default {
   justify-content: space-between;
   /* color: black; */
   list-style: none;
-  display: none;
+  /* display: none; */
 }
 </style>

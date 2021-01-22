@@ -1,30 +1,32 @@
 <template>
   <div
     sm="12"
-    class="queryform "
+    class="queryform"
   >
-    <h4>{{ aboutRegistry }}</h4>
-    <h4>Select Search Type</h4>
-    <div class="radioBtn">
-      <div class="btn">
-        <input
-          id="General"
-          v-model="picked"
-          type="radio"
-          value="general"
-          name="selector"
-        >
-        <label for="General">General</label>
-      </div>
-      <div class="btn">
-        <input
-          id="Detailed"
-          v-model="picked"
-          type="radio"
-          value="detailed"
-          name="selector"
-        >
-        <label for="Detailed">Detailed</label>
+    <div class="color grey lighten-2 pa-4">
+      <h4>{{ aboutRegistry }}</h4>
+      <h4>Select Search Type</h4>
+      <div class="radioBtn">
+        <div class="btn">
+          <input
+            id="General"
+            v-model="picked"
+            type="radio"
+            value="general"
+            name="selector"
+          >
+          <label for="General">General</label>
+        </div>
+        <div class="btn">
+          <input
+            id="Detailed"
+            v-model="picked"
+            type="radio"
+            value="detailed"
+            name="selector"
+          >
+          <label for="Detailed">Detailed</label>
+        </div>
       </div>
     </div>
     <!-- Used for testing -->
@@ -48,7 +50,7 @@
       <v-autocomplete
         v-show="picked=='general'"
         v-model="shipSelected"
-        label="Vessel"
+        label="Vessel Name"
         :items="ships"
         required
         dense
@@ -80,15 +82,6 @@
         dense
       />
 
-      <!-- <v-select
-        v-show="picked=='general'"
-        v-model="generalSearch"
-        :counter="10"
-        label="Search all Fields by keyword(s)"
-        required
-        dense
-      /> -->
-
       <v-autocomplete
         v-show="picked=='general'"
         v-model="reasonSelected"
@@ -98,12 +91,15 @@
         dense
       />
     </v-form>
-    <BaseButton
-      button-class="-fill-gradient"
-      @click="resetSearchVariables"
+
+    <!-- <BaseButton -->
+    <v-btn
+      class=" color blue-grey lighten-3"
+      @click="resetSearch"
     >
       Clear Search Filters
-    </BaseButton>
+    </v-btn>
+    <!-- </BaseButton> -->
   </div>
 </template>
 
@@ -111,10 +107,12 @@
 import millsData from '@/data/datasource'
 // import APIServices from '@/services/ApiServices';
 import Bus from '@/services/Bus'
-import BaseButton from '@/components/BaseButton'
+// import BaseButton from '@/components/BaseButton'
 
 export default {
-  components: { BaseButton },
+  components: {
+    // BaseButton
+     },
   props: {
     ships: {
       type: Array,
@@ -133,6 +131,7 @@ export default {
     //   required: true,
     //   default: 'Query Frm',
     // },
+
     years: {
       type: Array,
       default: function () {
@@ -147,16 +146,16 @@ export default {
   },
   data() {
     return {
-      visible: false,
-      searchVariable: '',
-      // shipsloading: false,
+      // visible: false,
+      // searchVariable: '',
+      // // shipsloading: false,
       millsData: [],
-      fetchResults: '',
-      officialNumbers: '',
-      reasonClosedRemarkNotes: '',
-      generalSearch: '',
-      noTitle: true,
-      picker: '',
+      // fetchResults: '',
+      // officialNumbers: '',
+      // reasonClosedRemarkNotes: '',
+      // generalSearch: '',
+      // noTitle: true,
+      // picker: '',
       officialNumberSelected: '',
       millsSelected: '',
       shipSelected: '',
@@ -164,11 +163,11 @@ export default {
       provSelected: '',
       reasonSelected: '',
       valid: false,
-      // This data is supplied by data/datasource.js
+      // // This data is supplied by data/datasource.js
       prov: millsData.province,
-      reasonList: millsData.reason4Closing,
+      reasonList: millsData.millsReason4Closing,
       picked: 'general',
-      multiple: true,
+      // multiple: true,
     }
   },
   computed: {
@@ -181,22 +180,22 @@ export default {
   watch: {
     shipSelected(val, oldVal) {
       console.log(`New Value: ${val} Old Value: ${oldVal}`)
-      if (val != oldVal) this.getMillsSummaryByShip(val)
+      if (val!='' && val != oldVal) this.getMillsSummaryByShip(val)
     },
 
     yearSelected(val, oldVal) {
       console.log(`New Value: ${val} Old Value: ${oldVal}`)
-      if (val != oldVal) this.getMillsSummaryByYear(val)
+      if (val!='' && val != oldVal) this.getMillsSummaryByYear(val)
     },
 
     provSelected(val, oldVal) {
       console.log(`New Value: ${val} Old Value: ${oldVal}`)
-      if (val != oldVal) this.getMillsSummaryByProv(val)
+      if (val!='' && val != oldVal) this.getMillsSummaryByProv(val)
     },
 
     reasonSelected(val, oldVal) {
       console.log(`New Value: ${val} Old Value: ${oldVal}`)
-      if (val != oldVal) this.getMillsSummaryByReason(val)
+      if (val!='' && val != oldVal) this.getMillsSummaryByReason(val)
     },
   },
   mounted() {
@@ -206,11 +205,19 @@ export default {
   },
 
   methods: {
-    getMillsSummaryByReason(reason) {
-      this.$emit('searchByReason', reason)
-      this.searchVariable = 'reason'
+    resetSearch(){
+      this.$emit('clearMillsSummaryFrm')
+      this.searchVariable=''
       this.resetSearchVariables()
     },
+
+    getMillsSummaryByShip(ship) {
+      // this.shipsloading = true
+      this.$emit('searchByShip', ship)
+      this.searchVariable = 'ship'
+      this.resetSearchVariables()
+    },
+
     getMillsSummaryByYear(year) {
       this.$emit('searchByYear', year)
       this.searchVariable = 'year'
@@ -223,10 +230,9 @@ export default {
       this.resetSearchVariables()
     },
 
-    getMillsSummaryByShip(ship) {
-      // this.shipsloading = true
-      this.$emit('searchByShip', ship)
-      this.searchVariable = 'ship'
+    getMillsSummaryByReason(reason) {
+      this.$emit('searchByReason', reason)
+      this.searchVariable = 'reason'
       this.resetSearchVariables()
     },
 
@@ -284,6 +290,8 @@ export default {
   position: relative;
   background-color: white;
   box-shadow: 5px 5px 5px rgba(20, 20, 20, 0.5);
+  width:90%;
+  margin-left:1em;
 }
 
 .radioBtn {

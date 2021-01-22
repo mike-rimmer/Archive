@@ -1,56 +1,93 @@
 <template>
-  <div class="summaryfrm">
-    <div class="locked">
-      <h3 style="margin-bottom:1em;">
-        Mills Summary Form
+  <!--
+**********
+Note: This Form receives a prop 'millsData' containing records from the server
+The records can be sorted asc/dec by clicking the applicable column header
+If a user click on a row a function is called to fetch the detailed info from the server which is then displayed on Card 'millsDetailsPopUp'.
+**********
+-->
+  <div
+    class="summaryfrm color grey lighten-2"
+  >
+    <div>
+      <h3>
+        {{ title }}
       </h3>
 
-      <transition name="fade">
+
+      <!-- FIXME: This is currently Experimental but definitely a candidate for implementation -->
+      <!-- <base-detail-pop-up
+        v-show="showDetailFrm"
+        :record="detailData"
+      /> -->
+      <div>
+        <v-data-table
+          dense
+          :headers="headers"
+          :items="millsData"
+          height="450"
+          :items-per-page="rowsPerPage"
+          class="elevation-6 "
+          @click:row="getDetailedRecord"
+        />
+      </div>
+
+      <v-scale-transition
+        origin="center center"
+      >
+        <!-- <BaseDetailPopUp
+          v-show="showDetailFrm"
+          :record="detailData"
+        /> -->
         <MillsDetailPopUp
           v-show="showDetailFrm"
           :record="detailData"
         />
-      </transition>
+      </v-scale-transition>
+      <!-- </transition> -->
     </div>
-
-
-
-    <v-data-table
-      dense
-      :headers="headers"
-      height="650"
-      width="90%"
-      :items="millsData"
-      :items-per-page="40"
-      :search="search"
-      :disable-pagination="true"
-      class="elevation-6"
-
-      @click:row="handleClick"
-    />
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import MillsDetailPopUp from '@/components/MillsDetailPopUp.vue'
 // import millsData from '@/data/datasource'
 import Bus from '@/services/Bus'
 import APIServices from '@/services/ApiServices'
+//  Decide whether to go with this automatice Detail Card  FIXME:
+// import BaseDetailPopUp from './BaseDetailPopUp.vue'
 
 export default {
   components: {
     MillsDetailPopUp,
+    // FIXME:Decide whether to go with this automatice Detail Card
+    // BaseDetailPopUp,
   },
   props: {
-    millsData: Array,
+    millsData: {
+      type: Array,
+      default: () => [],
+    },
+    fetchingData:{
+       type:Boolean,
+       default:false,
+  },
+
+    title:{
+      type:String,
+      default:''
+    }
+
   },
   data() {
     return {
+      rowsPerPage:12,
       search: '',
       headers: [
-        { text: 'Mills #', class: 'sticky-header', value: 'mills' },
+        { text: 'Mills #', class: 'sticky-header', value: 'mills'  },
         { text: 'Vessel Name', class: 'sticky-header', value: 'vesselName' },
-        { text: 'Official #', class: 'sticky-header', value: 'officialNum' },
+        { text: 'Official #', class: 'sticky-header', value: 'officialNum'},
         { text: 'Where Built', class: 'sticky-header', value: 'whereBuilt' },
         { text: 'Date Built', class: 'sticky-header', value: 'dateBuilt' },
         {
@@ -66,13 +103,18 @@ export default {
       detailData: {},
     }
   },
+
+  computed:{
+
+    },
   mounted() {
     Bus.$on('closeDetailFrm', () => {
       this.showDetailFrm = false
     })
   },
+
   methods: {
-    handleClick(rowData) {
+    getDetailedRecord(rowData) {
       const millsRecord = rowData.mills
       this.getMillsDetailFromServer(millsRecord)
     },
@@ -104,13 +146,21 @@ export default {
 h3 {
   margin: 0;
 }
+
+.cardrack{
+  display:flex;
+  width:100vw;
+  height:25vh;
+  background-color: white;
+}
+
 .summaryfrm {
   position: relative;
   border-radius: 10px;
   box-sizing: border-box;
   margin-top: 1em;
-  padding: 0 1em 0 1em;
-  background-color: rgb(86, 134, 146);
+  padding: 1em;
+  /* background-color:lightgrey; */
   width: 100%;
   /* height: 80vh;
   overflow-y: auto; */
@@ -120,25 +170,20 @@ h3 {
   position: sticky;
   top: 0px;
   height: 30px;
-  font-size: 1em;
   font-weight: bold;
   background-color: lightgrey;
   /* document.documentElement.style.setProperty('--toolbarHeight', height)  */
 }
 
-.v-data-table >>> .v-table_wrapper {
-  overflow: unset;
+.v-data-table{
+  font-size:.8em;
 }
 
-.locked {
-  padding-top: 0;
-  margin-top: 0;
-  padding-left: 0;
-  top: 0;
-  height: 40px;
-  background-color: rgb(86, 134, 146);
-  /* position: sticky; */
-}
+/* .v-data-table >>> .v-table_wrapper {
+  overflow: unset;
+} */
+
+
 
 .fade-enter-active,
 .fade-leave-active {

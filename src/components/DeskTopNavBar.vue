@@ -36,13 +36,12 @@ export default {
   props: {
     items: {
       type: Array,
-      required: true,
       default() {
         return [
           { title: 'Ships Registry', icon: 'home', route: '/' },
           { title: 'Forged in Fire', icon: 'folder', route: '/forged' },
           { title: 'Growth', icon: 'folder', route: '/growth' },
-          { title: 'Test', icon: 'test', route: '/test' },
+          { title: 'Test Page', icon: 'folder', route: '/test' },
         ]
       },
     },
