@@ -127,15 +127,14 @@
 
 <script>
 // import staticData from '@/data/datasource'
-import {mapState, mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 // import APIServices from '@/services/ApiServices';
 // import Bus from '@/services/Bus'
 // import BaseButton from '@/components/BaseButton'
 
 export default {
-name:'RegistryQryFrm',
-  components: {
-      },
+  name: 'RegistryQryFrm',
+  components: {},
   props: {
     // ships: {
     //   type: Array,
@@ -160,166 +159,221 @@ name:'RegistryQryFrm',
     //     return ['2020', '2021']
     //   },
     // },
-
   },
   data() {
     return {
-      title:"Canadian Registry Filters",
-      globalSearchSelected:'',
+      title: 'Canadian Registry Filters',
+      globalSearchSelected: '',
 
-      off_numSelected:'',
-      vesselSelected:'',
-      regSelected:'',
-      regDateSelected:'',
-      builderSelected:'',
-      rigSelected:'',
-      msg:'Clearing Registry Filters'
+      off_numSelected: '',
+      vesselSelected: '',
+      regSelected: '',
+      regDateSelected: '',
+      builderSelected: '',
+      rigSelected: '',
+      msg: 'Clearing Registry Filters',
     }
   },
 
   computed: {
-    ...mapState('Registry', ['RegistryCart', 'RegistryGlobal', 'RegistryCurrentFilter','RegistryCartIsLoading', 'RegistryFilter', 'regNumberFilter', 'regVesselFilter', 'regRegistrationFilter', 'regRegistrationDateFilter', 'regBuilderFilter', 'regRigFilter',
-    'ClearingRegistryFilters', 'RegistryAppliedFilters', 'RegistryFilterList']),
+    ...mapState('Registry', [
+      'RegistryCart',
+      'RegistryGlobal',
+      'RegistryCurrentFilter',
+      'RegistryCartIsLoading',
+      'RegistryFilter',
+      'regNumberFilter',
+      'regVesselFilter',
+      'regRegistrationFilter',
+      'regRegistrationDateFilter',
+      'regBuilderFilter',
+      'regRigFilter',
+      'ClearingRegistryFilters',
+      'RegistryAppliedFilters',
+      'RegistryFilterList',
+    ]),
 
-    numberFilter(){
+    numberFilter() {
       return this.regNumberFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
-    vesselFilter(){
+    vesselFilter() {
       return this.regVesselFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
-    regFilter(){
+    regFilter() {
       return this.regRegistrationFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
-    regDateFilter(){
+    regDateFilter() {
       return this.regRegistrationDateFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
-    builderFilter(){
+    builderFilter() {
       return this.regBuilderFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
-    rigFilter(){
+    rigFilter() {
       return this.regRigFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
-  filtersOn(){
-     return this.RegistryFilter
-   },
+    filtersOn() {
+      return this.RegistryFilter
+    },
 
-    off_nums(){
-          if(this.RegistryFilter || this.RegistryGlobal){
-         const tmp = this.RegistryCurrentFilter.map((ele)=>{
-         if(ele.officialnum !='' || ele.officialnum.trim() !=='undefined'){
-          return ele.officialnum
-         }
-         }).sort()
-         return tmp
-       }else{
-      return this.RegistryCart.map((ele)=>{
-         if(ele.officialnum.trim() != ''){
-        return ele.officialnum
-       }
-      }).sort()
-    }},
-
-    vessels(){
-        if(this.RegistryFilter || this.RegistryGlobal){
-         const tmp = this.RegistryCurrentFilter.map((ele)=>{
-         if(ele.vessel !='' || ele.vessel.trim() !=='undefined'){
-          return ele.vessel
-         }
-         }).sort()
-         return tmp
-       }else{
-      return this.RegistryCart.map((ele)=>{
-         if(ele.vessel.trim() != ''){
-        return ele.vessel
-       }
-      }).sort()
-    }},
-
-    registrations(){
-             if(this.RegistryFilter || this.RegistryGlobal){
-         const tmp = this.RegistryCurrentFilter.map((ele)=>{
-         if(ele.reg !='' || ele.reg.trim() !=='undefined'){
-          return ele.reg
-         }
-         }).sort()
-         return tmp
-       }else{
-      return this.RegistryCart.map((ele)=>{
-       let tmp = ele.reg.trim()
-         if(tmp != '' && tmp != ',' ){
+    off_nums() {
+      let tmp
+      if (this.RegistryFilter || this.RegistryGlobal) {
+        tmp = this.RegistryCurrentFilter.map((ele) => {
+          if (ele.officialnum != '' || ele.officialnum.trim() !== 'undefined') {
+            return ele.officialnum
+          }
+        }).sort()
         return tmp
-       }
-      }).sort()
-    }},
+      } else {
+        tmp = this.RegistryCart.map((ele) => {
+          if (ele.officialnum.trim() != '') {
+            return ele.officialnum
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('OffNums', tmp2.length)
+        return tmp2
+      }
+    },
 
-    regDates(){
-             if(this.RegistryFilter || this.RegistryGlobal){
-         const tmp = this.RegistryCurrentFilter.map((ele)=>{
-         if(ele.regyear !='' || ele.regyear.trim() !=='undefined'){
-          return ele.regyear
-         }
-         }).sort()
-         return tmp
-       }else{
-      return this.RegistryCart.map((ele)=>{
-         if(ele.regyear.trim() != ''){
-        return ele.regyear
-       }
-      }).sort()
-    }},
+    vessels() {
+      let tmp
+      if (this.RegistryFilter || this.RegistryGlobal) {
+        tmp = this.RegistryCurrentFilter.map((ele) => {
+          if (ele.vessel != '' || ele.vessel.trim() !== 'undefined') {
+            return ele.vessel
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.RegistryCart.map((ele) => {
+          if (ele.vessel.trim() != '') {
+            return ele.vessel
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('vessels', tmp2.length)
+        return tmp2
+      }
+    },
 
-    builders(){
-             if(this.RegistryFilter || this.RegistryGlobal){
-         const tmp = this.RegistryCurrentFilter.map((ele)=>{
-         if(ele.builder !='' || ele.builder.trim() !=='undefined'){
-          return ele.builder
-         }
-         }).sort()
-         return tmp
-       }else{
-      return this.RegistryCart.map((ele)=>{
-         if(ele.builder.trim() != ''){
-        return ele.builder
-       }
-      }).sort()
-    }},
+    registrations() {
+      let tmp
+      if (this.RegistryFilter || this.RegistryGlobal) {
+        tmp = this.RegistryCurrentFilter.map((ele) => {
+          if (ele.reg != '' || ele.reg.trim() !== 'undefined') {
+            return ele.reg
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.RegistryCart.map((ele) => {
+          let tmp = ele.reg.trim()
+          if (tmp != '' && tmp != ',') {
+            return tmp
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Registrations', tmp2.length)
+        return tmp2
+      }
+    },
 
-    rigs(){
-             if(this.RegistryFilter || this.RegistryGlobal){
-         const tmp = this.RegistryCurrentFilter.map((ele)=>{
-         if(ele.rig !='' || ele.rig.trim() !=='undefined'){
-          return ele.rig
-         }
-         }).sort()
-         return tmp
-       }else{
-      return this.RegistryCart.map((ele)=>{
-         if(ele.rig.trim() != ''){
-        return ele.rig
-       }
-      }).sort()
-    }},
+    regDates() {
+      let tmp
+      if (this.RegistryFilter || this.RegistryGlobal) {
+        tmp = this.RegistryCurrentFilter.map((ele) => {
+          if (ele.regyear != '' || ele.regyear.trim() !== 'undefined') {
+            return ele.regyear
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.RegistryCart.map((ele) => {
+          if (ele.regyear.trim() != '') {
+            return ele.regyear
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('RegDates', tmp2.length)
+        return tmp2
+      }
+    },
 
-    clearingFilters(){
-     return this.ClearingRegistryFilters
-   },
+    builders() {
+      var tmp
+      if (this.RegistryFilter || this.RegistryGlobal) {
+        const tmp = this.RegistryCurrentFilter.map((ele) => {
+          if (ele.builder != '' || ele.builder.trim() !== 'undefined') {
+            return ele.builder
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.RegistryCart.map((ele) => {
+          if (ele.builder.trim() != '') {
+            return ele.builder
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Builders', tmp2.length)
+        return tmp2
+      }
+    },
 
-  isLoading(){
-    return this.RegistryCartIsLoading
-  },
+    rigs() {
+      var tmp
+      if (this.RegistryFilter || this.RegistryGlobal) {
+        const tmp = this.RegistryCurrentFilter.map((ele) => {
+          if (ele.rig != '' || ele.rig.trim() !== 'undefined') {
+            return ele.rig
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.RegistryCart.map((ele) => {
+          if (ele.rig.trim() != '') {
+            return ele.rig
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Rigs', tmp2.length)
+        return tmp2
+      }
+    },
 
-  numberOfFilters(){
-    return this.RegistryAppliedFilters.length
-  },
+    clearingFilters() {
+      return this.ClearingRegistryFilters
+    },
 
-      // regSelected:'',
- filtersInSync(){
-   return this.RegistryAppliedFilters.length == this.RegistryFilterList.length
- }
+    isLoading() {
+      return this.RegistryCartIsLoading
+    },
 
+    numberOfFilters() {
+      return this.RegistryAppliedFilters.length
+    },
 
+    // regSelected:'',
+    filtersInSync() {
+      return (
+        this.RegistryAppliedFilters.length == this.RegistryFilterList.length
+      )
+    },
 
     // radio() {
     //   Bus.$emit('switchforms', this.picked)
@@ -328,35 +382,59 @@ name:'RegistryQryFrm',
   },
 
   watch: {
-     off_numSelected(val, oldVal){
-         if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:"officialnum", value:val, varfilter:'officalNum' })
-     },
+    off_numSelected(val, oldVal) {
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'officialnum',
+          value: val,
+          varfilter: 'officalNum',
+        })
+    },
 
-      vesselSelected(val, oldVal){
-         if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:"vessel", value:val, varfilter:'vesselName' })
-     },
+    vesselSelected(val, oldVal) {
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'vessel',
+          value: val,
+          varfilter: 'vesselName',
+        })
+    },
 
-      regSelected(val, oldVal){
-         if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:"reg", value:val, varfilter:'registration' })
-     },
+    regSelected(val, oldVal) {
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'reg',
+          value: val,
+          varfilter: 'registration',
+        })
+    },
 
-      regDateSelected(val, oldVal){
-         if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:"regyear", value:val, varfilter:'registrationDate' })
-     },
+    regDateSelected(val, oldVal) {
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'regyear',
+          value: val,
+          varfilter: 'registrationDate',
+        })
+    },
 
-      builderSelected(val, oldVal){
-         if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:"builder", value:val, varfilter:'builder' })
-     },
+    builderSelected(val, oldVal) {
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'builder',
+          value: val,
+          varfilter: 'builder',
+        })
+    },
 
-      rigSelected(val, oldVal){
-         if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:"rig", value:val, varfilter:'rig' })
-     },
+    rigSelected(val, oldVal) {
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'rig',
+          value: val,
+          varfilter: 'rig',
+        })
+    },
 
     // allSelected(val, oldVal) {
     //   // console.log(`New Value: ${val} Old Value: ${oldVal}`)
@@ -365,62 +443,62 @@ name:'RegistryQryFrm',
     //    this.searchVariable = 'all'
     //    }
     // },
-
-
   },
 
-
   methods: {
-    ...mapActions('Registry', ['clearRegistryFilters','setRegistryFilteredCart', 'removeRegistryLastFilter','setRegistryCartIsLoading', 'registryGlobalSearch' ]),
+    ...mapActions('Registry', [
+      'clearRegistryFilters',
+      'setRegistryFilteredCart',
+      'removeRegistryLastFilter',
+      'setRegistryCartIsLoading',
+      'registryGlobalSearch',
+    ]),
 
-    applyFilterToCartwithRegExp(payload){
+    applyFilterToCartwithRegExp(payload) {
       this.setRegistryCartIsLoading(true)
       payload.value = new RegExp(payload.value, 'i')
       this.setRegistryFilteredCart(payload)
       this.setRegistryCartIsLoading(false)
     },
 
-    resetRegistrySearchFilters(){
-        this.off_numSelected=''
-        this.vesselSelected=''
-        this.regSelected=''
-        this.regDateSelected =''
-        this.builderSelected =''
-        this.rigSelected =''
-        this.clearRegistryFilters(true)
+    resetRegistrySearchFilters() {
+      this.off_numSelected = ''
+      this.vesselSelected = ''
+      this.regSelected = ''
+      this.regDateSelected = ''
+      this.builderSelected = ''
+      this.rigSelected = ''
+      this.clearRegistryFilters(true)
     },
-
-
 
     // resetSearch(){
 
     // },
 
-    removeLastFilter(){
-      let last = this.RegistryFilterList.length-1
+    removeLastFilter() {
+      let last = this.RegistryFilterList.length - 1
       let ele = this.RegistryFilterList[last].varfilter
-      switch(ele){
+      switch (ele) {
         case 'officialnum':
           this.off_numSelected = ''
-          break;
+          break
         case 'vesselname':
-          this.vesselSelected=''
-          break;
+          this.vesselSelected = ''
+          break
         case 'reg':
-          this.regSelected =''
-          break;
+          this.regSelected = ''
+          break
         case 'registrationDate':
-          this.regDatSelected =''
-          break;
+          this.regDatSelected = ''
+          break
         case 'builder':
-          this.builderSelected =''
-          break;
+          this.builderSelected = ''
+          break
         case 'rig':
-          this.rigSelected =''
-          break;
+          this.rigSelected = ''
+          break
       }
       this.removeRegistryLastFilter()
-
     },
 
     // getRegistrySummaryList(val){
@@ -433,20 +511,17 @@ name:'RegistryQryFrm',
     //   this.resetSearchVariables()
     // },
 
-
-      performGlobalSearch(){
-        // debugger
-       this.registryGlobalSearch(this.globalSearchSelected)
+    performGlobalSearch() {
+      // debugger
+      this.registryGlobalSearch(this.globalSearchSelected)
     },
-
-
 
     resetSearchVariables() {
       // close the popupfrm showing record details
       this.$emit('hidePopUp')
       switch (this.searchVariable) {
         case '':
-          this.allSelected =''
+          this.allSelected = ''
           this.globalSearchSelected = ''
           break
 
@@ -456,7 +531,7 @@ name:'RegistryQryFrm',
           break
 
         case 'general':
-         this.allSelected =''
+          this.allSelected = ''
           // this.globalSearchSelected = ''
           break
 
@@ -469,41 +544,39 @@ name:'RegistryQryFrm',
 
 <style scoped>
 .queryform {
-  max-height:60vh;
-  overflow-y:auto;
+  max-height: 60vh;
+  overflow-y: auto;
   border-radius: 10px;
   box-sizing: border-box;
   margin-top: 1em;
   padding: 1em;
   position: relative;
-    background:var(--component-background-theme);
-     /* linear-gradient(
+  background: var(--component-background-theme);
+  /* linear-gradient(
      to bottom right,
     rgba(247, 248, 247, 0),
     rgba(252, 255, 252, .9)
     ); */
-  backdrop-filter:blur(4px);
+  backdrop-filter: blur(4px);
   box-shadow: 5px 5px 5px rgba(20, 20, 20, 0.5);
-  width:100%;
-  margin-left:.5em;
-  margin-right:.5em;
+  width: 100%;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
-
 
 .v-text-field >>> input {
-  font-size:.9em;
+  font-size: 0.9em;
 }
 .v-text-field >>> label {
-  font-size:.9em;
+  font-size: 0.9em;
 }
 .v-text-field >>> button {
-  font-size:.9em;
+  font-size: 0.9em;
 }
 
-p{
-  font-size:.9em;
+p {
+  font-size: 0.9em;
 }
-
 
 .radioBtn {
   display: flex;
@@ -518,8 +591,8 @@ p{
   margin-right: 1em;
 }
 
-.v-btn{
-  font-size:.7em !important;
+.v-btn {
+  font-size: 0.7em !important;
 }
 
 .clrbtn {

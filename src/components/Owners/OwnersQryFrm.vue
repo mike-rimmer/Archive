@@ -209,63 +209,87 @@ name:'OwnersQryFrm',
      ]),
 
      owners(){
+       let tmp
         if(this.OwnersFilter || this.OwnersGlobal){
-         const tmp = this.OwnersCurrentFilter.map((ele)=>{
+        tmp = this.OwnersCurrentFilter.map((ele)=>{
          if(ele.owner !='' || ele.owner.trim() !=='undefined'){
           if (ele.owner) return ele.owner
          }
          }).sort()
          return tmp
        }else{
-       return this.OwnersCart.map((ele)=>{
+       tmp = this.OwnersCart.map((ele)=>{
          if(ele.owner) return ele.owner
        }).sort()
+         let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
      }},
 
    marnum(){
+     let tmp
        if(this.OwnersFilter || this.OwnersGlobal){
-         const tmp = this.OwnersCurrentFilter.map((ele)=>{
+        tmp = this.OwnersCurrentFilter.map((ele)=>{
          if(ele.marnum !='' || ele.marnum.trim() !=='undefined'){
           if(ele.marnum) return ele.marnum
          }
          }).sort()
          return tmp
        }else{
-       return this.OwnersCart.map((ele)=>{
+       tmp = this.OwnersCart.map((ele)=>{
          if(ele.marnum) return ele.marnum
        }).sort()
+         let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
      }},
 
    portnum(){
+     let tmp
        if(this.OwnersFilter || this.OwnersGlobal){
-         const tmp = this.OwnersCurrentFilter.map((ele)=>{
+        tmp = this.OwnersCurrentFilter.map((ele)=>{
          if(ele.portnum !='' || ele.portnum.trim() !=='undefined'){
           if( ele.portnum) return ele.portnum
          }
          }).sort()
          return tmp
        }else{
-      return this.OwnersCart.map((ele)=>{
+     tmp = this.OwnersCart.map((ele)=>{
        if( ele.portnum) return ele.portnum
       }).sort()
+        let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
     }},
 
 
 
     residence(){
+      let tmp
       if(this.OwnersFilter || this.OwnersGlobal){
-         const tmp = this.OwnersCurrentFilter.map((ele)=>{
+        tmp = this.OwnersCurrentFilter.map((ele)=>{
          if(ele.residence !='' || ele.residence.trim() !=='undefined'){
           return ele.residence
          }
          }).sort()
          return tmp
        }else{
-      return this.OwnersCart.map((ele)=>{
+     tmp = this.OwnersCart.map((ele)=>{
          if(ele.residence !='' && ele.residence.trim() !=='undefined'){
           return ele.residence
          }
       }).sort()
+        let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
     }},
 
 
@@ -336,7 +360,7 @@ name:'OwnersQryFrm',
     },
 
     marnumSelected(val, oldval) {
-      console.log(`New Value: ${val} Old Value: ${oldval}`)
+
       if (val!='' && val != oldval){
         val = RegExp( '\\b' + val + '\\b','i')
         this.applyFilterToCartwithRegExp({ key:"marnum", value:val, varfilter:'marnumSelected' })
@@ -344,7 +368,7 @@ name:'OwnersQryFrm',
     },
 
     portSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
+
       if (val!='' && val != oldval){
          val = new RegExp(val, 'i')
          this.applyFilterToCartwithRegExp({ key:'portnum', value:val, varfilter:'portSelected' })
@@ -352,7 +376,7 @@ name:'OwnersQryFrm',
     },
 
     ownersIdSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
+
       if (val!='' && val != oldval){
         val = new RegExp(val, 'i')
         this.applyFilterToCartwithRegExp({ key:"ownersnum", value:val, varfilter:'ownersIdSelected' })
@@ -361,34 +385,30 @@ name:'OwnersQryFrm',
 
 
     sharesSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
+
       if (val!='' && val != oldval){
         val = new RegExp(val, 'i')
         this.applyFilterToCartwithRegExp({ key:"shares", value:val, varfilter:'sharesSelected' })
        }
     },
 
-    // globalSearch(val, oldval) {
-    //   console.log(`New Value: ${val} Old Value: ${oldval}`)
-    //   if (val!='' && val != oldval) this.getWallsSummaryByGenSearch(val)
-    // },
 
     purchaseSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
+
       if (val!='' && val != oldval){
        val = new RegExp(val, 'i')
        this.applyFilterToCartwithRegExp({ key:"datebought", value:val, varfilter:'purchaseSelected' })
        }
     },
     SoldSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
+
       if (val!='' && val != oldval){
        val = new RegExp(val, 'i')
        this.applyFilterToCartwithRegExp({ key:"datesold", value:val, varfilter:'SoldSelected' })
        }
     },
     residenceSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
+
       if (val!='' && val != oldval){
         val = new RegExp(val, 'i')
         this.applyFilterToCartwithRegExp({ key:"residence", value:val, varfilter:'residenceSelected' })
@@ -403,8 +423,8 @@ name:'OwnersQryFrm',
       ['setOwnersCartIsLoading', 'clearOwnersFilters', 'setOwnersFilteredCart', 'removeOwnersLastFilter', 'OwnersGlobalSearch']),
 
     applyFilterToCartwithRegExp(payload){
-      console.time()
-      console.log('%cFilter Applied','background-color:green; color:white;')
+      // console.time()
+      // console.log('%cFilter Applied','background-color:green; color:white;')
         this.setOwnersCartIsLoading(true)
         // payload.value = new RegExp(payload.value, 'i')
         this.setOwnersFilteredCart(payload)

@@ -204,58 +204,83 @@ name:'SniderQryFrm',
       },
 
     article(){
+      let tmp
         if(this.SniderFilter || this.SniderGlobal){
-          const tmp = this.SniderCurrentFilter.map((ele)=>{
+          tmp = this.SniderCurrentFilter.map((ele)=>{
           if(ele.articletitle) return ele.articletitle
           }).sort()
         return tmp
         }else{
-          return this.SniderCart.map((ele)=>{
+          tmp = this.SniderCart.map((ele)=>{
             if(ele.articletitle) return ele.articletitle
         }).sort()
+        let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
+
     }},
 
     ship(){
+      let tmp
       if(this.SniderFilter || this.SniderGlobal){
-        const tmp = this.SniderCurrentFilter.map((ele)=>{
+        tmp = this.SniderCurrentFilter.map((ele)=>{
               if(ele.shipname) return ele.shipname
          }).sort()
        return tmp
        }else{
-        return this.SniderCart.map((ele)=>{
+       tmp =this.SniderCart.map((ele)=>{
           if(ele.shipname) return ele.shipname
       }).sort()
+       let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
    }},
 
     shipType(){
+      let tmp
       if(this.SniderFilter || this.SniderGlobal){
-        const tmp = this.SniderCurrentFilter.map((ele)=>{
+        tmp = this.SniderCurrentFilter.map((ele)=>{
            if(ele.shiptype) return ele.shiptype
          }).sort()
        return tmp
        }else{
-        return this.SniderCart.map((ele)=>{
+        tmp = this.SniderCart.map((ele)=>{
           if(ele.shiptype) return ele.shiptype
       }).sort()
+       let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
    }},
 
 
 
     placeBuilt(){
+      let tmp
       if(this.SniderFilter || this.SniderGlobal){
-        const tmp = this.SniderCurrentFilter.map((ele)=>{
+        tmp = this.SniderCurrentFilter.map((ele)=>{
              if(ele.places) return ele.places
          }).sort()
        return tmp
        }else{
-        return this.SniderCart.map((ele)=>{
+        tmp = this.SniderCart.map((ele)=>{
             if(ele.places) return ele.places
       }).sort()
+       let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
    }},
 
   //   builder(){
   //     if(this.SniderFilter || this.SniderGlobal){
-  //       const tmp = this.SniderCurrentFilter.map((ele)=>{
+  //       tmp = this.SniderCurrentFilter.map((ele)=>{
   //         if(ele.builder) return ele.builder
   //        }).sort()
   //      return tmp
@@ -266,15 +291,21 @@ name:'SniderQryFrm',
   //  }},
 
     people(){
+      let tmp
       if(this.SniderFilter || this.SniderGlobal){
-        const tmp = this.SniderCurrentFilter.map((ele)=>{
+        tmp = this.SniderCurrentFilter.map((ele)=>{
                   if(ele.people) return ele.people
          }).sort()
        return tmp
        }else{
-        return this.SniderCart.map((ele)=>{
+        tmp = this.SniderCart.map((ele)=>{
             if(ele.people) return ele.people
       }).sort()
+       let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
    }},
 
   loadingDataTable(){

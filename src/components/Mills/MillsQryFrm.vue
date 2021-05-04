@@ -129,16 +129,15 @@
 </template>
 
 <script>
-
-import{ mapState, mapActions} from "vuex"
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name:'MillsQryFrm',
+  name: 'MillsQryFrm',
   components: {
     // BaseButton
-     },
+  },
 
-    props: {
+  props: {
     // reasonList: {
     //   type: Array,
     //   default: function () {
@@ -146,7 +145,7 @@ export default {
     //   },
     // },
 
-    formtitle : {
+    formtitle: {
       type: String,
       required: true,
       default: 'Query Frm',
@@ -165,214 +164,241 @@ export default {
     //     return ['Aberta','Ontario' ]
     //   },
     // },
-
   },
 
   data() {
     return {
       officialNumberSelected: '',
       millsSelected: '',
-      ownersSelected:'',
+      ownersSelected: '',
       vesselSelected: '',
       yearSelected: '',
       placeSelected: '',
       reasonSelected: '',
-      globalSearchSelected:'',
+      globalSearchSelected: '',
       valid: false,
-      msg:"Clearing Filters",
+      msg: 'Clearing Filters',
       picked: 'general',
       // multiple: true,
-
     }
   },
 
-  computed:{
-    ...mapState('Mills', ['MillsCart', 'MillsCurrentFilter','MillsGlobal', 'MillsCartIsLoading', 'MillsFilter', 'MillsVesselFilter', 'MillsDateFilter','MillsProvinceFilter','MillsReasonClosedFilter', 'ClearingMillsFilters', 'MillsAppliedFilters', 'MillsFilterList']),
+  computed: {
+    ...mapState('Mills', [
+      'MillsCart',
+      'MillsCurrentFilter',
+      'MillsGlobal',
+      'MillsCartIsLoading',
+      'MillsFilter',
+      'MillsVesselFilter',
+      'MillsDateFilter',
+      'MillsProvinceFilter',
+      'MillsReasonClosedFilter',
+      'ClearingMillsFilters',
+      'MillsAppliedFilters',
+      'MillsFilterList',
+    ]),
 
-
-    showLatestFilter(){
-      if(this.MillsAppliedFilters.length > 0){
-        let last = this.MillsAppliedFilters.length-1
+    showLatestFilter() {
+      if (this.MillsAppliedFilters.length > 0) {
+        let last = this.MillsAppliedFilters.length - 1
         return this.MillsAppliedFilters[last]
-      }else{
-        return "Filters are Empty"
+      } else {
+        return 'Filters are Empty'
       }
     },
 
-    ownersFilter(){
+    ownersFilter() {
       return this.MillsOwnersFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
-    vesselFilter(){
-       return this.MillsVesselFilter ?  'mdi-filter' : 'mdi-menu-down'
-     },
-
-    dateFilter(){
-       return this.MillsDateFilter ?  'mdi-filter' : 'mdi-menu-down'
+    vesselFilter() {
+      return this.MillsVesselFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
-   placeFilter(){
-     return this.MillsProvinceFilter ?  'mdi-filter' : 'mdi-menu-down'
-   },
+    dateFilter() {
+      return this.MillsDateFilter ? 'mdi-filter' : 'mdi-menu-down'
+    },
 
+    placeFilter() {
+      return this.MillsProvinceFilter ? 'mdi-filter' : 'mdi-menu-down'
+    },
 
-   reasonFilter(){
-     return this.MillsReasonClosedFilter ?  'mdi-filter' : 'mdi-menu-down'
-   },
+    reasonFilter() {
+      return this.MillsReasonClosedFilter ? 'mdi-filter' : 'mdi-menu-down'
+    },
 
-   globalFilter(){
-     return this.MillsGlobal ?  'mdi-filter'  : 'mdi-menu-down'
-   },
+    globalFilter() {
+      return this.MillsGlobal ? 'mdi-filter' : 'mdi-menu-down'
+    },
 
-  numberOfFilters(){
-    return this.MillsAppliedFilters.length
-  },
+    numberOfFilters() {
+      return this.MillsAppliedFilters.length
+    },
 
-  filtersInSync(){
-    return this.MillsFilterList.length == this.MillsAppliedFilters.length
-  },
+    filtersInSync() {
+      return this.MillsFilterList.length == this.MillsAppliedFilters.length
+    },
 
-   filtersOn(){
-     return this.MillsFilter
-   },
+    filtersOn() {
+      return this.MillsFilter
+    },
 
-   clearingFilters(){
-     return this.ClearingMillsFilters
-   },
+    clearingFilters() {
+      return this.ClearingMillsFilters
+    },
 
-   owners(){
-     let tmp
-        if(this.MillsFilter || this.MillsGlobal){
-        tmp = this.MillsCurrentFilter.map((ele)=>{
+    owners() {
+      let tmp
+      if (this.MillsFilter || this.MillsGlobal) {
+        tmp = this.MillsCurrentFilter.map((ele) => {
           return ele.owners
-         }).sort()
-       return tmp
-       }else{
-        tmp = this.MillsCart.map((ele)=>{
-        if(ele.owners) return ele.owners
-      }).sort()
-         var tmp2 = tmp.filter((ele, index, array)=>{
-       return array.indexOf(ele) == index
-     })
-       console.log('Owners',tmp2.length)
-      return tmp2
-   }
-  },
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.MillsCart.map((ele) => {
+          if (ele.owners) return ele.owners
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
 
-     years()
-       {
-       let tmp
-           if(this.MillsFilter || this.MillsGlobal){
-           tmp = this.MillsCurrentFilter.map((ele)=>{
-            return ele.dateBuilt
-           }).sort()
-         return tmp
-         }else{
-       tmp =this.MillsCart.map((ele)=>{
+        return tmp2
+      }
+    },
+
+    years() {
+      let tmp
+      if (this.MillsFilter || this.MillsGlobal) {
+        tmp = this.MillsCurrentFilter.map((ele) => {
+          return ele.dateBuilt
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.MillsCart.map((ele) => {
           if (ele.dateBuilt) return ele.dateBuilt
         }).sort()
-           var tmp2 = tmp.filter((ele, index, array)=>{
-       return array.indexOf(ele) == index
-     })
-         console.log('Years',tmp2.length)
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
         return tmp2
-     }},
-
-   ships(){
-     let tmp
-        if(this.MillsFilter || this.MillsGlobal){
-        tmp = this.MillsCurrentFilter.map((ele)=>{
-          return ele.vesselName
-         }).sort()
-       return tmp
-       }else{
-     tmp = this.MillsCart.map((ele)=>{
-        if(ele.vesselName) return ele.vesselName
-      }).sort()
-         var tmp2 = tmp.filter((ele, index, array)=>{
-       return array.indexOf(ele) == index
-     })
-       console.log('Ships',tmp2.length)
-      return tmp2
-   }
-  },
-
-
-   place(){
-     let tmp
-         if(this.MillsFilter || this.MillsGlobal){
-        tmp = this.MillsCurrentFilter.map((ele)=>{
-          return ele.country
-         }).sort()
-       return tmp
-       }else{
-      tmp = this.MillsCart.map((ele)=>{
-        if(ele.country) return ele.country
-      }).sort()
-         var tmp2 = tmp.filter((ele, index, array)=>{
-       return array.indexOf(ele) == index
-     })
-       console.log('Place',tmp2.length)
-      return tmp2
-   }},
-
-  loadingDataTable(){
-    return this.MillsCartIsLoading
-  },
-
-  reasonList(){
-       let tmp
-        if(this.MillsFilter || this.MillsGlobal){
-         tmp = this.MillsCurrentFilter.map((ele)=>{
-          return ele.reasonClosed
-         }).sort()
-        return tmp
-       }else{
-       tmp = this.MillsCart.map((ele)=>{
-      if(ele.reasonClosed.trim()!='' || (typeof ele.reasonClosed != 'undefined')){
-        return ele.reasonClosed
       }
-     }).sort()
-     var tmp2 = tmp.filter((ele, index, array)=>{
-       return array.indexOf(ele) == index
-     })
-     console.log('Reason',tmp2.length)
-     return tmp2
-  }},
-
-
-
-
-
-  },
-
-
-
-  watch: {
-      ownersSelected(val, oldVal){
-       if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:"owners", value:val, varfilter:'ownersSelected' })
     },
 
-    vesselSelected(val, oldVal){
-       if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:"vesselName", value:val, varfilter:'vesselSelected' })
+    ships() {
+      let tmp
+      if (this.MillsFilter || this.MillsGlobal) {
+        tmp = this.MillsCurrentFilter.map((ele) => {
+          return ele.vesselName
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.MillsCart.map((ele) => {
+          if (ele.vesselName) return ele.vesselName
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
+      }
+    },
+
+    place() {
+      let tmp
+      if (this.MillsFilter || this.MillsGlobal) {
+        tmp = this.MillsCurrentFilter.map((ele) => {
+          return ele.country
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.MillsCart.map((ele) => {
+          if (ele.country) return ele.country
+        }).sort()
+        let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        return tmp2
+      }
+    },
+
+    loadingDataTable() {
+      return this.MillsCartIsLoading
+    },
+
+    reasonList() {
+      let tmp
+      if (this.MillsFilter || this.MillsGlobal) {
+        tmp = this.MillsCurrentFilter.map((ele) => {
+          return ele.reasonClosed
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.MillsCart.map((ele) => {
+          if (
+            ele.reasonClosed.trim() != '' ||
+            typeof ele.reasonClosed != 'undefined'
+          ) {
+            return ele.reasonClosed
+          }
+        }).sort()
+        let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
+      }
+    },
+  },
+
+  watch: {
+    ownersSelected(val, oldVal) {
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'owners',
+          value: val,
+          varfilter: 'ownersSelected',
+        })
+    },
+
+    vesselSelected(val, oldVal) {
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'vesselName',
+          value: val,
+          varfilter: 'vesselSelected',
+        })
     },
 
     yearSelected(val, oldVal) {
-      // console.log(`New Value: ${val} Old Value: ${oldVal}`)
-      if (val!='' && val != oldVal)
-      this.applyFilterToCartwithRegExp({ key:'dateBuilt', value:val, varfilter: 'yearSelected' })
+
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'dateBuilt',
+          value: val,
+          varfilter: 'yearSelected',
+        })
     },
 
     placeSelected(val, oldVal) {
-      // console.log(`New Value: ${val} Old Value: ${oldVal}`)
-      if (val!='' && val != oldVal)  this.applyFilterToCartwithRegExp({ key:'whereBuilt', value:val, varfilter:'placeSelected' })
+
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'whereBuilt',
+          value: val,
+          varfilter: 'placeSelected',
+        })
     },
 
     reasonSelected(val, oldVal) {
-      // console.log(`New Value: ${val} Old Value: ${oldVal}`)
-      if (val!='' && val != oldVal) this.applyFilterToCartwithRegExp({ key:'reasonClosed', value:val, varfilter: 'reasonSelected' })
+
+      if (val != '' && val != oldVal)
+        this.applyFilterToCartwithRegExp({
+          key: 'reasonClosed',
+          value: val,
+          varfilter: 'reasonSelected',
+        })
     },
 
     // globalSearchSelected(val, oldVal){
@@ -381,87 +407,87 @@ export default {
   },
 
   methods: {
-    ...mapActions('Mills',
-      ['clearMillsFilters', 'setMillsFilteredCart', 'removeMillsLastFilter', 'setMillsCartIsLoading', 'millsGlobalSearch']),
+    ...mapActions('Mills', [
+      'clearMillsFilters',
+      'setMillsFilteredCart',
+      'removeMillsLastFilter',
+      'setMillsCartIsLoading',
+      'millsGlobalSearch',
+    ]),
 
-
-    applyFilterToCartwithRegExp(payload){
+    applyFilterToCartwithRegExp(payload) {
       this.setMillsCartIsLoading(true)
       payload.value = new RegExp(payload.value, 'i')
       this.setMillsFilteredCart(payload)
-        this.setMillsCartIsLoading(false)
+      this.setMillsCartIsLoading(false)
     },
 
-    resetMillsSearchFilters(){
-    //  Remove the current selection from each of the picklists
-     this.vesselSelected = ''
-     this.yearSelected =''
-     this.placeSelected =''
-     this.reasonSelected=''
-     this.globalSearchSelected =''
-     this.clearMillsFilters(true)
+    resetMillsSearchFilters() {
+      //  Remove the current selection from each of the picklists
+      this.vesselSelected = ''
+      this.yearSelected = ''
+      this.placeSelected = ''
+      this.reasonSelected = ''
+      this.globalSearchSelected = ''
+      this.clearMillsFilters(true)
     },
 
-    removeLastFilter(){
-      let last = this.MillsFilterList.length-1
+    removeLastFilter() {
+      let last = this.MillsFilterList.length - 1
       let ele = this.MillsFilterList[last].varfilter
-      switch(ele){
+      switch (ele) {
         case 'reasonSelected':
           this.reasonSelected = ''
-          break;
+          break
         case 'placeSelected':
-          this.placeSelected=''
-          break;
+          this.placeSelected = ''
+          break
         case 'yearSelected':
-          this.yearSelected =''
-          break;
+          this.yearSelected = ''
+          break
         case 'vesselSelected':
-          this.vesselSelected =''
-          break;
+          this.vesselSelected = ''
+          break
       }
       this.removeMillsLastFilter()
-
     },
 
-    performGlobalFilter(){
+    performGlobalFilter() {
       this.millsGlobalSearch(this.globalSearchSelected)
-    }
-      }
-
-
+    },
+  },
 }
 </script>
 
 <style scoped>
 .queryform {
-  max-height:60vh;
-  overflow-y:auto;
+  max-height: 60vh;
+  overflow-y: auto;
   border-radius: 10px;
   box-sizing: border-box;
   margin-top: 1em;
   padding: 1em;
   position: relative;
-  background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+  background: var(--component-background-theme);
+  backdrop-filter: blur(4px);
   box-shadow: 5px 5px 5px rgba(20, 20, 20, 0.5);
-  width:100%;
-  margin-left:.5em;
-  margin-right:.5em;
-
+  width: 100%;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 .v-text-field >>> input {
-  font-size:.9em;
+  font-size: 0.9em;
 }
 .v-text-field >>> label {
-  font-size:.9em;
+  font-size: 0.9em;
 }
 .v-text-field >>> button {
-  font-size:.9em;
+  font-size: 0.9em;
 }
 
-p{
-  font-size:.9em;
+p {
+  font-size: 0.9em;
 }
 
 .radioBtn {
@@ -475,11 +501,10 @@ p{
 
 .btn {
   margin-right: 1em;
-
 }
 
-.v-btn{
-  font-size:.7em !important;
+.v-btn {
+  font-size: 0.7em !important;
 }
 
 .clrbtn {

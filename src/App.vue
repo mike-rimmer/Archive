@@ -5,30 +5,29 @@
     >
       <ShipListsMenu />
     </v-app-bar>
-    <v-main>
-      <transition
-        name="fade"
-        mode="out-in"
-      >
-        <router-view />
-      </transition>
-    </v-main>
-    <v-footer
-      color="var(--museum-blue)"
-      height="60"
-    />
+
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <router-view />
+    </transition>
+    <v-footer>
+      <Footer />
+    </v-footer>
   </v-app>
 </template>
 
 <script>
 
 import ShipListsMenu from '@/components/Menus/ShipListMenuV2'
-
+import Footer from '@/components/BaseComponents/BaseFooter';
 export default {
   name: 'App',
 
   components: {
     ShipListsMenu,
+    Footer
   },
 
   data() {

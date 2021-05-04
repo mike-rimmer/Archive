@@ -135,352 +135,396 @@
 
 <script>
 // import staticData from '@/data/datasource'
-import {mapState, mapActions} from "vuex"
+import { mapState, mapActions } from 'vuex'
 // import Bus from '@/services/Bus'
 
 export default {
-
   props: {
     qryformtitle: {
       type: String,
       required: true,
       default: 'Query Frm',
     },
-
-
   },
   data() {
     return {
       idSelected: '',
       shipSelected: '',
-      rigSelected:'',
+      rigSelected: '',
       registrationSelected: '',
       placeBuiltSelected: '',
-      builderSelected:'',
-      globalSearch:'',
+      builderSelected: '',
+      globalSearch: '',
       ownerSelected: '',
       valid: false,
-      msg:'',
+      msg: '',
     }
   },
   computed: {
-    ...mapState('Wallace',
-    [
-    'WallaceCart', 'WallaceAppliedFilters', 'WallaceFilterList', 'WallaceCurrentFilter',
-    'WallaceGlobal',
-    'WallaceCartIsLoading',
-    'WallaceFilter',
-    'ClearingWallaceFilters',
-    'WallaceShipFilter',
-    'WallacePlaceRegistrationFilter',
-    'WallaceRigFilter',
-    'WallaceProvBuiltFilter',
-    'WallaceBuilderFilter',
-    'WallaceOwnersFilter'
-     ]),
+    ...mapState('Wallace', [
+      'WallaceCart',
+      'WallaceAppliedFilters',
+      'WallaceFilterList',
+      'WallaceCurrentFilter',
+      'WallaceGlobal',
+      'WallaceCartIsLoading',
+      'WallaceFilter',
+      'ClearingWallaceFilters',
+      'WallaceShipFilter',
+      'WallacePlaceRegistrationFilter',
+      'WallaceRigFilter',
+      'WallaceProvBuiltFilter',
+      'WallaceBuilderFilter',
+      'WallaceOwnersFilter',
+    ]),
 
-     showLatestFilter(){
-      if(this.WallaceAppliedFilters.length > 0){
-        let last = this.WallaceAppliedFilters.length-1
+    showLatestFilter() {
+      if (this.WallaceAppliedFilters.length > 0) {
+        let last = this.WallaceAppliedFilters.length - 1
         return this.WallaceAppliedFilters[last]
-      }else{
-        return "Filters are Empty"
+      } else {
+        return 'Filters are Empty'
       }
     },
 
     // WallaceShipFilter
-// WallaceOwnersFilter
-// WallaceBuilderFilter
-// WallaceCountryFilter
-// WallaceRegistrationFilter
+    // WallaceOwnersFilter
+    // WallaceBuilderFilter
+    // WallaceCountryFilter
+    // WallaceRegistrationFilter
 
-    wallaceShipFilter(){
-       return this.WallaceShipFilter ?  'mdi-filter' : 'mdi-menu-down'
-     },
-
-    wallacePlaceRegistrationFilter(){
-       return this.WallacePlaceRegistrationFilter ?  'mdi-filter' : 'mdi-menu-down'
+    wallaceShipFilter() {
+      return this.WallaceShipFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
-    wallaceRigFilter(){
-       return this.WallaceRigFilter ?  'mdi-filter' : 'mdi-menu-down'
+    wallacePlaceRegistrationFilter() {
+      return this.WallacePlaceRegistrationFilter
+        ? 'mdi-filter'
+        : 'mdi-menu-down'
     },
 
-   wallaceBuiltFilter(){
-     return this.WallaceProvBuiltFilter ?  'mdi-filter' : 'mdi-menu-down'
-   },
+    wallaceRigFilter() {
+      return this.WallaceRigFilter ? 'mdi-filter' : 'mdi-menu-down'
+    },
 
-  wallaceBuilderFilter(){
-    return this.WallaceBuilderFilter ? 'mdi-filter' : 'mdi-menu-down'
-  },
+    wallaceBuiltFilter() {
+      return this.WallaceProvBuiltFilter ? 'mdi-filter' : 'mdi-menu-down'
+    },
 
-   wallaceOwnerFilter(){
-     return this.WallaceOwnersFilter ?  'mdi-filter' : 'mdi-menu-down'
-   },
+    wallaceBuilderFilter() {
+      return this.WallaceBuilderFilter ? 'mdi-filter' : 'mdi-menu-down'
+    },
 
-  //  globalFilter(){
-  //    return this.WallaceGlobal ?  'mdi-filter'  : 'mdi-menu-down'
-  //  },
+    wallaceOwnerFilter() {
+      return this.WallaceOwnersFilter ? 'mdi-filter' : 'mdi-menu-down'
+    },
 
+    //  globalFilter(){
+    //    return this.WallaceGlobal ?  'mdi-filter'  : 'mdi-menu-down'
+    //  },
 
-   filtersOn(){
-     return this.WallaceFilter
-   },
+    filtersOn() {
+      return this.WallaceFilter
+    },
 
-   clearingFilters(){
-     return this.ClearingWallaceFilters
-   },
+    clearingFilters() {
+      return this.ClearingWallaceFilters
+    },
 
-   ships(){
-       if(this.WallaceFilter || this.WallaceGlobal){
-        const tmp = this.WallaceCurrentFilter.map((ele)=>{
-          if(ele.vname) return ele.vname
-         }).sort()
-       return tmp
-       }else{
-        return this.WallaceCart.map((ele)=>{
-              if(ele.vname) return ele.vname
-      }).sort()
-   }
-   },
-
-   registration(){
-       if(this.WallaceFilter || this.WallaceGlobal){
-         const tmp = this.WallaceCurrentFilter.map((ele)=>{
-         if(ele.prov !='' && ele.prov != undefined){
-          return "ele.prov"
-         }
-         }).sort()
-         return tmp
-       }else{
-           return this.WallaceCart.map((ele)=>{
-             if(ele.prov !='' && ele.prov !=undefined){
-               return ele.prov
-             }
-            }).sort()
-         }
-         },
-
-   rigs(){
-       if(this.WallaceFilter || this.WallaceGlobal){
-         const tmp = this.WallaceCurrentFilter.map((ele)=>{
-         if(ele.rig.trim() !=''){
-          return ele.rig
-         }
-         }).sort()
-         return tmp
-       }else{
-        return this.WallaceCart.map((ele)=>{
-        if(ele.rig.trim() != ''){
-        return ele.rig
+    ships() {
+      let tmp
+      if (this.WallaceFilter || this.WallaceGlobal) {
+        tmp = this.WallaceCurrentFilter.map((ele) => {
+          if (ele.vname) return ele.vname
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.WallaceCart.map((ele) => {
+          if (ele.vname) return ele.vname
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        return tmp2
       }
-      }).sort()
-   }
-   },
+    },
 
-  place(){
-     if(this.WallaceFilter || this.WallaceGlobal){
-        const tmp = this.WallaceCurrentFilter.map((ele)=>{
-         if(ele.buildprov.trim() !='' && ele.buildprov !== 'undefined'){
-          return ele.buildprov
-         }
-         }).sort()
-         return tmp
-       }else{
-      return this.WallaceCart.map((ele)=>{
-        if(ele.buildprov.trim() != '' && ele.buildprov !== 'undefined'){
-          return ele.buildprov
-        }
-      }).sort()
-  }
-  },
-
-  builders(){
-      if(this.WallaceFilter || this.WallaceGlobal){
-         const tmp = this.WallaceCurrentFilter.map((ele)=>{
-         if(ele.bildnme.trim() !=''){
-          return ele.bildnme
-         }
-         }).sort()
-         return tmp
-       }else{
-      return this.WallaceCart.map((ele)=>{
-      if(ele.bildnme.trim() != ''){
-        return ele.bildnme
+    registration() {
+      let tmp
+      if (this.WallaceFilter || this.WallaceGlobal) {
+        const tmp = this.WallaceCurrentFilter.map((ele) => {
+          if (ele.prov != '' && ele.prov != undefined) {
+            return 'ele.prov'
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.WallaceCart.map((ele) => {
+          if (ele.prov != '' && ele.prov != undefined) {
+            return ele.prov
+          }
+        }).sort()
+        let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        return tmp2
       }
-      }).sort()
-  }
-  },
+    },
 
-  owners(){
-      if(this.WallaceFilter || this.WallaceGlobal){
-         const tmp = this.WallaceCurrentFilter.map((ele)=>{
-         if(ele.own.trim() !='' && ele.own  != 'undefined'){
-          return ele.own
-         }
-         }).sort()
-         return tmp
-       }else{
-        return this.WallaceCart.map((ele)=>{
-          if(ele.own.trim() != '' && ele.own != 'undefined'){
+    rigs() {
+      let tmp
+      if (this.WallaceFilter || this.WallaceGlobal) {
+        tmp = this.WallaceCurrentFilter.map((ele) => {
+          if (ele.rig.trim() != '') {
+            return ele.rig
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.WallaceCart.map((ele) => {
+          if (ele.rig.trim() != '') {
+            return ele.rig
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        return tmp2
+      }
+    },
+
+    place() {
+      let tmp
+      if (this.WallaceFilter || this.WallaceGlobal) {
+        tmp = this.WallaceCurrentFilter.map((ele) => {
+          if (ele.buildprov.trim() != '' && ele.buildprov !== 'undefined') {
+            return ele.buildprov
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.WallaceCart.map((ele) => {
+          if (ele.buildprov.trim() != '' && ele.buildprov !== 'undefined') {
+            return ele.buildprov
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
+      }
+    },
+
+    builders() {
+      let tmp
+      if (this.WallaceFilter || this.WallaceGlobal) {
+        tmp = this.WallaceCurrentFilter.map((ele) => {
+          if (ele.bildnme.trim() != '') {
+            return ele.bildnme
+          }
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.WallaceCart.map((ele) => {
+          if (ele.bildnme.trim() != '') {
+            return ele.bildnme
+          }
+        }).sort()
+        let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+
+        return tmp2
+      }
+    },
+
+    owners() {
+      let tmp
+      if (this.WallaceFilter || this.WallaceGlobal) {
+        tmp = this.WallaceCurrentFilter.map((ele) => {
+          if (ele.own.trim() != '' && ele.own != 'undefined') {
             return ele.own
           }
-          }).sort()
+        }).sort()
+        return tmp
+      } else {
+        tmp = this.WallaceCart.map((ele) => {
+          if (ele.own.trim() != '' && ele.own != 'undefined') {
+            return ele.own
+          }
+        }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
 
-        }
-        },
+        return tmp2
+      }
+    },
 
+    loadingDataTable() {
+      return this.WallaceCartIsLoading
+    },
 
+    numberOfFilters() {
+      // return this.OwnersFilterList.length
+      return this.WallaceAppliedFilters.length
+    },
 
-  loadingDataTable(){
-    return this.WallaceCartIsLoading
-  },
-
-   numberOfFilters(){
-    // return this.OwnersFilterList.length
-    return this.WallaceAppliedFilters.length
-  },
-
-  filtersInSync(){
-    return this.WallaceAppliedFilters.length === this.WallaceFilterList.length
-  }
-
-
+    filtersInSync() {
+      return this.WallaceAppliedFilters.length === this.WallaceFilterLclsist.length
+    },
   },
 
   watch: {
     shipSelected(val, oldval) {
-       if (val!='' && val != oldval)
-      // Note the key is the field name that represents each of the columns in the v-data-table
-      this.applyFilterToCartwithRegExp({ key:"vname", value:val, varfilter:'shipSelected' })
+      if (val != '' && val != oldval)
+        // Note the key is the field name that represents each of the columns in the v-data-table
+        this.applyFilterToCartwithRegExp({
+          key: 'vname',
+          value: val,
+          varfilter: 'shipSelected',
+        })
     },
 
     registrationSelected(val, oldval) {
-      console.log(`New Value: ${val} Old Value: ${oldval}`)
-      if (val!='' && val != oldval)
-       this.applyFilterToCartwithRegExp({ key:"registration", value:val, varfilter:'registrationSelected' })
+
+      if (val != '' && val != oldval)
+        this.applyFilterToCartwithRegExp({
+          key: 'registration',
+          value: val,
+          varfilter: 'registrationSelected',
+        })
     },
 
     rigSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
-      if (val!='' && val != oldval)
-      this.applyFilterToCartwithRegExp({ key:"rig", value:val, varfilter:'rigSelected' })
+      if (val != '' && val != oldval)
+        this.applyFilterToCartwithRegExp({
+          key: 'rig',
+          value: val,
+          varfilter: 'rigSelected',
+        })
     },
 
     placeBuiltSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
-      if (val!='' && val != oldval)
-      this.applyFilterToCartwithRegExp({ key:"buildprov", value:val, varfilter:'placeBuiltSelected' })
+      if (val != '' && val != oldval)
+        this.applyFilterToCartwithRegExp({
+          key: 'buildprov',
+          value: val,
+          varfilter: 'placeBuiltSelected',
+        })
     },
-
 
     builderSelected(val, oldval) {
-      // console.log(`New Value: ${val} Old Value: ${oldval}`)
-      if (val!='' && val != oldval)
-      this.applyFilterToCartwithRegExp({ key:"bildnme", value:val, varfilter:'builderSelected' })
+      if (val != '' && val != oldval)
+        this.applyFilterToCartwithRegExp({
+          key: 'bildnme',
+          value: val,
+          varfilter: 'builderSelected',
+        })
     },
 
-    // globalSearch(val, oldval) {
-    //   console.log(`New Value: ${val} Old Value: ${oldval}`)
-    //   if (val!='' && val != oldval) this.getWallsSummaryByGenSearch(val)
-    // },
 
     ownerSelected(val, oldval) {
       // console.log(`New Value: ${val} Old Value: ${oldval}`)
-      if (val!='' && val != oldval)
-      this.applyFilterToCartwithRegExp({ key:"own", value:val, varfilter:'ownerSelected' })
+      if (val != '' && val != oldval)
+        this.applyFilterToCartwithRegExp({
+          key: 'own',
+          value: val,
+          varfilter: 'ownerSelected',
+        })
     },
   },
 
-
-
   methods: {
-    ...mapActions('Wallace',
-      ['setWallaceCartIsLoading', 'clearWallaceFilters', 'setWallaceFilteredCart', 'removeWallaceLastFilter', 'WallaceGlobalSearch']),
+    ...mapActions('Wallace', [
+      'setWallaceCartIsLoading',
+      'clearWallaceFilters',
+      'setWallaceFilteredCart',
+      'removeWallaceLastFilter',
+      'WallaceGlobalSearch',
+    ]),
 
-    applyFilterToCartwithRegExp(payload){
+    applyFilterToCartwithRegExp(payload) {
       this.setWallaceCartIsLoading(true)
       payload.value = new RegExp(payload.value, 'i')
       this.setWallaceFilteredCart(payload)
       this.setWallaceCartIsLoading(false)
     },
 
-      resetWallaceSearchFilters(){
-    //  Remove the current selection from each of the picklists
-     this.shipSelected = ''
-     this.registedSelected =''
-     this.rigFilter =''
-     this.placeBuiltSelected=''
-     this.builderSelected=''
-     this.ownerSelected =''
-     this.clearWallaceFilters(true)
+    resetWallaceSearchFilters() {
+      //  Remove the current selection from each of the picklists
+      this.shipSelected = ''
+      this.registedSelected = ''
+      this.rigFilter = ''
+      this.placeBuiltSelected = ''
+      this.builderSelected = ''
+      this.ownerSelected = ''
+      this.clearWallaceFilters(true)
     },
 
-    removeLastFilter(){
-      let last = this.WallaceFilterList.length-1
+    removeLastFilter() {
+      let last = this.WallaceFilterList.length - 1
       let ele = this.WallaceFilterList[last].varfilter
-      switch(ele){
+      switch (ele) {
         case 'shipSelected':
           this.shipSelected = ''
-          break;
+          break
         case 'registrationSelected':
-          this.registrationSelected=''
-          break;
+          this.registrationSelected = ''
+          break
         case 'rigSelected':
-          this.rigSelected =''
-          break;
+          this.rigSelected = ''
+          break
         case 'placeBuiltSelected':
-          this.placeBuiltSelected =''
-          break;
+          this.placeBuiltSelected = ''
+          break
         case 'builderSelected':
-          this.builderSelected =''
-          break;
+          this.builderSelected = ''
+          break
         case 'ownerSelected':
-          this.ownerSelected =''
-          break;
+          this.ownerSelected = ''
+          break
       }
       this.removeWallaceLastFilter()
-
     },
 
-    performGlobalFilter(){
+    performGlobalFilter() {
       this.millsGlobalSearch(this.globalSearchSelected)
-    }
     },
-
+  },
 }
 </script>
 
 <style scoped>
 .queryform {
-  max-height:60vh;
+  max-height: 60vh;
   overflow-y: auto;
   border-radius: 10px;
   box-sizing: border-box;
   margin-top: 1em;
   padding: 1em;
   position: relative;
-  background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+  background: var(--component-background-theme);
+  backdrop-filter: blur(4px);
   box-shadow: 5px 5px 5px rgba(20, 20, 20, 0.5);
-  width:100%;
-  margin-left:.5em;
-  margin-right:.5em;
-
+  width: 100%;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 .v-text-field >>> input {
-  font-size:.9em;
+  font-size: 0.9em;
 }
 .v-text-field >>> label {
-  font-size:.9em;
+  font-size: 0.9em;
 }
 .v-text-field >>> button {
-  font-size:.8em;
+  font-size: 0.8em;
 }
 
-p{
-  font-size:.9em;
+p {
+  font-size: 0.9em;
 }
 
 .radioBtn {
@@ -494,11 +538,10 @@ p{
 
 .btn {
   margin-right: 1em;
-
 }
 
-.v-btn{
-  font-size:.7em !important;
+.v-btn {
+  font-size: 0.7em !important;
 }
 
 .clrbtn {

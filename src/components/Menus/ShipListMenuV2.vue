@@ -3,7 +3,7 @@
     dense
     bottom
     color="var(--museum-blue)"
-    height="60"
+    height="70"
   >
     <v-row justify-lg="space-around">
       <v-toolbar-title
