@@ -1350,7 +1350,7 @@ const millsData = (function test () {
 
 
 
-  const MillsIntro = `
+const MillsIntro = `
 <h1>Kingston Marine Museum of the Great Lakes</h1>
 <h1>is pleased to host the New Mills List</></h1>
 
@@ -1396,7 +1396,7 @@ const millsData = (function test () {
     millsReason4Closing,
     wallsReason4Closing,
     menuItems,
-    // MillsIntro,
+    MillsIntro,
     MillsDates,
     WallaceDates,
     WallaceBuilders

@@ -4,7 +4,7 @@ const mills = {
   desc: "'The New Mills' List Registered Canadian Steamships 1817 - 1930 over 75 feet'",
   intro: `
 <h1>Kingston Marine Museum of the Great Lakes</h1>
-<h1>is pleased to host the New Mills List</></h1>
+<h1>Is pleased to host the <span style='text-shadow: 4px 4px 5px black; color:white;'>The New Mills Registry</span></h1>
 
 <h3>Preface</h3>
 
@@ -38,6 +38,12 @@ const mills = {
 
 <p style='font-weight:bold'>York University</p>
 
-<p style='font-weight:bold'>Toronto, Ontario, May 12, 1999.</p>`}
+<p style='font-weight:bold'>Toronto, Ontario, May 12, 1999.</p>
+
+<p style = 'padding: 0 .3em;display:inline-block; width:auto; text-shadow: 4px 4px 5px black; color:white;' >Hover mouse over desired Image to see that Intro</p><br>
+<p style = 'padding: 0 .3em;display:inline-block; width:auto;  text-shadow: 4px 4px 5px black; color:white;' >Left Click on Desired Image to go to that Registry</p>
+`}
 
 export default mills;
+
+

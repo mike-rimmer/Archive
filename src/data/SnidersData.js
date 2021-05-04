@@ -1,11 +1,22 @@
-const snidersData = {
+const sniders = {
   title: "Snider Database",
   desc: "This is about the Snider Database",
-  intro: `<h4>What is Lorem Ipsum?</h4>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+  intro:
+`<h1>Kingston Marine Museum of the Great Lakes</h1>
+<h1>Is pleased to host the<span style='text-shadow: 4px 4px 5px black; color:white;'> Snider's Schooner List</></h1>
 
-  <h4>Why do we use it?</h4>
-  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).`
+<h3>Preface</h3>
+<p>
+C.H.J. Snider (May 26, 1879-December 12, 1971) chronicled the early way to travel and do business on the Great Lakes in his 1,303 "Schooner Days" columns for Toronto’s The Evening Telegram between January 31, 1931, to  1954. His highest position was that of Managing Editor and he also was a trustee of the estate of John Ross Robertson, the Telegram's founder and also a great author on Ontario history.</p>
+
+<p>Snider first sailed being at the helm of a schooner at the age of thirteen, later he would sail one of the most famous schooners on Lake Ontario, the Stuart H. Dunn, and these early travels let Snider study first-hand the development of the Great Lakes region.</p>
+
+<h4>Forward</h4>
+<p>Originally found among the scrapbook collections of many ship enthusiasts, Charles Henry Jeremiah Snider’s Schooner Days were laid out in the styles of an old salty dog telling stories to young boys. Where he tracked down old men who were just boys themselves when many of these schooners first hit the water of the Great Lakes.</p>
+
+<p>Snider was a great marine researcher and an accomplished artist who drew most of the sketches found in his columns. His sailing experience would help him write seven books on early Great Lakes shipping.</p>
+
+<p>Conversely published on microfilm in the early seventies, Snider’s Schooner Days later were compiled with select stories into the book by Robert B. Townsend, entitled Tales From The Great Lakes in 1995 of which the Marine Museum Of The Great Lakes lent pictures from their collection. Schooner Days can now be enjoyed for researchers worldwide in a searchable online database at the Marine Museum Of The Great Lakes in Kingston, Ontario.</p>`
 };
 
-export default snidersData;
+export default sniders;
