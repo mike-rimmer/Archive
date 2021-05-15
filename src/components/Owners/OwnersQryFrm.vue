@@ -5,7 +5,7 @@
   >
     <div>
       <p style="font-weight:bold;">
-        {{ formtitle }}
+        {{ formtitle.toUpperCase() }}
       </p>
     </div>
     <hr style="margin-bottom:1.5em; border:0; border-top: 1px solid black;">
@@ -489,8 +489,8 @@ name:'OwnersQryFrm',
   margin-top: 1em;
   padding: 1em;
   position: relative;
-  background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+  /* background:var(--component-background-theme);
+  backdrop-filter:blur(4px); */
   box-shadow: 5px 5px 5px rgba(20, 20, 20, 0.5);
   width:100%;
   margin-left:.5em;

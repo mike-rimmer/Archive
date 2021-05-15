@@ -1,7 +1,7 @@
 <template>
   <!-- Consider this for enlarging images https://github.com/diracleo/vue-enlargeable-image -->
   <div class="background">
-    <h1 style="color:var(--image-primary-color)">
+    <h1 style="color:var(--image-primary-text)">
       Wallace Ship Images
     </h1>
     <v-card>
@@ -22,63 +22,67 @@
           </v-btn>
         </v-btn-toggle>
       </v-card-text>
-    </v-card>
-    <v-row>
-      <v-col
-        v-for="image in images"
 
-        :key="image.title"
-        cols="3"
-      >
-        <v-card
-          color="green lighten-4"
+      <v-row>
+        <v-col
+          v-for="image in images"
+          :key="image.title"
+          name="fade"
+          tag="v-col"
+          cols="3"
         >
-          <v-card-text>
-            <div
-              style="width:300"
-            >
-              <v-img
-                class="img-style"
-                :src="$IMGPATH+image.url"
-                :alt="image.name"
-                @click="showEnlargeImage($IMGPATH+image.url)"
-              />
-            </div>
-            <p class="title">
-              {{ image.name }}
-            </p>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-overlay
-        :z-index="zIndex"
-        :value="overlay"
-        :opacity="opacity"
-      >
-        <div class="test">
-          <v-img
-            :src="currentUrl"
-            class="normal"
-            :width="landscape == 0 ? 900 : 400"
-            height="auto"
-            style="filter:grayscale(100%)"
-            @click="overlay = false"
-          />
-
-
-          <v-btn
-            class="white--text"
-            color="var(--image-primary-color)"
-            @click="overlay = false"
+          <v-card
+            :key="image.title"
+            color="brown lighten-5"
           >
-            Return to Gallery
-          </v-btn>
-        </div>
-      </v-overlay>
-    </v-row>
+            <v-card-text>
+              <div
+                style="width:300"
+              >
+                <v-img
+                  class="img-style"
+                  :src="$IMGPATH+image.url"
+                  :alt="image.name"
+                  @click="showEnlargeImage($IMGPATH+image.url)"
+                />
+              </div>
+              <p class="title">
+                {{ image.name }}
+              </p>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-overlay
+          transition="fade-transition"
+          :z-index="zIndex"
+          :value="overlay"
+          :opacity="opacity"
+        >
+          <div class="test">
+            <v-img
+              :src="currentUrl"
+              class="normal"
+              :width="landscape == 0 ? 900 : 400"
+              height="auto"
+              style="filter:grayscale(100%)"
+              @click="overlay = false"
+            />
+
+
+            <v-btn
+              class="white--text"
+              color="var(--image-primary-color)"
+              @click="overlay = false"
+            >
+              Return to Gallery
+            </v-btn>
+          </div>
+        </v-overlay>
+      </v-row>
+    </v-card>
   </div>
 </template>
 
@@ -142,7 +146,7 @@ export default {
 .background{
   padding:0 5%;
   margin:0 auto;
-  background:var(--image-theme-color)
+  background:white;
 }
 
 .title{

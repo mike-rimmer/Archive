@@ -59,8 +59,8 @@
 
 <style scoped>
 .fauxdiv{
- opacity:1;
- backdrop-filter: blur(2px);
+ background-color:white;
+ /* backdrop-filter: blur(2px); */
 }
 
 
@@ -75,35 +75,30 @@ font-size: 0.8rem !important;
   top: 0px;
   height: 30px;
   font-weight: bold;
-  background: linear-gradient(
+  /* background-color:white; */
+  /* background: linear-gradient(
     to right bottom,
     rgba(247, 248, 247, 0),
     rgba(252, 255, 252, 0)
-  );
-  opacity:1;
+  ); */
+  /* opacity:1; */
 }
 
-.glasslook{
-   background: linear-gradient(
-    to right bottom,
-    rgba(247, 248, 247, 0),
-    rgba(252, 255, 252, 0)
-    );
- }
+
 
 .v-data-table{
   font-size:.8em;
 }
 
-.theme--light.v-data-table{
+/* .theme--light.v-data-table{
    background: linear-gradient(
     to right bottom,
     rgba(100,128,64,0),
     rgba(100,128,64,.7)
   );
-    backdrop-filter:blur(4px);
+} */
+    /* backdrop-filter:blur(4px); */
   /* background-color: rgba(100,128,64,.2); */
-}
 
 
 .fade-enter-active,

@@ -7,7 +7,6 @@
       <template v-slot:QryFrm>
         <RegistryQryFrm
           :title="title"
-          :about-registry="registryTitle"
           @hidePopUp="hidePopUp"
           @clearRegistrySummaryFrm="resetRegistryData"
         />
@@ -17,7 +16,7 @@
           :height="height"
           :headers="headers"
           :data="registryData"
-          :title="registryTitle"
+          :title="title"
         />
       </template>
     </BaseFrm>
@@ -47,8 +46,8 @@ export default {
       return {
         height:'380',
         csl:[],
-        title:"Canadian Ship Registry List",
-        registryTitle:'Canadian Ship Registry List',
+        title:"CANADIAN SHIP REGISTRY LIST",
+        // registryTitle:'CANADIAN SHIP REGISTRY LIST',
         showPopUp:false,
         registryData:[],
         errMsg:'',

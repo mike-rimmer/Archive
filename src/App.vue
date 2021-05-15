@@ -5,29 +5,25 @@
     >
       <ShipListsMenu />
     </v-app-bar>
-
     <transition
       name="fade"
       mode="out-in"
+      appear
     >
       <router-view />
     </transition>
-    <v-footer>
-      <Footer />
-    </v-footer>
   </v-app>
 </template>
 
 <script>
 
 import ShipListsMenu from '@/components/Menus/ShipListMenuV2'
-import Footer from '@/components/BaseComponents/BaseFooter';
 export default {
   name: 'App',
 
   components: {
     ShipListsMenu,
-    Footer
+    // Footer
   },
 
   data() {
@@ -63,6 +59,12 @@ export default {
 }
 
 @font-face{
+ font-family:'Lato-Light';
+ src:local('Lato-Light'),
+ url(./fonts/Lato-Light.ttf) format('truetype');
+}
+
+@font-face{
  font-family:'Lato-LightItalic';
  src:local('Lato-LightItalic'),
  url(./fonts/Lato-LightItalic.woff2) format('woff2');
@@ -76,9 +78,15 @@ export default {
 }
 
 @font-face{
- font-family:'Quattrocento';
- src:local('Quattrocento'),
- url(./fonts/Quattrocento.woff2) format('woff2');
+ font-family:'Roboto-Light';
+ src:local('Roboto-Light'),
+ url(./fonts/Roboto-Light.ttf) format('truetype');
+}
+
+@font-face{
+ font-family:'Roboto-Regular';
+ src:local('Roboto-Regular'),
+ url(./fonts/Roboto-Regular.ttf) format('truetype');
 }
 
 
@@ -93,14 +101,28 @@ export default {
   opacity: 0;
 }
 
-.moveleft-enter-active,
-.moveleft-leave-active {
-  transition: all .7s ease-in-out;
+.moveleft-enter{
+  opacity: 0;
+  transform:translateX(900px);
 }
 
-.moveleft-enter,
-.moveleft-leave-to {
-  transform: translateX(600px);
-  opacity: 0;
+/* .moveleft-leave,
+.moveleft-enter-to{
+  opacity:1;
+  transform:translateX(0px);
+} */
+
+.moveleft-enter-active{
+  transition: all .7s ease;
 }
+
+.moveleft-leave-active {
+  transition: all .7s ease;
+}
+
+.moveleft-leave-to{
+  opacity:0;
+  transform:translateX(-900px)
+}
+
 </style>

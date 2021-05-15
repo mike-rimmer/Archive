@@ -1,20 +1,21 @@
 <template>
-  <div
+  <v-card
     sm="12"
     class="queryform"
   >
-    <div>
+    <v-card-titel>
       <p style="font-weight:bold;">
         {{ formtitle }}
       </p>
-    </div>
+    </v-card-titel>
     <hr style="margin-bottom:1.5em; border:0; border-top: 1px solid black;">
-    <v-form
-      ref="form"
-      v-model="valid"
-      lazy-validation
-    >
-      <!-- <v-text-field
+    <v-card-active>
+      <v-form
+        ref="form"
+        v-model="valid"
+        lazy-validation
+      >
+        <!-- <v-text-field
         v-model="globalSearchSelected"
         :append-icon="globalFilter"
         label="General Initial Search"
@@ -23,33 +24,34 @@
       /> -->
 
 
-      <v-autocomplete
-        v-model="ownersSelected"
-        :append-icon="ownersFilter"
-        :items="owners"
-        label="Vessel Owner"
-        required
-        dense
-      />
+        <v-autocomplete
+          v-model="ownersSelected"
+          :append-icon="ownersFilter"
+          :items="owners"
+          label="Vessel Owner"
+          required
+          dense
+          color="black"
+        />
 
-      <v-autocomplete
-        v-model="yearSelected"
-        :append-icon="dateFilter"
-        :items="years"
-        label="Year Built"
-        required
-        dense
-      />
+        <v-autocomplete
+          v-model="yearSelected"
+          :append-icon="dateFilter"
+          :items="years"
+          label="Year Built"
+          required
+          dense
+        />
 
-      <v-autocomplete
-        v-model="vesselSelected"
-        :append-icon="vesselFilter"
-        :items="ships"
-        label="Vessel Name"
-        required
-        dense
-      />
-      <!-- <v-autocomplete
+        <v-autocomplete
+          v-model="vesselSelected"
+          :append-icon="vesselFilter"
+          :items="ships"
+          label="Vessel Name"
+          required
+          dense
+        />
+        <!-- <v-autocomplete
         v-model="yearSelected"
         :append-icon="dateFilter"
         :items="years"
@@ -58,74 +60,75 @@
         dense
       /> -->
 
-      <v-autocomplete
-        v-model="placeSelected"
-        :append-icon="placeFilter"
-        :items="place"
-        label="Place Built"
-        required
-        dense
-      />
+        <v-autocomplete
+          v-model="placeSelected"
+          :append-icon="placeFilter"
+          :items="place"
+          label="Place Built"
+          required
+          dense
+        >
+          <v-autocomplete
+            v-model="reasonSelected"
+            :append-icon="reasonFilter"
+            :items="reasonList"
+            label="Reason Closed"
+            required
+            dense
+          />
+        </v-autocomplete>
+      </v-form>
 
-      <v-autocomplete
-        v-model="reasonSelected"
-        :append-icon="reasonFilter"
-        :items="reasonList"
-        label="Reason Closed"
-        required
-        dense
-      />
-    </v-form>
-
-    <!-- <BaseButton -->
-    <v-row
-      v-show="MillsFilter"
-      class="justify-center"
-    >
-      <v-btn
-        @click="resetMillsSearchFilters"
+      <!-- <BaseButton -->
+      <v-row
+        v-show="MillsFilter"
+        class="justify-center"
       >
-        Clear Filters
-      </v-btn>
-    </v-row>
-    <v-row
-      v-show="clearingFilters"
-      class="justify-center white--text mt-2"
-    >
-      <p>
-        {{ msg }}
-      </p>
-    </v-row>
-    <v-row
-      v-if="filtersOn"
-      class="justify-center white--text mt-2"
-    >
-      <p>Filter(s) Active</p>
-      <v-col>
-        <v-btn @click="removeLastFilter">
-          Remove Last Filter
+        <v-btn
+          @click="resetMillsSearchFilters"
+        >
+          Clear Filters
         </v-btn>
-      </v-col>
-      <v-col>
-        {{ numberOfFilters }} {{ filtersInSync }}
-      </v-col>
-    </v-row>
-    <v-row
-      v-else
-      class="justify-center white--text mt-2"
-    >
-      <p>UnFiltered</p>
-    </v-row>
-    <v-row
-      v-show="loadingDataTable"
-      justify="center"
-      class="justify-center white--text mt-2 px-4"
-    >
-      <p>Data is Loading...<br> please wait</p>
-    </v-row>
-    {{ MillsFilter }} {{ MillsGlobal }}
+      </v-row>
+      <v-row
+        v-show="clearingFilters"
+        class="justify-center white--text mt-2"
+      >
+        <p>
+          {{ msg }}
+        </p>
+      </v-row>
+      <v-row
+        v-if="filtersOn"
+        class="justify-center white--text mt-2"
+      >
+        <p>Filter(s) Active</p>
+        <v-col>
+          <v-btn @click="removeLastFilter">
+            Remove Last Filter
+          </v-btn>
+        </v-col>
+        <v-col>
+          {{ numberOfFilters }} {{ filtersInSync }}
+        </v-col>
+      </v-row>
+      <v-row
+        v-else
+        class="justify-center white--text mt-2"
+      >
+        <p>UnFiltered</p>
+      </v-row>
+      <v-row
+        v-show="loadingDataTable"
+        justify="center"
+        class="justify-center white--text mt-2 px-4"
+      >
+        <p>Data is Loading...<br> please wait</p>
+      </v-row>
+      {{ MillsFilter }} {{ MillsGlobal }}
     <!-- </BaseButton> -->
-  </div>
+    </v-card-active>
+  </v-card>
 </template>
 
 <script>
@@ -138,12 +141,6 @@ export default {
   },
 
   props: {
-    // reasonList: {
-    //   type: Array,
-    //   default: function () {
-    //     return ['Abandoned', 'Burnt']
-    //   },
-    // },
 
     formtitle: {
       type: String,
@@ -151,19 +148,7 @@ export default {
       default: 'Query Frm',
     },
 
-    // years: {
-    //   type: Array,
-    //   default: function () {
-    //     return ['2020', '2021']
-    //   },
-    // },
 
-    // place: {
-    //   type: Array,
-    //   default: function () {
-    //     return ['Aberta','Ontario' ]
-    //   },
-    // },
   },
 
   data() {
@@ -465,15 +450,20 @@ export default {
   overflow-y: auto;
   border-radius: 10px;
   box-sizing: border-box;
-  margin-top: 1em;
+  margin-top: 3em;
   padding: 1em;
   position: relative;
-  background: var(--component-background-theme);
-  backdrop-filter: blur(4px);
+  /* background: var(--component-background-theme); */
+  /* background-color:white; */
+  /* backdrop-filter: blur(4px); */
   box-shadow: 5px 5px 5px rgba(20, 20, 20, 0.5);
   width: 100%;
   margin-left: 0.5em;
   margin-right: 0.5em;
+}
+
+.v-autocomplete{
+  color:black;
 }
 
 .v-text-field >>> input {

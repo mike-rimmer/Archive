@@ -25,15 +25,15 @@
 </template>
 
 <script>
-// import ApiServices from '../services/ApiServices'
-// import millsData from '../../data/MillsDataSource';
+
+// Example of jit loading import...
 const BaseFrm = () => import('@/components/BaseComponents/BaseShipListFrm.vue')
 // import BaseFrm from '@/components/BaseComponents/BaseShipListFrm.vue';
 const MillsQryFrm = () => import('@/components/Mills/MillsQryFrm.vue')
 // import MillsQryFrm from '@/components/Mills/MillsQryFrm.vue';
 const MillsDisplayFrm = () => import('@/components/Mills/MillsDisplayFrm.vue')
 const CartIndicator = () => import('@/components/BaseComponents/BaseDetailCartIndicator.vue')
-// import MillsDisplayFrm from '@/components/Mills/MillsDisplayFrm.vue';
+
 import {mapActions} from 'vuex'
 
 
@@ -67,91 +67,11 @@ export default {
       errMsg:'',
       tableheight:'380',
       formtitle:"The New Mills List Canadian Coastal and Inland Steam Vessels, 1809 -1930",
-      qryformtitle:"Mills Registry",
+      qryformtitle:"MILLS REGISTRY",
     }
   },
 
-    // computed:{
-    //   ...mapState(['MillsCart', 'MillsLatestFilter', 'MillsCartIsLoading']),
 
-    //   millsdata(){
-    //       return this.MillsLatestFilter
-    //   },
-
-    //   showSummary() {
-    //     return !this.showIntro
-    //   }
-
-    // },
-
-    // beforeCreate(){
-    //    console.time()
-    //    console.log('%cMills Before Created', 'background-color:green; color:white')
-    // },
-
-    // created(){
-    //      this.loadCart()
-    //      console.timeLog()
-    //      console.log('%cMills Created', 'background-color:green; color:white')
-    //    },
-
-    // beforeMount(){
-    //   console.timeLog()
-    //   console.log('%cMills Before Mounted', 'background-color:green; color:white')
-    // },
-
-    // mounted(){
-    //   this.$nextTick(() =>{
-    //     console.log('%cNextTick', 'background-color:red; color:white')
-    //     console.log('%cMills Mounted', 'background-color:green; color:white')
-    //     console.timeLog()
-    //     console.timeEnd()
-
-    //   })
-    // },
-
-    // beforeUpdate(){
-    //   console.timeLog()
-    //   console.log('%cMills Before UpDated', 'background-color:green; color:white')
-    // },
-
-    // upDated(){
-    //   this.$nextTick(() =>{
-    //   console.timeLog()
-    //   console.log('%cMills UpDated', 'background-color:green; color:white')
-    //   })
-    // },
-
-    // activated(){
-    //   console.timeLog()
-    //   console.log('%cMills Activated', 'background-color:green; color:white')
-    // },
-
-    // deActivated(){
-    //   console.timeLog()
-    //   console.log('%cMills DeActivated', 'background-color:green; color:white')
-    // },
-
-    // beforeUnmount(){
-    //   console.timeLog()
-    //   console.log('%cMills Before Unmount', 'background-color:green; color:white')
-    // },
-
-    // errorCaptured(){
-    //   console.timeLog()
-    //   console.log('%cMills errorCaptured', 'background-color:green; color:white')
-    // },
-
-    // renderTracked(){
-    //   console.timeLog()
-    //   console.log('%cMills renderTracked', 'background-color:green; color:white')
-    // },
-
-    // renderTriggered(){
-    //   console.timeLog()
-    //   console.log('%cMills renderTriggered', 'background-color:green; color:white')
-    //   console.timeEnd()
-    // },
 
     created(){
       this.loadCart()
@@ -175,7 +95,7 @@ export default {
 </script>
 
 <style  scoped>
- .chartContainer{
+ /* .chartContainer{
    display:flex;
    flex-wrap: wrap;
    width:100%;
@@ -186,5 +106,5 @@ export default {
 
  .card{
    width:350px;
- }
+ } */
 </style>

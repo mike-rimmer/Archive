@@ -9,7 +9,7 @@ If a user click on a row a function is called to fetch the detailed info from th
   <div class="summaryfrm">
     <!-- <div class="glass "> -->
     <div>
-      <h3 class="black--text">
+      <h3>
         {{ title }}
       </h3>
 
@@ -123,6 +123,8 @@ export default {
       this.showDetailFrm = false
     },
 
+
+
     getDetailedRecord(rowData) {
       let id = rowData.Id
       APIServices. getRegistryDetailedRecordById(`'${id}'`)
@@ -158,8 +160,8 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
-   background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+   /* background:var(--component-background-theme);
+  backdrop-filter:blur(4px); */
   font-size:.7em;
 }
 
@@ -173,35 +175,35 @@ font-size: 0.8rem !important;
   top: 0px;
   height: 30px;
   font-weight: bold;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right bottom,
     rgba(247, 248, 247, 0),
     rgba(252, 255, 252, 0)
-  )
+  ) */
 }
 
-.glasslook{
+/* .glasslook{
    background: linear-gradient(
     to right bottom,
     rgba(247, 248, 247, 0),
     rgba(252, 255, 252, 0)
     );
- }
+ } */
 
 
 .v-data-table{
   font-size:.8em;
 }
 
-.theme--light.v-data-table{
+/* .theme--light.v-data-table{
    background: linear-gradient(
     to right bottom,
     rgba(100,128,64,0),
     rgba(100,128,64,.7)
   );
     backdrop-filter:blur(4px);
-  /* background-color: rgba(100,128,64,.2); */
-}
+
+} */
 
 .fade-enter-active,
 .fade-leave-active {

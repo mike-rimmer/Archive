@@ -475,8 +475,8 @@ name:'CSLQryFrm',
   margin-top: 1em;
   padding: 1em;
   position: relative;
-  background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+  /* background:var(--component-background-theme);
+  backdrop-filter:blur(4px); */
   box-shadow: 5px 5px 5px rgba(20, 20, 20, 0.5);
   width:100%;
   margin-left:.5em;

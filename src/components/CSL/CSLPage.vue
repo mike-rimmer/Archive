@@ -7,7 +7,7 @@
       <template v-slot:QryFrm>
         <div>
           <CSLQryFrm
-            :qryformtitle="qryformtitle"
+            :qryformtitle="formtitle"
           />
         </div>
       </template>
@@ -53,8 +53,7 @@ export default {
         { text: 'Country', value: 'buildcntry', width:'10%' },
       ],
       csl:[],
-      formtitle:"Canada Steamship Lines Fleet List",
-      qryformtitle:'Canada Steamship Registry',
+      formtitle:"CANADA STEAMSHIP LINES FLEET LISTS",
       showPopUp:false,
       // CSLData:[],
       errMsg:'',

@@ -4,7 +4,7 @@ const mills = {
   desc: "'The New Mills' List Registered Canadian Steamships 1817 - 1930 over 75 feet'",
   intro: `
 <h1>Kingston Marine Museum of the Great Lakes</h1>
-<h1>Is pleased to host the <span style='text-shadow: 4px 4px 5px black; color:white;'>The New Mills Registry</span></h1>
+<h1>Is pleased to host the <span style='color:#39947f;'>The New Mills Registry</span></h1>
 
 <h3>Preface</h3>
 

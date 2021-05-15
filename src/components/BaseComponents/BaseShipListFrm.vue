@@ -26,10 +26,11 @@
         </popup>
       </v-col>
       <v-col
-        md="10"
+        md="9"
         sm="12"
+        class="ml-10"
       >
-        <v-card class="ma-4">
+        <v-card class="mt-4">
           <slot name="summaryFrm" />
         </v-card>
       </v-col>
@@ -114,14 +115,16 @@ export default {
 <style scoped>
 
 .background {
+  margin-top:4em;
   position: relative;
   width: 100vw;
-  height:100vh;
+  height:auto;
+ /* height:100vh; */
   z-index: 1;
 }
 
 
-.background::before {
+/* .background::before {
   content: '';
   background: url('../../assets/greatlakes.jpeg');
   background-repeat: no-repeat;
@@ -133,8 +136,8 @@ export default {
   bottom: 0;
   right: 0;
   z-index: -100;
-  opacity: 1;
-}
+  opacity: .4;
+} */
 
  .glasslook{
     background: var(--ship-list--theme-color);

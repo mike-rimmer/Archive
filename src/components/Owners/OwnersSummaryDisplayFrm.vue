@@ -8,8 +8,8 @@ If a user click on a row a function is called to fetch the detailed info from th
 -->
   <div class="summaryfrm">
     <div>
-      <h3 class="black--text">
-        {{ title }}
+      <h3>
+        {{ title.toUpperCase() }}
       </h3>
 
       <div>
@@ -143,8 +143,8 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
-   background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+   /* background:var(--component-background-theme);
+  backdrop-filter:blur(4px); */
   font-size:.7em;
 }
 
@@ -158,12 +158,12 @@ font-size: 0.8rem !important;
   top: 0px;
   height: 30px;
   font-weight: bold;
-  background:var(--component-background-theme);
+  /* background:var(--component-background-theme); */
 }
 
-.glasslook{
+/* .glasslook{
     background:var(--component-background-theme);
- }
+ } */
 
 
 .v-data-table{
@@ -171,8 +171,8 @@ font-size: 0.8rem !important;
 }
 
 .theme--light.v-data-table{
-  background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+  /* background:var(--component-background-theme);
+  backdrop-filter:blur(4px); */
   /* background-color: rgba(100,128,64,.2); */
 }
 

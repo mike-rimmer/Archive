@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-1 mr-12 pa-1 px-2 transparent">
+  <div class="mt-1 mr-12 pa-1 px-2">
     <v-btn
       @click="$router.push('/detail')"
     >
@@ -12,7 +12,12 @@
       class="ml-4"
       @click="$router.push('/shiplists/images')"
     >
-      <v-icon>mdi-sail-boat</v-icon>
+      <img
+        class="shipimage"
+        src="../../assets/images/ship.svg"
+        alt="ship"
+      >
+      <!-- <v-icon>mdi-sail-boat</v-icon> -->
     </v-btn>
   </div>
 </template>
@@ -32,6 +37,7 @@ import {mapState} from 'vuex'
 
 computed:{
   ...mapState('CSL', ['CSLDetailCart']),
+
   qty(){
     return this.CSLDetailCart.length
   }
@@ -39,7 +45,10 @@ computed:{
  }
  </script>
 
-
  <style scoped>
+.shipimage{
+  height:105px;
+  margin-top:35px;
+}
 
  </style>

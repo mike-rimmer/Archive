@@ -172,8 +172,8 @@ h3 {
   padding: 1em;
   width: 100%;
   /* background-color: rgba(255,255,255,.5); */
-  background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+  /* background:var(--component-background-theme);
+  backdrop-filter:blur(4px); */
   font-size:.7em;
 }
 
@@ -189,7 +189,7 @@ font-size: 0.8rem !important;
   top: 0px;
   height: 30px;
   font-weight: bold;
-  background:var(--component-background-theme);
+  /* background:var(--component-background-theme); */
 
    /* linear-gradient(
     to right bottom,
@@ -199,18 +199,17 @@ font-size: 0.8rem !important;
 
 }
 
-.glasslook{
+/* .glasslook{
    background:var(--component-background-theme);
- }
+ } */
 
 .v-data-table{
   font-size:.8em;
 }
 
-.theme--light.v-data-table{
+/* .theme--light.v-data-table{
    background:var(--component-background-theme);
     backdrop-filter:blur(4px);
-  /* background-color: rgba(100,128,64,.2); */
-}
+} */
 
 </style>

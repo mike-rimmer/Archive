@@ -12,24 +12,29 @@ If a user click on a row a function is called to fetch the detailed info from th
         {{ formtitle }}
       </h3>
 
-      <div>
-        <v-data-table
-          :class="{msgborder : msgAlert}"
-          dense
-          :headers="headers"
-          fixed-header
-          :loading="isLoading"
-          loading-text="Data is loading ... please wait!"
-          :items="tableData"
-          height="60vh"
-          :footer-props="{
-            'items-per-page-options':[100,200,300,400,500,1000,-1]}"
-          :items-per-page="-1"
-          class="glasslook elevation-6"
-          @contextmenu:row="loadDetailCart"
-          @click:row="getDetailedRecord"
-        />
-      </div>
+      <button
+        @contextmenu.prevent="showAlert"
+      >
+        Context
+      </button>
+
+      <v-data-table
+        :class="{msgborder : msgAlert}"
+        dense
+        :headers="headers"
+        fixed-header
+        :loading="isLoading"
+        loading-text="Data is loading ... please wait!"
+        :items="tableData"
+        height="60vh"
+        :footer-props="{
+          'items-per-page-options':[100,200,300,400,500,1000,-1]}"
+        :items-per-page="-1"
+        class="glasslook elevation-6"
+        @contextmenu:row="loadDetailCart"
+        @click:row="getDetailedRecord"
+      />
+
       <div
         v-show="msgAlert"
         style="text-align:center; color:green"
@@ -120,6 +125,8 @@ export default {
   //    return this.CSLShowDetail
   //  },
 
+
+
   currentDetail(){
       if( this.CSLCurrentDetail){
 
@@ -137,6 +144,10 @@ export default {
     closePopUp(){
       this.showDetailFrm = false
     },
+
+  showAlert(){
+    alert()
+  },
 
   loadDetailCart(event, item){
     // eslint-disable-next-line no-debugger
@@ -181,8 +192,8 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
-  background:var(--component-background-theme);
-  backdrop-filter:blur(4px);
+  /* background:var(--component-background-theme);
+  backdrop-filter:blur(4px); */
   font-size:.7em;
 }
 
@@ -196,7 +207,7 @@ font-size: 0.8rem !important;
   top: 0px;
   height: 30px;
   font-weight: bold;
-  background:var(--component-background-theme);
+  /* background:var(--component-background-theme); */
 
 }
 
@@ -204,20 +215,19 @@ font-size: 0.8rem !important;
   border:solid green 2px ;
 }
 
-.glasslook{
+/* .glasslook{
   background:var(--component-background-theme);
- }
+ } */
 
 
 .v-data-table{
   font-size:.8em;
 }
 
-.theme--light.v-data-table{
+/* .theme--light.v-data-table{
    background:var(--component-background-theme);
     backdrop-filter:blur(4px);
-  /* background-color: rgba(100,128,64,.2); */
-}
+} */
 
 
 </style>

@@ -1,21 +1,25 @@
 <template>
   <div>
-    <PlaceHolder title="Collections" />
+    <ResearchBase>
+      <template v-slot:body>
+        <SearchForm />
+      </template>
+    </ResearchBase>
   </div>
 </template>
 
 <script>
-import PlaceHolder from '@/components/BaseComponents/BasePlaceHolder'
-  export default {
-    name:'Collections',
-    components:{
-      PlaceHolder
-    },
+ import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
+ import SearchForm from '@/components/SearchForm'
+// import PlaceHolder from '@/components/BaseComponents/BasePlaceHolder'
+export default {
+  name: 'Collections',
+  components:{
+  ResearchBase,
+  SearchForm
+  // PlaceHolder
+}
 
 
-  }
+}
 </script>
-
-<style lang="css" scoped>
-
-</style>

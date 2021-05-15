@@ -6,10 +6,10 @@ The records can be sorted asc/dec by clicking the applicable column header
 If a user click on a row a function is called to fetch the detailed info from the server which is then displayed on Card 'millsDetailsPopUp'.
 **********
 -->
-  <div class="summaryfrm color grey lighten-2">
+  <div class="summaryfrm">
     <div>
       <h3>
-        {{ formtitle }}
+        {{ formtitle.toUpperCase() }}
       </h3>
 
       <div>
@@ -167,8 +167,8 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(4px);
+  /* background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px); */
   font-size: 0.7em;
 }
 
@@ -182,20 +182,20 @@ h3 {
   top: 0px;
   height: 30px;
   font-weight: bold;
-  background: var(--component-background-theme);
+  /* background: var(--component-background-theme); */
 }
 
-.glasslook {
+/* .glasslook {
   background: var(--component-background-theme);
-}
+} */
 
 .v-data-table {
   font-size: 0.8em;
 }
 
 .theme--light.v-data-table {
-  background: var(--component-background-theme);
-  backdrop-filter: blur(4px);
+  /* background: var(--component-background-theme);
+  backdrop-filter: blur(4px); */
   /* background-color: rgba(100,128,64,.2); */
 }
 

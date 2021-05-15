@@ -40,35 +40,43 @@ const router = new VueRouter({
     component : lazyLoad('Collections')
   },
 
+  // {
+  //   path: '/collections/artifacts',
+  //   name: 'Artifacts',
+  //   // component:Menu
+  //   component : lazyLoad('Artifacts')
+  // },
+  // {
+  //   path: '/collections/Archives',
+  //   name: 'Archives',
+  //   // component:Menu
+  //   component : lazyLoad('Archives')
+  // },
+  // {
+  //   path: '/collections/photos',
+  //   name: 'Photos',
+  //   // component:Menu
+  //   component : lazyLoad('Photos')
+  // },
   {
-    path: '/collections/artifacts',
-    name: 'Artifacts',
+    path: '/collections/library',
+    name: 'Library',
     // component:Menu
-    component : lazyLoad('Artifacts')
+    component : lazyLoad('Library')
   },
+
   {
-    path: '/collections/Archives',
-    name: 'Archives',
+    path: '/support',
+    name: 'Support',
     // component:Menu
-    component : lazyLoad('Archives')
+    component : lazyLoad('Support')
   },
-  {
-    path: '/collections/photos',
-    name: 'Photos',
-    // component:Menu
-    component : lazyLoad('Photos')
-  },
+
   {
     path: '/about',
     name: 'About',
     // component:Menu
     component : lazyLoad('About')
-  },
-  {
-    path: '/library',
-    name: 'Library',
-    // component:Menu
-    component : lazyLoad('Library')
   },
 
   // {

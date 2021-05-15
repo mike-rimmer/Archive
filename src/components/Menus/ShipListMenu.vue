@@ -19,19 +19,18 @@
           href="http://www.marmuseum.ca"
         ><p>Museum</p></a>
       </ul>
-    </div>
 
-    <div style="display:flex; justify-content:end">
-      <img
-        style="margin-right:6em;"
-        class="logo"
-        src="../../assets/museumlogo.gif"
-        height="75"
-        width="150"
-        alt="Museum Logo"
-        srcset=""
-      >
-      <span style="font-size:.6em; margin-right:4em; margin-top:4em">Ver 1.4 Dated:04-29-2021</span>
+      <div style="display:flex; align-items:center; justify-content:end">
+        <img
+          style="margin-right:6em;"
+          class="logo"
+          src="../../assets/images/museumlogo.svg"
+          height="80"
+          alt="Museum Logo"
+          srcset=""
+        >
+        <span style="font-size:.6em; margin-right:4em; margin-top:4em">Ver 1.4 Dated:04-29-2021</span>
+      </div>
     </div>
   </div>
 </template>

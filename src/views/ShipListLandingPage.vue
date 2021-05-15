@@ -1,60 +1,58 @@
 <template>
-  <div class="pagelayout">
-    <div class="banner" />
-    <div class="menulayout">
-      <v-row>
-        <v-col
-          v-for="(image, index) in images"
-          :key="index"
-          cols="5"
-        >
-          <v-hover
-            v-slot="{hover}"
-            open-delay="200"
-          >
-            <v-card
-              :to="image.route"
-              class="card-layout"
-              :class="{'on-hover':hover}"
-              :elevation="hover ? 12 : 4"
-              @mouseover="selectAboutInfo(image.title)"
-            >
-              <img
-                :src="image.url"
-                :alt="image.alt"
-                ripple
-
-                class="glasslook img-container"
+  <div>
+    <ResearchBase>
+      <template v-slot:images>
+        <div class="pagelayout">
+          <div class="menulayout">
+            <v-row>
+              <v-col
+                v-for="(image, index) in images"
+                :key="index"
+                cols="5"
               >
-              <v-card-title
-                class="justify-center py-0 align-self-center"
-              >
-                <button>
-                  <router-link
+                <v-hover
+                  v-slot="{hover}"
+                  open-delay="200"
+                >
+                  <v-card
                     :to="image.route"
-                    class="white--text"
-                  />
-                  <!-- <p style="font-size:.8em;font-weight:bold; margin-top:10px">
+                    class="card-layout"
+                    :class="{'on-hover':hover}"
+                    :elevation="hover ? 12 : 4"
+                    @mouseover="selectAboutInfo(image.title)"
+                  >
+                    <img
+                      :src="image.url"
+                      :alt="image.alt"
+                      ripple
+                    >
+                    <v-card-title
+                      class="justify-center py-0 align-self-center"
+                    >
+                      <button>
+                        <router-link
+                          :to="image.route"
+                          class="white--text"
+                        />
+                        <!-- <p style="font-size:.8em;font-weight:bold; margin-top:10px">
                   {{ image.title }}
                 </p> -->
-                </button>
-              </v-card-title>
-            </v-card>
-          </v-hover>
-        </v-col>
-      </v-row>
-    </div>
-    <transition
-      name="fade"
-      mode="out-in"
-    >
-      <div
-        v-show="showInfo"
-        class="text-display"
-      >
-        <About :aboutdata="AboutInfo.intro" />
-      </div>
-    </transition>
+                      </button>
+                    </v-card-title>
+                  </v-card>
+                </v-hover>
+              </v-col>
+            </v-row>
+          </div>
+
+          <About
+            :aboutdata="AboutInfo.intro"
+            showhelp="showhelp"
+          />
+        </div>
+      </template>
+      <template v-slot:body />
+    </Researchbase>
   </div>
 </template>
 <script>
@@ -62,13 +60,14 @@
 // import Owners from '@/views/Owners'
 // import Registry from '@/views/Registry'
 // import Wallace from '@/views/Owners'
+// import gsap from 'gsap'
 const IMGPATH = 'https://marmuseum.ca/shiplists2/list-db-server/images/'
-// const IMGPATH = 'http://localhost/shiplists2/list-db-server/images/'
+import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
 import About from '@/components/BaseComponents/BaseAbout'
 import mills from '@/data/millsData.js'
 import registry from '@/data/crlData.js'
 import owners from '@/data/ownersData.js'
-import wallace from '@/data/wallaceDataAbridged.js'
+import wallace from '@/data/wallaceData.js'
 import snider from '@/data/snidersData.js'
 import csl from '@/data/cslData.js'
 const tooltip = { intro: 'Hover mouse over images to see Intro' }
@@ -77,9 +76,11 @@ export default {
   title: 'ShipList Database',
   components: {
     About,
-  },
+    ResearchBase
+   },
   data() {
     return {
+      showhelp:true,
       images: [
         {
           url: IMGPATH + 'registry.png',
@@ -121,13 +122,14 @@ export default {
         },
       ],
       museumLogo: IMGPATH + 'shipswheel.jpg',
-      AboutInfo: mills,
+      AboutInfo:'',
       showInfo: true,
       // tabs: 0,
       // newpage:true,
       // renderComponent:true
     }
   },
+
   methods: {
     selectAboutInfo(title) {
       // this.showInfo = false
@@ -158,6 +160,8 @@ export default {
         default:
           this.AboutInfo = tooltip
       }
+
+
       // this.showInfo=true
       // setTimeout(() => {
       //    this.showInfo = true
@@ -171,7 +175,8 @@ export default {
       //   this.renderComponent = true;
       // })
     },
-  },
+
+  }
 }
 </script>
 
@@ -180,29 +185,21 @@ export default {
 
 .pagelayout{
   display: grid;
-  grid-template-rows: 400px auto;
+  grid-template-rows: auto;
   grid-template-columns: 45% 55%;
   grid-template-areas:
-  'b b'
   'm a ';
   position: relative;
   width: 100vw;
-  min-height: 135em;
+  min-height: auto;
   justify-content: space-around;
   /* z-index: 1; */
-  background:var(--menu-theme-color)
+  /* background:var(--menu-theme-color); */
+  /* background-color:red; */
    /* linear-gradient(rgba(75, 93, 150, 0.1), rgba(7, 74, 129, 0.9)); */
 }
 
-.banner{
-  grid-area:b;
-  width:auto;
-  background-image: url('../assets/images/cayuga.jpg');
-  background-size:100% auto;
-  background-position: 10% 57%;
-  object-fit:cover;
-  margin-bottom:2em;
-}
+
 
 .menulayout {
   grid-area: m;
@@ -212,6 +209,7 @@ export default {
   box-sizing: content-box;
   align-content: start;
   height:100%;
+  align-self:stretch;
 }
 
 .v-card .card-layout{
@@ -229,6 +227,8 @@ box-sizing: content-box;
   padding: 0 1em;
   box-sizing: content-box;
   height:100%;
+
+
 }
 
 
@@ -245,11 +245,11 @@ img {
   margin: 0 1em;
 } */
 
-.glasslook {
+/* .glasslook {
   background:var(--menu-theme-color);
   opacity: 1;
   object-fit:cover;
-}
+} */
 
 .container{
   position:"center center";
@@ -278,16 +278,15 @@ p .msg {
   color: white;
 }
 
-
-
-.moveleft-enter-active,
-.moveleft-leave-active {
-  transition: all 15s ease-in-out;
+.test-enter-from,
+.test-leave-to{
+  opacity:0;
+  transform:translateY(-60px);
 }
 
-.moveleft-enter,
-.moveleft-leave-to {
-  transform: translateX(1000px);
-  opacity: 0;
+.test-enter-active{
+  transition:all 1s ease;
 }
+
+
 </style>

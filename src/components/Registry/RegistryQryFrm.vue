@@ -136,33 +136,17 @@ export default {
   name: 'RegistryQryFrm',
   components: {},
   props: {
-    // ships: {
-    //   type: Array,
-    //   default: function () {
-    //     return ['Ship A', 'Ship B']
-    //   },
-    // },
-    // owners: {
-    //   type: Array,
-    //   default: function () {
-    //     return ['Bill Bishop', 'Mary Bishop']
-    //   },
-    // },
-    // title: {
-    //   type: String,
-    //   required: true,
-    //   default: 'Query Frm',
-    // },
-    // years: {
-    //   type: Array,
-    //   default: function () {
-    //     return ['2020', '2021']
-    //   },
-    // },
+
+    title: {
+      type: String,
+      required: true,
+      default: 'Query Frm',
+    },
+
   },
   data() {
     return {
-      title: 'Canadian Registry Filters',
+      // title: 'Canadian Registry Filters',
       globalSearchSelected: '',
 
       off_numSelected: '',
@@ -551,13 +535,13 @@ export default {
   margin-top: 1em;
   padding: 1em;
   position: relative;
-  background: var(--component-background-theme);
+  /* background: var(--component-background-theme); */
   /* linear-gradient(
      to bottom right,
     rgba(247, 248, 247, 0),
     rgba(252, 255, 252, .9)
     ); */
-  backdrop-filter: blur(4px);
+  /* backdrop-filter: blur(4px); */
   box-shadow: 5px 5px 5px rgba(20, 20, 20, 0.5);
   width: 100%;
   margin-left: 0.5em;
