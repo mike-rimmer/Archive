@@ -4,9 +4,9 @@
 import axios from 'axios'
 const AxiosApi = axios.create({
   // Change baseUrl to rimike.ca for Production
-  // baseURL: 'https://marmuseum.ca/shiplists2/list-db-server/api/',
+  baseURL: 'https://marmuseum.ca/shiplists2/list-db-server/api/',
 
-  baseURL: 'http://localhost/shiplists2/list-db-server/api/',
+  // baseURL: 'http://localhost/shiplists2/list-db-server/api/',
 
   withCredentials: false,
   headers: {

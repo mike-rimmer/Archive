@@ -5,11 +5,18 @@
       align="center"
     >
       <h1 class="mb-10">
-        Welcome to the Marine Museum <span style="text-shadow: 4px 4px 5px black; color:white;">  ShipsList </span> Research Cart
+        Welcome to the Marine Museum <span style="color:var(--museum-green);">  ShipsList </span> Research Cart <span
+          style="color:var(--museum-green)"
+        >{{ `Qty: ${detailCartQty} ` }}</span>
       </h1>
     </v-row>
 
-    <DetailStoreCart :selection-data="cartData" />
+    <DetailStoreCart
+      :selection-data="
+        cartData"
+    />
+    </h1>
+    </v-row>
   </div>
 </template>
 
@@ -54,15 +61,8 @@ import {mapState} from 'vuex'
 
 <style scoped>
 .background{
-    background:var(--component-background-theme);
-/* background: linear-gradient(180deg, #8ED5E2 0%, #6FB0E1 100%); */
-   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.6);
-/* border-radius: 20px; */
-  /* background: linear-gradient(
-    rgba(75, 93, 150, 0.1),
-    rgba(7, 74, 129, 0.9)
-  ); */
-    height:90vh;
+    margin-top:6em;
+    height:auto;
 }
 </style>
 

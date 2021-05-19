@@ -1,7 +1,7 @@
 <template>
   <div>
     <ResearchBase>
-      <template v-slot:images>
+      <template v-slot:slotbody>
         <div class="pagelayout">
           <div class="menulayout">
             <v-row>
@@ -47,14 +47,14 @@
 
           <About
             :aboutdata="AboutInfo.intro"
-            showhelp="showhelp"
+            :showhint="showhelp"
           />
         </div>
       </template>
-      <template v-slot:body />
     </Researchbase>
   </div>
 </template>
+
 <script>
 // import Mills from '@/views/Mills'
 // import Owners from '@/views/Owners'

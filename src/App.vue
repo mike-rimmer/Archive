@@ -43,19 +43,7 @@ export default {
 <style >
 :root{
   --museum-blue:#091154;
-  /* --image-theme-color: rgba(211, 190, 69, 0.85); */
-  --image-theme-color:linear-gradient(to bottom right, hsl(120, 25%, 98%), hsla(226, 55%, 80%, 0.22));
-  --menu-theme-color:linear-gradient(to bottom right, hsla(232, 29%, 95%, 0.5), hsla(232, 29%, 95%, 0.902));
-  --image-primary-color:hsla(46, 84%, 17%, 0.994);
-  --ship-list-theme-color: linear-gradient(to bottom right, hsl(120, 25%, 98%), hsla(226, 55%, 80%, 0.9));
-  --component-background-theme:linear-gradient(to bottom right, hsla(232, 29%, 95%, 0.5), hsla(232, 29%, 95%, 0.902));
-  /* --museum-blue:#091154;
-  /* --image-theme-color: rgba(211, 190, 69, 0.85); */
-  /* --image-theme-color:linear-gradient(to bottom right, hsl(120, 11%, 56%), hsla(120, 77%, 75%, 0.9)); */
-  /* --menu-theme-color:linear-gradient(to bottom right, hsla(120, 27%, 100%,.1), hsla(120, 10%, 79%, 0.5)); */
-  /* --image-primary-color:hsla(46, 84%, 17%, 0.994); */
-  /* --ship-list-theme-color: linear-gradient(to bottom right, hsl(120, 3%, 45%), hsla(120, 77%, 75%, 0.9)); */
-  /* --component-background-theme:linear-gradient(to bottom right, hsl(120, 11%, 56%), hsla(120, 77%, 75%, 0.9));  */
+  --museum-green:#39947f;
 }
 
 @font-face{

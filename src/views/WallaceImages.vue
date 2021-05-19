@@ -1,89 +1,122 @@
 <template>
   <!-- Consider this for enlarging images https://github.com/diracleo/vue-enlargeable-image -->
-  <div class="background">
-    <h1 style="color:var(--image-primary-text)">
-      Wallace Ship Images
-    </h1>
-    <v-card>
-      <v-card-text>
-        <label for="choice">The Marine Museum of Kingston offers a complete selection of Wallace ship images:</label>
-        <v-btn-toggle
-          v-model="landscape"
-          class="pl-5"
+  <v-container>
+    <div class="mt-15">
+      <h1>Wallace Ship Images</h1>
+      <label
+        for="vbtn"
+      >The Marine Museum of Kingston offers a complete selection of Wallace ship images:</label>
+      <v-btn-toggle
+        v-model="islandscape"
+        class="pl-5"
+      >
+        <v-btn
+          class
         >
-          <v-btn
-            class
-          >
-            Landscape
-          </v-btn>
+          Landscape
+        </v-btn>
 
-          <v-btn class="ml-2">
-            Portrait
-          </v-btn>
-        </v-btn-toggle>
-      </v-card-text>
+        <v-btn class="ml-2">
+          Portrait
+        </v-btn>
+      </v-btn-toggle>
+    </div>
 
-      <v-row>
-        <v-col
-          v-for="image in images"
+
+    <v-row
+      v-if="islandscape == 0"
+    >
+      <v-col
+        v-for="image in images"
+        :key="image.title"
+        name="fade"
+        tag="v-col"
+        cols="3"
+      >
+        <v-card
           :key="image.title"
-          name="fade"
-          tag="v-col"
-          cols="3"
+          color="brown lighten-5"
         >
-          <v-card
-            :key="image.title"
-            color="brown lighten-5"
-          >
-            <v-card-text>
-              <div
-                style="width:300"
-              >
-                <v-img
-                  class="img-style"
-                  :src="$IMGPATH+image.url"
-                  :alt="image.name"
-                  @click="showEnlargeImage($IMGPATH+image.url)"
-                />
-              </div>
-              <p class="title">
-                {{ image.name }}
-              </p>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-overlay
-          transition="fade-transition"
-          :z-index="zIndex"
-          :value="overlay"
-          :opacity="opacity"
-        >
-          <div class="test">
-            <v-img
-              :src="currentUrl"
-              class="normal"
-              :width="landscape == 0 ? 900 : 400"
-              height="auto"
-              style="filter:grayscale(100%)"
-              @click="overlay = false"
-            />
-
-
-            <v-btn
-              class="white--text"
-              color="var(--image-primary-color)"
-              @click="overlay = false"
+          <v-card-text>
+            <div
+              class="imagesstyle"
             >
-              Return to Gallery
-            </v-btn>
-          </div>
-        </v-overlay>
-      </v-row>
-    </v-card>
-  </div>
+              <v-img
+                class="img-style"
+                :src="$IMGPATH+image.url"
+                :alt="image.name"
+                @click="showEnlargeImage($IMGPATH+image.url)"
+              />
+            </div>
+            <p class="title">
+              {{ image.name }}
+            </p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row else>
+      <v-col
+        v-for="image in images"
+        :key="image.title"
+        name="fade"
+        tag="v-col"
+        cols="3"
+      >
+        <v-card
+          :key="image.title"
+          color="brown lighten-5"
+        >
+          <v-card-text>
+            <div
+              class="imagesstyle"
+            >
+              <v-img
+                class="img-style"
+                :src="$IMGPATH+image.url"
+                :alt="image.name"
+                @click="showEnlargeImage($IMGPATH+image.url)"
+              />
+            </div>
+            <p class="title">
+              {{ image.name }}
+            </p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+
+    <v-row>
+      <v-overlay
+        transition="fade-transition"
+        :z-index="zIndex"
+        :value="overlay"
+        :opacity="opacity"
+      >
+        <div class="test">
+          <v-img
+            :src="currentUrl"
+            class="normal"
+            :width="islandscape == 0 ? 900 : 400"
+            height="auto"
+            style="filter:grayscale(100%)"
+            @click="overlay = false"
+          />
+
+
+          <v-btn
+            class="white--text"
+            color="var(--image-primary-color)"
+            @click="overlay = false"
+          >
+            Return to Gallery
+          </v-btn>
+        </div>
+      </v-overlay>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -102,17 +135,17 @@ export default {
       currentUrl: '',
       zIndex: 20,
       width:600,
-      landscape:0
+      islandscape:0
     }
   },
     computed:{
       ...mapState('Wallace',['WallaceLandScape', 'WallacePortrait','PortraitLoaded', 'LandScapeLoaded']),
-      portraitImages(){
-        return this.WallacePortrait[0]
-      },
+      // portraitImages(){
+      //   return this.WallacePortrait[0]
+      // },
 
       images(){
-        if(this.landscape == 0 ){
+        if(this.islandscape == 0 ){
           return this.WallaceLandScape[0]
         }
         else{
@@ -144,9 +177,10 @@ export default {
 
 <style  scoped>
 .background{
+  margin-top:4em;
   padding:0 5%;
   margin:0 auto;
-  background:white;
+  background:red;
 }
 
 .title{
@@ -164,8 +198,11 @@ export default {
 .img-style {
   border: solid 6px lightgrey;
   filter: grayscale(10%) drop-shadow(8px 8px 10px gray);
-  object-fit:contain;
+  /* object-fit:; */
+}
 
+.imagestyle{
+  /* width:300px; */
 }
 
 .fade-enter-active,

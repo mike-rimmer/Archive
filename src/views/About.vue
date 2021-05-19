@@ -1,6 +1,12 @@
 <template>
   <div>
     <ResearchBase>
+      <template v-slot:intro>
+        <h3 class="mb-10">
+          ABOUT THE COLLECTION
+        </h3>
+        <p>The official geographic limits of the collection are from Montreal to the Lakehead. The one exception to these limits is the library collection, which is International in scope. The Archival collection of the Marine Museum has over 3,500 linear feet of records and over 50,000 ship plans. The Artifact collection is over 4,000 objects and art. The Photograph collection contains over 31,000 images. The Library holdings contain over 12,000 titles.</p>
+      </template>
       <template v-slot:images>
         <v-row>
           <v-col
@@ -14,48 +20,45 @@
             >
               <v-card
                 flat
-                class="card-layout"
+                class="justify-center"
                 :class="{'on-hover':hover}"
                 @click="selectAboutInfo(image.title)"
               >
-                <img
+                <v-img
                   :src="image.url"
                   :alt="image.alt"
                   ripple
-
-                  class="glasslook img-container"
+                  width="250"
                 >
-                <v-card-title
-                  class="justify-center py-0 align-self-center"
-                >
-                  <button>
-                    <router-link
-                      class="white--text"
-                      :to="image.url"
-                    />
-                  </button>
-                </v-card-title>
+                  <v-card-title
+                    class="justify-center py-0 align-self-center"
+                  >
+                    <button>
+                      <router-link
+                        class="white--text"
+                        :to="image.url"
+                      />
+                    </button>
+                  </v-card-title>
+                </v-img>
               </v-card>
             </v-hover>
           </v-col>
+
+          <transition name="fade">
+            <div
+              v-show="isValid"
+              style="background-color:hsla(60,20%,80%,.7); padding:1em; min-height:300px;"
+            >
+              <AboutInfo :aboutdata="AboutInfo.intro" />
+              <v-btn
+                @click="$router.push('/collections')"
+              >
+                Search
+              </v-btn>
+            </div>
+          </transition>
         </v-row>
-      </template>
-      <template v-slot:intro>
-        <h3>ABOUT THE COLLECTION</h3>
-        <p>The official geographic limits of the collection are from Montreal to the Lakehead. The one exception to these limits is the library collection, which is International in scope. The Archival collection of the Marine Museum has over 3,500 linear feet of records and over 50,000 ship plans. The Artifact collection is over 4,000 objects and art. The Photograph collection contains over 31,000 images. The Library holdings contain over 12,000 titles.</p>
-      </template>
-      <template v-slot:body>
-        <AboutInfo
-          :aboutdata="AboutInfo.intro"
-        />
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="$router.push('collections')"
-        >
-          Search
-        </v-btn>
       </template>
     </researchbase>
   </div>
@@ -64,7 +67,7 @@
 <script>
 const IMGPATH = 'https://marmuseum.ca/shiplists2/list-db-server/images/'
  import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
- import AboutInfo from '@/components/BaseComponents/BaseAbout'
+ import AboutInfo from '@/components/BaseComponents/BaseAbout2'
  import artifacts from '@/data/artifactsData.js'
  import archives from '@/data/archivesData.js'
  import library from '@/data/libraryData.js'
@@ -77,8 +80,9 @@ export default {
   },
     data(){
       return{
-        valid: false,
-        AboutInfo:'',
+        show:true,
+        isValid: false,
+        AboutInfo:archives,
           images: [
         {
           url: IMGPATH + 'Archives.png',
@@ -113,19 +117,26 @@ export default {
     methods:{
       selectAboutInfo(title) {
         // alert(title)
-      this.valid=true
+      this.isValid=false
+      // this.show = false
       switch (title) {
         case 'Archives':
           this.AboutInfo = archives
+          // this.$nextTick(()=>this.show=true)
+          this.isValid=true
           break
         case 'Artifacts':
           this.AboutInfo = artifacts
+           this.isValid=true
+          // this.$nextTick(()=>this.show=true)
           break
         case 'Photographs':
           this.AboutInfo = photographs
+           this.isValid=true
           break
         case 'Library':
           this.AboutInfo = library
+           this.isValid=true
           break
         default:
 

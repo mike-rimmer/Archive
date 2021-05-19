@@ -2,8 +2,8 @@ const wallaceData = {
   title: 'Wallace List Intro',
   desc: 'This is a description of the Wallage List',
   intro: `
-  <h1>Kingston Marine Museum of the Great Lakes</h1>
-  <h1>is pleased to host the <span style="color: #39947f">The Wallace List Registry</span></h1>
+  <h1>Marine Museum of the Great Lakes</h1>
+  <h1 style='margin-bottom:15px;'>is pleased to host the <span style="color: #39947f">Wallace List Registry</span></h1>
 <p>
 <h3><b>Preface</b></h3>
 A list of over 7,600 square-rigged vessels, mainly 500 tons and over, built in the Eastern provinces of British North America from 1786-1920 compiled by Frederick William Wallace.</p>

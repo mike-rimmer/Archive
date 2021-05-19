@@ -1,7 +1,7 @@
 <template>
   <div>
     <ResearchBase>
-      <template v-slot:body>
+      <template v-slot:images>
         <SearchForm />
       </template>
     </ResearchBase>

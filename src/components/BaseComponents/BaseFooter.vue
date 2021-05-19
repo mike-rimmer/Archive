@@ -21,7 +21,8 @@
         <!-- <h4>MUSEUM HOURS</h4>
         <hr> -->
 
-        <div class="center-layout-social-media">
+        <div class="layout-social-media">
+          <span class="mt-1">Follow Us:</span>
           <div>
             <ShareNetwork
               network="facebook"
@@ -71,8 +72,10 @@
             </ShareNetwork>
           </div>
         </div>
-        <div class="center-layout-donate">
-          <v-btn>
+        <div class="layout-donate">
+          <v-btn
+            color="#3B928A"
+          >
             Donate
           </v-btn>
         </div>
@@ -110,18 +113,20 @@ export default {
   position:relative
 }
 
-.center-layout-social-media{
+.layout-social-media{
   display:flex;
-  justify-content:space-around;
+  justify-content:space-between;
+  width:40%;
   margin-top:2em;
 }
 
-.center-layout-donate{
+.layout-donate{
   display:flex;
-  justify-content:center;
+  justify-content:start;
   margin-top:3em;
   height:100px;
 }
+
 
 h4{
   font-family:'Roboto-Regular', 'San-Serif';

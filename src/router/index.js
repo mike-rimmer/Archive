@@ -128,6 +128,12 @@ const router = new VueRouter({
     component:lazyLoad('CSLDetails')
   },
 
+  // {
+  //   path: '/shiplists/detail',
+  //   name: 'CSLDetail',
+  //   component:lazyLoad('UnderConstruction')
+  // },
+
   {
     path: '/shiplists/images',
     name: 'WallaceImages',
