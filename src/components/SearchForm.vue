@@ -3,12 +3,12 @@
     <v-card
       class="mx-auto"
     >
-      <v-card-title class="primary--text">
+      <v-card-title class="museumgreen--text">
         ARCHIVEAL ITEMS ADVANCED SEARCH
       </v-card-title>
 
       <v-card-subtitle>
-        Enter you search items in the field below
+        Enter your search items in the field below
       </v-card-subtitle>
       <v-container>
         <v-form v-model="valid">
@@ -19,7 +19,7 @@
             >
               <v-text-field
                 v-model="keyword"
-                :rules="keywordRules"
+
                 :counter="10"
                 label="KEYWORD"
                 required
@@ -31,8 +31,8 @@
               md="4"
             >
               <v-text-field
-                v-model="type"
-                :rules="typeRules"
+                v-model="stype"
+
                 :counter="10"
                 label="TYPE"
                 required
@@ -62,7 +62,7 @@
             >
               <v-text-field
                 v-model="item"
-                :rules="itemRules"
+
                 label="ITEMS NAMES"
                 required
               />
@@ -74,7 +74,6 @@
             >
               <v-text-field
                 v-model="itemNum"
-                :rules="itemNumRules"
                 label="ITEM NUMBER"
                 required
               />
@@ -87,7 +86,6 @@
             >
               <v-text-field
                 v-model="dates"
-                :rules="dateRules"
                 label="DATES"
                 placeholder="(1870 - 2021)"
                 required
@@ -100,7 +98,6 @@
             >
               <v-text-field
                 v-model="option1"
-                :rules="optionRules"
                 label="OPTION 1"
                 required
               />
@@ -113,7 +110,6 @@
             >
               <v-text-field
                 v-model="collectionName"
-                :rules="dateRules"
                 label="COLLECTION NAME"
                 required
               />
@@ -125,7 +121,6 @@
             >
               <v-text-field
                 v-model="option2"
-                :rules="optionRules"
                 label="OPTION 2"
                 required
               />
@@ -168,21 +163,42 @@
     data(){
       return{
         valid:false,
-        item:'',
-        itemNumber:'',
-        date:'',
         type:'',
         keyword:'',
-        collectionName:'',
+        stype:'',
+        item:'',
+        itemNum:'',
+        dates:'',
         option1:'',
+        collectionName:'',
         option2:'',
+
+
       }
-    }
+    },
+methods:{
+  validate(){
+    console.log('Validate')
+  },
+
+  resetValidation(){
+    console.log('ResetValidation')
+  },
+
+  reset(){
+    console.log('Reset')
+  }
+
+}
   }
 </script>
 
 <style lang="css" scoped>
 pagelayout{
   height:auto;
+}
+
+form{
+  padding:2em;
 }
 </style>

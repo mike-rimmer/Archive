@@ -13,18 +13,14 @@
         <slot name="images" />
       </div>
 
-      <transition
-        name="rbtest"
-        @before-enter="beforeEnter"
-        @enter="enter"
+
+      <div
+        class="slotbody"
       >
-        <div
-          class="slotbody"
-          :class="{gray : isgray}"
-        >
-          <slot name="body" />
-        </div>
-      </transition>
+        <slot name="slotbody" />
+      </div>
+
+
       <div class="footer">
         <slot name="footer">
           <Footer />
@@ -34,7 +30,7 @@
   </div>
 </template>
 
-<script>
+<script >
 
   import Footer from '@/components/BaseComponents/BaseFooter'
   export default {
@@ -45,20 +41,108 @@
     props:{
       isgray:{
         type:Boolean,
-        default:true
+        default:false
+      },
+
+      showSlot:{
+        type:Boolean,
+        default:false
       }
     },
 
-    methods:{
-      beforeEnter(el){
-       console.log(el)
-      },
+    // beforeEnter(el){
+    //    el.style.opacity=0
+    //    el.style.transform="translateX(600px)"
+    //    el.style.scale="scale(0)"
 
-      enter(el){
-        console.log(el)
-      }
+    //  },
+
+  //  enter(el, done){
+  //     gsap.to(el, {
+  //       opacity:1,
+  //       scale:1,
+  //       x:0,
+  //       duration:1,
+  //       ease:'linear'
+  //     },
+  //     {complete:done}
+  //     )
+  //    },
+
+  //    leave(el){
+  //      gsap.to(el,{
+  //        opacity:0,
+  //        scale:0,
+  //        x:-600,
+  //        duration:1,
+  //        ease:'linear'
+  //      })
+    //  }
+
+
+
+
+
+
+    methods:{
+      // beforeEnter(el){
+      //  console.log(el)
+      //   el.style.opacity =0
+      //   el.style.transform="scale(0)"
+      //   console.log('Before Event')
+      //  },
+
+
+
+      // enter(el){
+      //   gsap.to(el,{
+      //     opacity:1,
+      //     scale:1,
+      //     duration:1,
+      //     backgroundColor:'grey'
+
+      //   })
+      // },
+
+      // enter(el){
+      //   console.log('Enter')
+      //   var tl = gsap.timeline()
+      //   tl.from(el,{opacity:0, scale:0, duration:1, backgroundColor:'grey'})
+      //   .to(el, {scale:.9, backgroundColor:'plum', duration:.5},"+=0.5")
+      // },
+
+
+
+      // afterEnter(el){
+      //    console.log('After Enter', el)
+      //    gsap.to(el, {
+      //      delay:1,
+      //      scale:.9,
+      //     backgroundColor:'plum',
+      //      duration:.5,
+      //    })
+      // },
+
+      // beforeLeave(el){
+      //    console.log('Before Leave', el)
+      //    gsap.to(el,{
+      //      backgroundColor:'plum',
+      //      scale:1,
+      //    })
+      // },
+
+      // leave(el){
+      //   console.log('Leave',el)
+      //   var tl = gsap.timeline()
+      //   tl.to(el,{duration:.9, opacity:0, scale:0})
+      // },
+
+      // afterLeave(el){
+      //    console.log('After Leave',el)
+      // }
+
     }
-      }
+  }
 </script>
 
 <style lang="css" scoped>
@@ -77,25 +161,24 @@
     color:#39947f;
   }
 
-  .slotintro, .slotimage, .slotbody{
+  .slotintro, .slotimage, .slotgray, .slotbody{
     width:90%;
     margin: 4em auto;
-    height:auto;
-  }
+    }
 
   .slotimages{
     display:flex;
     justify-content: center;
-
-  }
-  .gray{
-    background-color:rgb(211, 209, 209);
   }
 
-  .slotbody{
-    padding:1em;
-    min-height:320px;
-    box-shadow: 5px 5px 5xp rgba(40,40,40, .7);
-  }
+
+
+
+ /* .rbtest-enter{transform:scale(0); opacity:0; background-color:white}
+ .rbtext-enter-to{transform:scale(1);opacity:1; }
+ .rbtest-enter-active{transition: all 1s ease-in-out}
+
+ .rbtest-leave-to{transform:scale(0); opacity:0;background-color:white}
+ .rbtest-leave-active{transition: all 1s ease-in-out} */
 
 </style>

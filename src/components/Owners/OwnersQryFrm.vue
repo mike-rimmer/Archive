@@ -213,18 +213,19 @@ name:'OwnersQryFrm',
         if(this.OwnersFilter || this.OwnersGlobal){
         tmp = this.OwnersCurrentFilter.map((ele)=>{
          if(ele.owner !='' || ele.owner.trim() !=='undefined'){
-          if (ele.owner) return ele.owner
+          return ele.owner
          }
          }).sort()
          return tmp
        }else{
        tmp = this.OwnersCart.map((ele)=>{
-         if(ele.owner) return ele.owner
+           if(ele.owner !='' || ele.owner.trim() !=='undefined')
+          return ele.owner
        }).sort()
          let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log("Owners", tmp2.length)
         return tmp2
      }},
 
@@ -233,18 +234,19 @@ name:'OwnersQryFrm',
        if(this.OwnersFilter || this.OwnersGlobal){
         tmp = this.OwnersCurrentFilter.map((ele)=>{
          if(ele.marnum !='' || ele.marnum.trim() !=='undefined'){
-          if(ele.marnum) return ele.marnum
+          return ele.marnum
          }
          }).sort()
          return tmp
        }else{
        tmp = this.OwnersCart.map((ele)=>{
-         if(ele.marnum) return ele.marnum
+        if(ele.marnum !='' || ele.marnum.trim() !=='undefined')
+         return ele.marnum
        }).sort()
          let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log("MarNum", tmp2.length)
         return tmp2
      }},
 
@@ -253,19 +255,21 @@ name:'OwnersQryFrm',
        if(this.OwnersFilter || this.OwnersGlobal){
         tmp = this.OwnersCurrentFilter.map((ele)=>{
          if(ele.portnum !='' || ele.portnum.trim() !=='undefined'){
-          if( ele.portnum) return ele.portnum
+          return ele.portnum
          }
          }).sort()
          return tmp
        }else{
      tmp = this.OwnersCart.map((ele)=>{
-       if( ele.portnum) return ele.portnum
+        if(ele.portnum !='' || ele.portnum.trim() !=='undefined')
+       return ele.portnum
       }).sort()
         let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Port Num',tmp2.length)
         return tmp2
+
     }},
 
 
@@ -280,15 +284,15 @@ name:'OwnersQryFrm',
          }).sort()
          return tmp
        }else{
-     tmp = this.OwnersCart.map((ele)=>{
-         if(ele.residence !='' && ele.residence.trim() !=='undefined'){
+        tmp = this.OwnersCart.map((ele)=>{
+         if(ele.residence !='' || ele.residence.trim() !=='undefined'){
           return ele.residence
          }
       }).sort()
         let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log("Residence", tmp2.length)
         return tmp2
     }},
 

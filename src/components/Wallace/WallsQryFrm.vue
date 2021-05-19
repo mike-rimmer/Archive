@@ -235,16 +235,19 @@ export default {
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
-          if (ele.vname) return ele.vname
+        if (ele.vname != '' || ele.vname.trim() !== 'undefined')
+          return ele.vname
         }).sort()
         return tmp
       } else {
         tmp = this.WallaceCart.map((ele) => {
-          if (ele.vname) return ele.vname
+        if (ele.vname != '' || ele.vname.trim() !== 'undefined')
+          return ele.vname
         }).sort()
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
+        console.log('Vessel Name', tmp2.length)
         return tmp2
       }
     },
@@ -253,20 +256,21 @@ export default {
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         const tmp = this.WallaceCurrentFilter.map((ele) => {
-          if (ele.prov != '' && ele.prov != undefined) {
+          if (ele.prov != '' || ele.prov.trim() !== undefined) {
             return 'ele.prov'
           }
         }).sort()
         return tmp
       } else {
         tmp = this.WallaceCart.map((ele) => {
-          if (ele.prov != '' && ele.prov != undefined) {
+          if (ele.prov != '' || ele.prov.trim() !== undefined) {
             return ele.prov
           }
         }).sort()
         let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
+        console.log('Prov', tmp2.length)
         return tmp2
       }
     },
@@ -275,20 +279,21 @@ export default {
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
-          if (ele.rig.trim() != '') {
+          if (ele.rig != '' || ele.rig.trim() !== undefined) {
             return ele.rig
           }
         }).sort()
         return tmp
       } else {
         tmp = this.WallaceCart.map((ele) => {
-          if (ele.rig.trim() != '') {
+         if (ele.rig != '' || ele.rig.trim() !== undefined) {
             return ele.rig
           }
         }).sort()
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
+        console.log("Rig", tmp2.length)
         return tmp2
       }
     },
@@ -297,21 +302,21 @@ export default {
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
-          if (ele.buildprov.trim() != '' && ele.buildprov !== 'undefined') {
+          if (ele.buildprov != '' || ele.buildprov.trim() !== 'undefined') {
             return ele.buildprov
           }
         }).sort()
         return tmp
       } else {
         tmp = this.WallaceCart.map((ele) => {
-          if (ele.buildprov.trim() != '' && ele.buildprov !== 'undefined') {
+          if (ele.buildprov != '' || ele.buildprov.trim() !== 'undefined') {
             return ele.buildprov
           }
         }).sort()
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Build Prov', tmp2.length)
         return tmp2
       }
     },
@@ -320,21 +325,21 @@ export default {
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
-          if (ele.bildnme.trim() != '') {
+          if (ele.buildnme != '' || ele.buildnme.trim() !== 'undefined') {
             return ele.bildnme
           }
         }).sort()
         return tmp
       } else {
         tmp = this.WallaceCart.map((ele) => {
-          if (ele.bildnme.trim() != '') {
+          if (ele.buildnme != '' || ele.buildnme.trim() !== 'undefined') {
             return ele.bildnme
           }
         }).sort()
         let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Build Name', tmp2.length)
         return tmp2
       }
     },
@@ -343,21 +348,21 @@ export default {
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
-          if (ele.own.trim() != '' && ele.own != 'undefined') {
+          if (ele.own != '' || ele.own.trim() !== 'undefined') {
             return ele.own
           }
         }).sort()
         return tmp
       } else {
         tmp = this.WallaceCart.map((ele) => {
-          if (ele.own.trim() != '' && ele.own != 'undefined') {
+          if (ele.own != '' || ele.own.trim() !== 'undefined') {
             return ele.own
           }
         }).sort()
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Owners', tmp2.length)
         return tmp2
       }
     },

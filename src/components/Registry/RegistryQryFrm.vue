@@ -212,7 +212,7 @@ export default {
         return tmp
       } else {
         tmp = this.RegistryCart.map((ele) => {
-          if (ele.officialnum.trim() != '') {
+            if (ele.officialnum != '' || ele.officialnum.trim() !== 'undefined')  {
             return ele.officialnum
           }
         }).sort()
@@ -235,7 +235,7 @@ export default {
         return tmp
       } else {
         tmp = this.RegistryCart.map((ele) => {
-          if (ele.vessel.trim() != '') {
+          if (ele.vessel != '' || ele.vessel.trim() !== 'undefined') {
             return ele.vessel
           }
         }).sort()
@@ -259,7 +259,7 @@ export default {
       } else {
         tmp = this.RegistryCart.map((ele) => {
           let tmp = ele.reg.trim()
-          if (tmp != '' && tmp != ',') {
+          if (ele.reg != '' || ele.reg.trim() !== 'undefined') {
             return tmp
           }
         }).sort()
@@ -282,7 +282,7 @@ export default {
         return tmp
       } else {
         tmp = this.RegistryCart.map((ele) => {
-          if (ele.regyear.trim() != '') {
+          if (ele.regyear != '' || ele.regyear.trim() !== 'undefined') {
             return ele.regyear
           }
         }).sort()
@@ -305,7 +305,7 @@ export default {
         return tmp
       } else {
         tmp = this.RegistryCart.map((ele) => {
-          if (ele.builder.trim() != '') {
+          if (ele.builder != '' || ele.builder.trim() !== 'undefined'){
             return ele.builder
           }
         }).sort()
@@ -328,7 +328,7 @@ export default {
         return tmp
       } else {
         tmp = this.RegistryCart.map((ele) => {
-          if (ele.rig.trim() != '') {
+         if (ele.rig != '' || ele.rig.trim() !== 'undefined') {
             return ele.rig
           }
         }).sort()

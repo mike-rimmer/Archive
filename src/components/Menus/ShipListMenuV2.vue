@@ -9,9 +9,14 @@
       class="pl-10"
       color="var(--museum-blue)"
     >
-      <span class="white--text">
-        RESEARCH PORTAL
-      </span>
+      <img
+        style="margin-left:10px;"
+        class="logo"
+        src="../../assets/images/museumlogo.svg"
+        height="80"
+        alt="Museum Logo"
+        srcset=""
+      >
     </v-toolbar-title>
     <v-row>
       <v-col
@@ -81,22 +86,13 @@
         <div class="logoandtheme">
           <v-switch
             v-model="$vuetify.theme.dark"
-            class="mt-5 mx-5"
+            class="mt-5"
             dark
             inset
             label="Theme"
             persistent-hint
           />
-
-          <img
-            style="margin-left:10px;"
-            class="logo"
-            src="../../assets/images/museumlogo.svg"
-            height="70"
-            alt="Museum Logo"
-            srcset=""
-          >
-          <span style="padding: 0 1em; font-size:.6em; color:white; ">Ver 1.4 Dated:05-14-2021</span>
+          <span style="font-size:.6em; color:white; ">Ver 1.7 Dated:05-19-2021</span>
         </div>
       </v-col>
 
@@ -138,7 +134,7 @@ export default {
           submenu: [
             { title: 'Home', route: '/' },
             {
-              title: 'Canadian Registry List',
+              title: 'Canadian Registry',
               route: '/shiplists/crl',
             },
             {
@@ -150,7 +146,7 @@ export default {
               route: '/shiplists/mills',
             },
             {
-              title: 'Ship Owners List',
+              title: 'Ship Owners',
               route: '/shiplists/sol',
             },
             {
@@ -175,7 +171,11 @@ export default {
           id: 4,
           title: 'About',
           route: '/about',
-          submenu: [{ id: '4.1', title: 'Support', route: '/support' }],
+          submenu: [
+          { id: '4.1', title: 'Support', route: '/support' },
+          { id: '4.2', title: 'Research Fees', route: '/support/fees' },
+
+          ],
         },
         { id: 0, title: 'MUSEUM', route: 'https://marmuseum.ca', submenu: [] },
       ],
@@ -191,12 +191,16 @@ export default {
 
 <style scoped>
 
+.logo{
+  margin-top:15px;
+}
+
 .logoandtheme{
   display:flex;
-  justify-content:space-between;
+  justify-content:space-around;
   align-items:center;
   height:64px;
- background-color:var(--museum-blue)
+ background-color:var(--museum-blue);
 }
 .v-toolbar {
   padding: 0px !important;

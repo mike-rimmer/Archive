@@ -3,8 +3,10 @@
     class="detailcard"
     :record="record"
   >
-    <v-card
-      class="pa-5"
+    <div
+      class="pa-5 ma-5"
+      color="blue"
+      height="auto"
     >
       <div
         id="printMe"
@@ -20,10 +22,12 @@
             Marine Museum of the Great Lakes at Kingston
           </h2>
         </div>
+
         <div class="details mt-4">
           <div class="textarea">
+            {{ notis }}
             <p
-              v-for="(value, key, index ) in record"
+              v-for="(value, key, index ) in record.details"
               :key="key"
             >
               <span
@@ -44,10 +48,10 @@
             v-if="showImage"
             class="imagearea"
           >
-            <img
+            <!-- <img
               :src="IMGPATH+mapInfo.url"
               :alt="mapInfo.name"
-            >
+            > -->
           </div>
         </div>
       </div>
@@ -60,12 +64,7 @@
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-btn
-            @click="addItem2Store"
-          >
-            <v-icon>mdi-cart-plus</v-icon>
-            Cart
-          </v-btn>
+
 
           <v-btn
             @click="printDiv"
@@ -73,23 +72,9 @@
             <v-icon>mdi-printer</v-icon>
             Print
           </v-btn>
-
-        <!-- <v-fab-transition>
-          <v-btn
-            v-show="fab"
-            fab="fab"
-            fixed
-            center
-            right
-            color="blue"
-            @click="goToTop"
-          >
-            <v-icon>mdi-arrow-up-bold-circle</v-icon>
-          </v-btn>
-        </v-fab-transition> -->
         </div>
       </v-row>
-    </v-card>
+    </div>
   </div>
 </template>
 
@@ -128,13 +113,19 @@ export default {
       default: () => ({ url: '', name: '' }),
     },
   },
+  // data(){
+  //   return{
+  //     notis:this.record.details.Notis
+  //   }
+  // },
 
   data() {
     return {
+      notis:this.record.details.Notis,
       fab: false,
       showbtn:true,
-      IMGPATH:
-        'http://localhost/shiplists2/list-db-server/images/wallaceships/',
+      // IMGPATH:
+      //   'http://localhost/shiplists2/list-db-server/images/wallaceships/',
     }
   },
 
@@ -150,13 +141,10 @@ export default {
 
     CloseDetailPopUp() {
       this.visible = false
+      console.log('Close Frm', this.notis)
       this.$emit('closefrm')
     },
 
-    addItem2Store() {
-      // alert(this.record.Notis)
-      this.loadCSLDetailToCart(this.record)
-    },
 
     printCard() {
       this.$htmlToPaper('printMe')
@@ -196,42 +184,20 @@ export default {
 
 <style scoped>
 .detailcard {
-  position: absolute;
   box-sizing: border-box;
   background-color: #d8d5d5;
   border-radius: 5px;
-  padding: 1em;
+  padding: .5em;
   /* padding-right: 15px; */
   line-height: 1.2em;
-  left: 90px;
-  /* top: 55px; */
-  top: 2vh;
-  width: 800px;
-  overflow-y: scroll;
-  max-height: 68vh;
-  /* border-radius: 10px; */
-  box-shadow: 5px 5px 10px 2px rgba(20, 20, 20, 0.5);
-  z-index: 500;
-}
-
-.details {
-  display: grid;
-  grid-template-columns: 40% 5% 55%;
-  grid-template-areas: 't . i';
-}
-
-.textarea {
-  grid-area: 't';
-}
-
-.imagearea {
-  grid-area: 'i';
-  padding-left: 2em;
-}
-
-.imagearea img {
-  width: 300px;
-  object-fit: fit;
+  min-width:400px;
+  max-width:450px;
+  overflow-y: auto;
+  max-height: 600px;
+  margin:1em;
+  padding-right:2em;
+  box-shadow:5px 5px 5px, rgba(40, 40, 40, .7);
+  font-size:14px;
 }
 
 

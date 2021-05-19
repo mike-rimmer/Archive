@@ -207,17 +207,19 @@ name:'SniderQryFrm',
       let tmp
         if(this.SniderFilter || this.SniderGlobal){
           tmp = this.SniderCurrentFilter.map((ele)=>{
-          if(ele.articletitle) return ele.articletitle
+          if (ele.articletitle != '' || ele.articletitle.trim() !== 'undefined')
+          return ele.articletitle
           }).sort()
         return tmp
         }else{
           tmp = this.SniderCart.map((ele)=>{
-            if(ele.articletitle) return ele.articletitle
+           if (ele.articletitle != '' || ele.articletitle.trim() !== 'undefined')
+            return ele.articletitle
         }).sort()
         let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Article Title', tmp2.length)
         return tmp2
 
     }},
@@ -226,17 +228,19 @@ name:'SniderQryFrm',
       let tmp
       if(this.SniderFilter || this.SniderGlobal){
         tmp = this.SniderCurrentFilter.map((ele)=>{
-              if(ele.shipname) return ele.shipname
+        if (ele.shipname != '' || ele.shipname.trim() !== 'undefined')
+              return ele.shipname
          }).sort()
        return tmp
        }else{
        tmp =this.SniderCart.map((ele)=>{
-          if(ele.shipname) return ele.shipname
+        if (ele.shipname != '' || ele.shipname.trim() !== 'undefined')
+          return ele.shipname
       }).sort()
        let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Ship Name',tmp2.length)
         return tmp2
    }},
 
@@ -244,17 +248,19 @@ name:'SniderQryFrm',
       let tmp
       if(this.SniderFilter || this.SniderGlobal){
         tmp = this.SniderCurrentFilter.map((ele)=>{
-           if(ele.shiptype) return ele.shiptype
+        if (ele.shiptype != '' || ele.shiptype.trim() !== 'undefined')
+        return ele.shiptype
          }).sort()
        return tmp
        }else{
         tmp = this.SniderCart.map((ele)=>{
-          if(ele.shiptype) return ele.shiptype
+        if (ele.shiptype != '' || ele.shiptype.trim() !== 'undefined')
+          return ele.shiptype
       }).sort()
        let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Ship type', tmp2.length)
         return tmp2
    }},
 
@@ -264,17 +270,19 @@ name:'SniderQryFrm',
       let tmp
       if(this.SniderFilter || this.SniderGlobal){
         tmp = this.SniderCurrentFilter.map((ele)=>{
-             if(ele.places) return ele.places
+       if (ele.places != '' || ele.places.trim() !== 'undefined')
+             return ele.places
          }).sort()
        return tmp
        }else{
         tmp = this.SniderCart.map((ele)=>{
-            if(ele.places) return ele.places
+             if (ele.places != '' || ele.places.trim() !== 'undefined')
+            return ele.places
       }).sort()
        let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Places', tmp2.length)
         return tmp2
    }},
 
@@ -294,17 +302,19 @@ name:'SniderQryFrm',
       let tmp
       if(this.SniderFilter || this.SniderGlobal){
         tmp = this.SniderCurrentFilter.map((ele)=>{
-                  if(ele.people) return ele.people
+        if (ele.people != '' || ele.people.trim() !== 'undefined')
+                  return ele.people
          }).sort()
        return tmp
        }else{
         tmp = this.SniderCart.map((ele)=>{
-            if(ele.people) return ele.people
+             if (ele.people != '' || ele.people.trim() !== 'undefined')
+          return ele.people
       }).sort()
        let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('People', tmp2.length)
         return tmp2
    }},
 

@@ -27,6 +27,7 @@ If a user click on a row a function is called to fetch the detailed info from th
           :items-per-page="-1"
           class="elevation-6"
           @click:row="getDetailedRecord"
+          @contextmenu:row="loadDetailCart"
         />
       </div>
 
@@ -123,6 +124,21 @@ export default {
       this.showDetailFrm = false
     },
 
+  loadDetailCart(event, row){
+    // eslint-disable-next-line no-debugger
+    // debugger
+    event.preventDefault();
+    let resp =''
+    resp = confirm(`Add ${row.item.officialnum} to Researcher Cart`)
+    if(resp){
+      alert(` ${row.item.officialnum} added to Researcher Cart`)
+      // const payload={id:`"${item.item.notis}"`, list:'CSL' }
+      // this.loadCSLCurrentDetailandUpDateDetailCart(payload)
+    }
+    this.showMsg(row.item.officialnum)
+  },
+
+
 
 
     getDetailedRecord(rowData) {
@@ -160,8 +176,7 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
-   /* background:var(--component-background-theme);
-  backdrop-filter:blur(4px); */
+  background-color:hsl(175, 35%,75%);
   font-size:.7em;
 }
 

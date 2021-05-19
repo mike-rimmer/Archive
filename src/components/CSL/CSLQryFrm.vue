@@ -222,87 +222,145 @@ name:'CSLQryFrm',
       },
 
       notis(){
+      let tmp
         if(this.CSLFilter || this.CSLGlobal){
-          const tmp = this.CSLCurrentFilter.map((ele)=>{
-          if(ele.notis) return ele.notis
+          tmp = this.CSLCurrentFilter.map((ele)=>{
+          if (ele.notis != '' || ele.notis.trim() !== 'undefined')
+          return ele.notis
           }).sort()
         return tmp
         }else{
-          return this.CSLCart.map((ele)=>{
-            if(ele.notis) return ele.notis
+        tmp = this.CSLCart.map((ele)=>{
+          if (ele.notis != '' || ele.notis.trim() !== 'undefined')
+            return ele.notis
         }).sort()
+        var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Notis', tmp2.length)
+        return tmp2
     }},
 
     officialNum(){
+      let tmp
       if(this.CSLFilter || this.CSLGlobal){
-        const tmp = this.CSLCurrentFilter.map((ele)=>{
-              if(ele.num) return ele.num
+        tmp = this.CSLCurrentFilter.map((ele)=>{
+          if(ele.num != '' || ele.num.trim() !== 'undefined')
+        return ele.num
          }).sort()
        return tmp
        }else{
-        return this.CSLCart.map((ele)=>{
-          if(ele.num) return ele.num
+        tmp = this.CSLCart.map((ele)=>{
+          if(ele.num != '' || ele.num.trim() !== 'undefined')
+          return ele.num
       }).sort()
+         var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('num', tmp2.length)
+        return tmp2
    }},
 
     shipName(){
+      var tmp
       if(this.CSLFilter || this.CSLGlobal){
-        const tmp = this.CSLCurrentFilter.map((ele)=>{
-           if(ele.name) return ele.name
+        tmp = this.CSLCurrentFilter.map((ele)=>{
+        if(ele.name != '' || ele.name.trim() !== 'undefined')
+           return ele.name
          }).sort()
        return tmp
        }else{
-        return this.CSLCart.map((ele)=>{
-          if(ele.name) return ele.name
+        tmp = this.CSLCart.map((ele)=>{
+          if(ele.name != '' || ele.name.trim() !== 'undefined')
+          return ele.name
       }).sort()
+      var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Ship Name', tmp2.length)
+        return tmp2
+
    }},
 
     shipType(){
+      let tmp
       if(this.CSLFilter || this.CSLGlobal){
-        const tmp = this.CSLCurrentFilter.map((ele)=>{
-        if(ele.type) return ele.type
+        tmp = this.CSLCurrentFilter.map((ele)=>{
+        if(ele.type != '' || ele.type.trim() !== 'undefined')
+        return ele.type
          }).sort()
        return tmp
        }else{
-        return this.CSLCart.map((ele)=>{
-          if(ele.type) return ele.type
+        tmp = this.CSLCart.map((ele)=>{
+         if(ele.type != '' || ele.type.trim() !== 'undefined')
+          return ele.type
       }).sort()
+       var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Ship Type', tmp2.length)
+        return tmp2
+
    }},
 
     yearBuilt(){
+      let tmp
       if(this.CSLFilter || this.CSLGlobal){
-        const tmp = this.CSLCurrentFilter.map((ele)=>{
-             if(ele.yearbuilt) return ele.yearbuilt
+        tmp = this.CSLCurrentFilter.map((ele)=>{
+        if(ele.yearbuilt != '' || ele.yearbuilt.trim() !== 'undefined')
+              return ele.yearbuilt
          }).sort()
        return tmp
        }else{
-        return this.CSLCart.map((ele)=>{
-            if(ele.yearbuilt) return ele.yearbuilt
+        tmp = this.CSLCart.map((ele)=>{
+        if(ele.yearbuilt != '' || ele.yearbuilt.trim() !== 'undefined')
+            return ele.yearbuilt
       }).sort()
+          var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Year Built', tmp2.length)
+        return tmp2
    }},
 
     builder(){
+      let tmp
       if(this.CSLFilter || this.CSLGlobal){
-        const tmp = this.CSLCurrentFilter.map((ele)=>{
-          if(ele.builder) return ele.builder
+        tmp = this.CSLCurrentFilter.map((ele)=>{
+        if(ele.builder != '' || ele.builder.trim() !== 'undefined')
+          return ele.builder
          }).sort()
        return tmp
        }else{
-        return this.CSLCart.map((ele)=>{
-            if(ele.builder) return ele.builder
+      tmp= this.CSLCart.map((ele)=>{
+      if(ele.builder != '' || ele.builder.trim() !== 'undefined')
+             return ele.builder
       }).sort()
+         var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Builders', tmp2.length)
+        return tmp2
    }},
 
     country(){
+      let tmp
       if(this.CSLFilter || this.CSLGlobal){
-        const tmp = this.CSLCurrentFilter.map((ele)=>{
-                  if(ele.buildcntry) return ele.buildcntry
-         }).sort()
+      tmp = this.CSLCurrentFilter.map((ele)=>{
+      if(ele.builder != '' || ele.builder.trim() !== 'undefined')
+      return ele.buildcntry
+      }).sort()
        return tmp
        }else{
-        return this.CSLCart.map((ele)=>{
-            if(ele.buildcntry) return ele.buildcntry
+        tmp = this.CSLCart.map((ele)=>{
+        if(ele.builder != '' || ele.builder.trim() !== 'undefined')
+        return ele.buildcntry
       }).sort()
+         var tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('OffNums', tmp2.length)
+        return tmp2
    }},
 
   loadingDataTable(){

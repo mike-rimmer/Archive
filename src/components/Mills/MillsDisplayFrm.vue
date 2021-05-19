@@ -3,7 +3,7 @@
 MillsDisplayFrm
 -->
   <div
-    class="summaryfrm "
+    class="summaryfrm"
   >
     <h3>
       {{ formtitle.toUpperCase() }}
@@ -171,9 +171,7 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
-  /* background-color: rgba(255,255,255,.5); */
-  /* background:var(--component-background-theme);
-  backdrop-filter:blur(4px); */
+  background-color:hsl(175, 35%, 75%);
   font-size:.7em;
 }
 

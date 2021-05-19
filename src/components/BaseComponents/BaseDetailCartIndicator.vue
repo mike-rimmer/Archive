@@ -1,7 +1,8 @@
 <template>
   <div class="mt-1 mr-12 pa-1 px-2">
     <v-btn
-      @click="$router.push('/detail')"
+      style="background-color:hsl(174, 35%, 75%)"
+      @click="$router.push('/shiplists/detail')"
     >
       <span><v-icon class="black--text">mdi-cart</v-icon></span>
       <span class="black--text">In Research Cart: {{ qty }}</span>
@@ -10,6 +11,7 @@
     <v-btn
       v-if="showimage"
       class="ml-4"
+      style="background-color:hsl(174, 35%, 75%)"
       @click="$router.push('/shiplists/images')"
     >
       <img

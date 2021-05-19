@@ -6,7 +6,7 @@ The records can be sorted asc/dec by clicking the applicable column header
 If a user click on a row a function is called to fetch the detailed info from the server which is then displayed on Card 'millsDetailsPopUp'.
 **********
 -->
-  <div class="summaryfrm ">
+  <div class="summaryfrm  ">
     <div>
       <h3>
         {{ formtitle }}
@@ -168,6 +168,7 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
+  background-color:hsl(174, 35%,75%);
   /* background:var(--component-background-theme);
   backdrop-filter:blur(4px); */
   font-size:.7em;

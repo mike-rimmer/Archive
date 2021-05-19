@@ -1,21 +1,21 @@
 <template>
-  <v-card
+  <div
     sm="12"
     class="queryform"
   >
-    <v-card-titel>
+    <div>
       <p style="font-weight:bold;">
         {{ formtitle }}
       </p>
-    </v-card-titel>
+    </div>
     <hr style="margin-bottom:1.5em; border:0; border-top: 1px solid black;">
-    <v-card-active>
-      <v-form
-        ref="form"
-        v-model="valid"
-        lazy-validation
-      >
-        <!-- <v-text-field
+
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
+      <!-- <v-text-field
         v-model="globalSearchSelected"
         :append-icon="globalFilter"
         label="General Initial Search"
@@ -24,34 +24,34 @@
       /> -->
 
 
-        <v-autocomplete
-          v-model="ownersSelected"
-          :append-icon="ownersFilter"
-          :items="owners"
-          label="Vessel Owner"
-          required
-          dense
-          color="black"
-        />
+      <v-autocomplete
+        v-model="ownersSelected"
+        :append-icon="ownersFilter"
+        :items="owners"
+        label="Vessel Owner"
+        required
+        dense
+        color="black"
+      />
 
-        <v-autocomplete
-          v-model="yearSelected"
-          :append-icon="dateFilter"
-          :items="years"
-          label="Year Built"
-          required
-          dense
-        />
+      <v-autocomplete
+        v-model="yearSelected"
+        :append-icon="dateFilter"
+        :items="years"
+        label="Year Built"
+        required
+        dense
+      />
 
-        <v-autocomplete
-          v-model="vesselSelected"
-          :append-icon="vesselFilter"
-          :items="ships"
-          label="Vessel Name"
-          required
-          dense
-        />
-        <!-- <v-autocomplete
+      <v-autocomplete
+        v-model="vesselSelected"
+        :append-icon="vesselFilter"
+        :items="ships"
+        label="Vessel Name"
+        required
+        dense
+      />
+      <!-- <v-autocomplete
         v-model="yearSelected"
         :append-icon="dateFilter"
         :items="years"
@@ -60,75 +60,74 @@
         dense
       /> -->
 
-        <v-autocomplete
-          v-model="placeSelected"
-          :append-icon="placeFilter"
-          :items="place"
-          label="Place Built"
-          required
-          dense
-        >
-          <v-autocomplete
-            v-model="reasonSelected"
-            :append-icon="reasonFilter"
-            :items="reasonList"
-            label="Reason Closed"
-            required
-            dense
-          />
-        </v-autocomplete>
-      </v-form>
+      <v-autocomplete
+        v-model="placeSelected"
+        :append-icon="placeFilter"
+        :items="place"
+        label="Place Built"
+        required
+        dense
+      />
 
-      <!-- <BaseButton -->
-      <v-row
-        v-show="MillsFilter"
-        class="justify-center"
+      <v-autocomplete
+        v-model="reasonSelected"
+        :append-icon="reasonFilter"
+        :items="reasonList"
+        label="Reason Closed"
+        required
+        dense
+      />
+    </v-form>
+
+    <!-- <BaseButton -->
+    <v-row
+      v-show="MillsFilter"
+      class="justify-center"
+    >
+      <v-btn
+        @click="resetMillsSearchFilters"
       >
-        <v-btn
-          @click="resetMillsSearchFilters"
-        >
-          Clear Filters
+        Clear Filters
+      </v-btn>
+    </v-row>
+    <v-row
+      v-show="clearingFilters"
+      class="justify-center white--text mt-2"
+    >
+      <p>
+        {{ msg }}
+      </p>
+    </v-row>
+    <v-row
+      v-if="filtersOn"
+      class="justify-center white--text mt-2"
+    >
+      <p>Filter(s) Active</p>
+      <v-col>
+        <v-btn @click="removeLastFilter">
+          Remove Last Filter
         </v-btn>
-      </v-row>
-      <v-row
-        v-show="clearingFilters"
-        class="justify-center white--text mt-2"
-      >
-        <p>
-          {{ msg }}
-        </p>
-      </v-row>
-      <v-row
-        v-if="filtersOn"
-        class="justify-center white--text mt-2"
-      >
-        <p>Filter(s) Active</p>
-        <v-col>
-          <v-btn @click="removeLastFilter">
-            Remove Last Filter
-          </v-btn>
-        </v-col>
-        <v-col>
-          {{ numberOfFilters }} {{ filtersInSync }}
-        </v-col>
-      </v-row>
-      <v-row
-        v-else
-        class="justify-center white--text mt-2"
-      >
-        <p>UnFiltered</p>
-      </v-row>
-      <v-row
-        v-show="loadingDataTable"
-        justify="center"
-        class="justify-center white--text mt-2 px-4"
-      >
-        <p>Data is Loading...<br> please wait</p>
-      </v-row>
-      {{ MillsFilter }} {{ MillsGlobal }}
+      </v-col>
+      <v-col>
+        {{ numberOfFilters }} {{ filtersInSync }}
+      </v-col>
+    </v-row>
+    <v-row
+      v-else
+      class="justify-center white--text mt-2"
+    >
+      <p>UnFiltered</p>
+    </v-row>
+    <v-row
+      v-show="loadingDataTable"
+      justify="center"
+      class="justify-center white--text mt-2 px-4"
+    >
+      <p>Data is Loading...<br> please wait</p>
+    </v-row>
+    <!-- {{ MillsFilter }} {{ MillsGlobal }} -->
     <!-- </BaseButton> -->
-    </v-card-active>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -237,17 +236,19 @@ export default {
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
+       if (ele.owner != '' || ele.owners.trim() !== 'undefined')
           return ele.owners
         }).sort()
         return tmp
       } else {
         tmp = this.MillsCart.map((ele) => {
-          if (ele.owners) return ele.owners
+          if (ele.owner != '' || ele.owners.trim() !== 'undefined')
+        return ele.owners
         }).sort()
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Owners', tmp2.length)
         return tmp2
       }
     },
@@ -256,17 +257,19 @@ export default {
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
+         if (ele.dateBuilt != '' || ele.dateBuilt.trim() !== 'undefined')
           return ele.dateBuilt
         }).sort()
         return tmp
       } else {
         tmp = this.MillsCart.map((ele) => {
-          if (ele.dateBuilt) return ele.dateBuilt
+            if (ele.dateBuilt != '' || ele.dateBuilt.trim() !== 'undefined')
+          return ele.dateBuilt
         }).sort()
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Date Built', tmp2.length)
         return tmp2
       }
     },
@@ -275,17 +278,19 @@ export default {
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
+        if (ele.vesselName != '' || ele.vesselName.trim() !== 'undefined')
           return ele.vesselName
         }).sort()
         return tmp
       } else {
         tmp = this.MillsCart.map((ele) => {
-          if (ele.vesselName) return ele.vesselName
+       if (ele.vesselName != '' || ele.vesselName.trim() !== 'undefined')
+          return ele.vesselName
         }).sort()
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Vessel Name', tmp2.length)
         return tmp2
       }
     },
@@ -294,47 +299,50 @@ export default {
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
+        if (ele.country !== '' ||  ele.country.trim() !== 'undefined')
           return ele.country
         }).sort()
         return tmp
       } else {
         tmp = this.MillsCart.map((ele) => {
-          if (ele.country) return ele.country
+          if (ele.country !== '' ||  ele.country.trim() !== 'undefined' )
+              return ele.country
         }).sort()
         let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
+        console.log('Places', tmp2.length)
         return tmp2
       }
     },
 
-    loadingDataTable() {
-      return this.MillsCartIsLoading
-    },
 
     reasonList() {
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
+          if (ele.reasonClosed.trim() != '' || ele.reasonClosed.trim() !== 'undefined')
           return ele.reasonClosed
         }).sort()
         return tmp
       } else {
         tmp = this.MillsCart.map((ele) => {
-          if (
-            ele.reasonClosed.trim() != '' ||
-            typeof ele.reasonClosed != 'undefined'
-          ) {
+          if (ele.reasonClosed.trim() != '' || typeof ele.reasonClosed != 'undefined')
             return ele.reasonClosed
-          }
         }).sort()
         let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-
+        console.log('Reason Closed', tmp2.length)
         return tmp2
       }
     },
+
+
+    loadingDataTable() {
+      return this.MillsCartIsLoading
+    },
+
   },
 
   watch: {

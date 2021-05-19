@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
 import VueHtmlToPaper from 'vue-html-to-paper'
+import VueSocialSharing from 'vue-social-sharing'
 // import MultiFiltersPlugin from './plugins/MultiFilters'
 import titleMixin from './services/titleMixin'
 // import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -25,6 +26,8 @@ Vue.prototype.$IMGPATH = 'http://marmuseum.ca/shiplists2/list-db-server/images/w
 
 Vue.use(VueHtmlToPaper, options);
 // Vue.use(MultiFiltersPlugin);
+
+Vue.use(VueSocialSharing)
 
 Vue.config.productionTip = false;
 Vue.mixin(titleMixin)

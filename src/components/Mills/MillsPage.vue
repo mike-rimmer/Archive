@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top:100px">
     <BaseFrm>
       <template v-slot:Cart>
         <CartIndicator />

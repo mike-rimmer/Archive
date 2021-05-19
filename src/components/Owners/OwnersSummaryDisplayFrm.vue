@@ -143,8 +143,7 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
-   /* background:var(--component-background-theme);
-  backdrop-filter:blur(4px); */
+  background-color:hsl(173, 35%, 75%);
   font-size:.7em;
 }
 

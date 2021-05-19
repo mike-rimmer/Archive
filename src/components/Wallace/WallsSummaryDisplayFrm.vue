@@ -167,8 +167,7 @@ h3 {
   box-sizing: border-box;
   padding: 1em;
   width: 100%;
-  /* background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(4px); */
+  background-color:hsl(174, 35%,75%);
   font-size: 0.7em;
 }
 
