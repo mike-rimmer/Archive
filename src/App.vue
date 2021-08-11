@@ -47,23 +47,11 @@ export default {
 }
 
 @font-face{
- font-family:'Lato-Light';
- src:local('Lato-Light'),
- url(./fonts/Lato-Light.ttf) format('truetype');
+ font-family:'Lora-VariableFont_wght';
+ src:local('Lora-VariableFont_wght'),
+ url(./fonts/Lora-VariableFont_wght.ttf) format('truetype');
 }
 
-@font-face{
- font-family:'Lato-LightItalic';
- src:local('Lato-LightItalic'),
- url(./fonts/Lato-LightItalic.woff2) format('woff2');
-}
-
-
-@font-face{
- font-family:'Lato-Regular';
- src:local('Lato-Regular'),
- url(./fonts/Lato-Regular.woff2) format('woff2');
-}
 
 @font-face{
  font-family:'Roboto-Light';
@@ -77,11 +65,23 @@ export default {
  url(./fonts/Roboto-Regular.ttf) format('truetype');
 }
 
+h1, h2, h3, h4, h5{
+   font-family:'Roboto-Regular', sans-serif;
+}
+
+body{
+  font-size:1em;
+}
+
+.v-application a {
+  color: white;
+}
 
 .fade-enter-active,
 .fade-leave-active {
   transition: all .4s ease-in-out;
 }
+
 
 .fade-enter,
 .fade-leave-to {

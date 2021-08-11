@@ -28,27 +28,25 @@
                     >
                     <v-card-title
                       class="justify-center py-0 align-self-center"
-                    >
-                      <button>
-                        <router-link
-                          :to="image.route"
-                          class="white--text"
-                        />
-                        <!-- <p style="font-size:.8em;font-weight:bold; margin-top:10px">
-                  {{ image.title }}
-                </p> -->
-                      </button>
-                    </v-card-title>
+                    />
                   </v-card>
                 </v-hover>
               </v-col>
             </v-row>
           </div>
-
-          <About
-            :aboutdata="AboutInfo.intro"
-            :showhint="showhelp"
-          />
+          <div>
+            <button
+              v-show="showBtn"
+              class="searchBtn"
+              @click="searchList"
+            >
+              Search
+            </button>
+            <About
+              :aboutdata="AboutInfo.data.intro"
+              :showhint="showhelp"
+            />
+          </div>
         </div>
       </template>
     </Researchbase>
@@ -56,14 +54,9 @@
 </template>
 
 <script>
-// import Mills from '@/views/Mills'
-// import Owners from '@/views/Owners'
-// import Registry from '@/views/Registry'
-// import Wallace from '@/views/Owners'
-// import gsap from 'gsap'
 const IMGPATH = 'https://marmuseum.ca/shiplists2/list-db-server/images/'
 import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
-import About from '@/components/BaseComponents/BaseAbout'
+import About from '@/components/BaseComponents/BaseAboutShips'
 import mills from '@/data/millsData.js'
 import registry from '@/data/crlData.js'
 import owners from '@/data/ownersData.js'
@@ -83,82 +76,100 @@ export default {
       showhelp:true,
       images: [
         {
-          url: IMGPATH + 'registry.png',
+          url: IMGPATH + 'crl.jpg',
           alt: 'CRL',
           title: 'Canadian Registry',
           route: '/shiplists/CRL',
         },
         {
-          url: IMGPATH + 'mills.png',
+          url: IMGPATH + 'mills.jpg',
           alt: 'MILLS',
           title: 'Mills',
           route: '/shiplists/mills',
         },
 
         {
-          url: IMGPATH + 'owners.png',
+          url: IMGPATH + 'owners.jpg',
           alt: 'SOL',
           title: 'Ship Owners List',
-          route: '/shiplistsSOL',
+          route: '/shiplists/SOL',
         },
 
         {
-          url: IMGPATH + 'wallace.png',
+          url: IMGPATH + 'wallace.jpg',
           alt: 'WALLACE',
           title: 'Wallace',
           route: '/shiplists/Wallace',
         },
         {
-          url: IMGPATH + 'CSL.png',
+          url: IMGPATH + 'csl.jpg',
           alt: 'CSL',
           title: 'Canada Steamship',
           route: '/shiplists/CSL',
         },
         {
-          url: IMGPATH + 'snider.png',
+          url: IMGPATH + 'snider.jpg',
           alt: 'SNYDERS',
           title: 'Sniders',
-          route: '/shiplists/',
+          route: '/shiplists/snider',
         },
       ],
       museumLogo: IMGPATH + 'shipswheel.jpg',
-      AboutInfo:'',
-      showInfo: true,
+      AboutInfo:{route:'', data:''},
+
       // tabs: 0,
       // newpage:true,
       // renderComponent:true
     }
   },
 
+  computed:{
+    showBtn(){
+      return (this.AboutInfo.route!='' && true)
+    }
+  },
+
   methods: {
+  searchList(){
+    this.$router.push(this.AboutInfo.route)
+    // alert(this.AboutInfo.route)
+  },
+
     selectAboutInfo(title) {
-      // this.showInfo = false
+
       switch (title) {
         case 'Canadian Registry':
-          this.AboutInfo = registry
+          this.AboutInfo.data = registry
+          this.AboutInfo.route= '/shiplists/crl'
           this.forceRerender()
           break
         case 'Mills':
-          this.AboutInfo = mills
+          this.AboutInfo.data = mills
+          this.AboutInfo.route= '/shiplists/mills'
           this.forceRerender()
           break
         case 'Ship Owners List':
-          this.AboutInfo = owners
+          this.AboutInfo.data = owners
+          this.AboutInfo.route= '/shiplists/owners'
           this.forceRerender()
           break
         case 'Wallace':
-          this.AboutInfo = wallace
+          this.AboutInfo.data = wallace
+          this.AboutInfo.route= '/shiplists/wallace'
           this.forceRerender()
           break
         case 'Sniders':
-          this.AboutInfo = snider
+          this.AboutInfo.data = snider
+          this.AboutInfo.route= this.AboutInfo.route= '/shiplists/snider'
           break
 
         case 'Canada Steamship':
-          this.AboutInfo = csl
+          this.AboutInfo.data = csl
+          this.AboutInfo.route= this.AboutInfo.route= '/shiplists/csl'
           break
         default:
-          this.AboutInfo = tooltip
+          this.AboutInfo.data = tooltip
+          this.AboutInfo.route= ''
       }
 
 
@@ -199,7 +210,14 @@ export default {
    /* linear-gradient(rgba(75, 93, 150, 0.1), rgba(7, 74, 129, 0.9)); */
 }
 
-
+button{
+  background-color:#39947f;
+  border-radius:5px;
+  border:1px black;
+  padding: .25em .5em;
+  box-shadow: 5px 5px 5px rgba(40,40,40,.7);
+  margin-bottom:1em;
+ }
 
 .menulayout {
   grid-area: m;

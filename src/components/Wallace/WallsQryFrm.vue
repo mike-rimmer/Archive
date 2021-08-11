@@ -24,13 +24,14 @@
       />
 
       <v-autocomplete
-        v-model="registrationSelected"
-        :append-icon="wallacePlaceRegistrationFilter"
-        :items="registration"
+        v-model="regSelected"
+        :append-icon="wallaceRegistrationFilter"
         label="Province of Registration"
+        :items="shipRegistration"
         required
         dense
       />
+
 
       <v-autocomplete
         v-model="rigSelected"
@@ -69,66 +70,50 @@
         required
         dense
       />
-
-      <!--
-      <v-text-field
-        v-model="globalSearch"
-        label="General Search"
-        prepend-icon="mdi-book-search"
-        placeholder="Enter Key words for your Search "
-        @keypress.enter="performGlobalSearch"
-      >
-        {{ globalSearch }}
-      </v-text-field> -->
     </v-form>
-
+    <hr style="margin-bottom:1.5em; border:0; border-top: 1px solid black;">
     <!-- <BaseButton -->
-    <v-row
-      v-show="WallaceFilter"
-      class="justify-center"
+
+    <div
+      v-if="WallaceFilter"
+      style="display:flex; flex-direction:column; justify-content:space-around;  align-items:center; background-color:#A9D6D1; color:black; "
     >
       <v-btn
+        class="my-4"
+        @click="removeLastFilter"
+      >
+        Remove Last Filter
+      </v-btn>
+      <v-btn
+        v-show="showClearAllFilterButton"
+        class="my-4"
         @click="resetWallaceSearchFilters"
       >
-        Clear Filters
+        Clear All Filters
       </v-btn>
-    </v-row>
-    <v-row
-      v-show="clearingFilters"
-      class="justify-center white--text mt-2"
-    >
-      <p>
-        {{ msg }}
-      </p>
-    </v-row>
-    <v-row
-      v-if="filtersOn"
-      class="justify-center white--text mt-2"
-    >
-      <p>Filter(s) Active</p>
-      <v-col>
-        <v-btn @click="removeLastFilter">
-          Remove Last Filter
-        </v-btn>
-      </v-col>
-      <v-col>
-        <!-- {{ numberOfFilters }} {{ filtersInSync }} -->
-      </v-col>
-    </v-row>
-    <v-row
+    </div>
+    <div
       v-else
-      class="justify-center white--text mt-2"
+      style="display:flex; flex-direction:column;justify-content:center; background-color:#A9D6D1; color:black; align-items:center; padding:1em; border-radius:4px;"
     >
-      <p>UnFiltered</p>
-    </v-row>
-    <v-row
+      <span>Un-Filtered</span>
+      <span>Data</span>
+    </div>
+
+    <div
       v-show="loadingDataTable"
-      justify="center"
-      class="justify-center white--text mt-2 px-4"
+      style="display:flex; color:white; background-color:green; justify-content:center; align-items:center;"
     >
-      <p>Data is Loading...<br>please wait</p>
-    </v-row>
-    <!-- </BaseButton> -->
+      <span>Data is Loading<br>...please wait...</span>
+    </div>
+
+    <!-- <div
+      style="display:flex; flex-direction:column; color:white; background-color:blue; justify-content:center; align-items:center;"
+    >
+      <h1>Flags</h1>
+      {{ regSelected }}
+      <p>Clearing Filters {{ clearingFilters }}</p>
+    </div> -->
   </div>
 </template>
 
@@ -139,6 +124,7 @@ import { mapState, mapActions } from 'vuex'
 // import Bus from '@/services/Bus'
 
 export default {
+  name:'WallsQryFrm',
   props: {
     qryformtitle: {
       type: String,
@@ -151,13 +137,13 @@ export default {
       idSelected: '',
       shipSelected: '',
       rigSelected: '',
-      registrationSelected: '',
+      regSelected: '',
       placeBuiltSelected: '',
       builderSelected: '',
       globalSearch: '',
       ownerSelected: '',
       valid: false,
-      msg: '',
+      msg: 'This is a msg',
     }
   },
   computed: {
@@ -187,17 +173,21 @@ export default {
       }
     },
 
-    // WallaceShipFilter
-    // WallaceOwnersFilter
-    // WallaceBuilderFilter
-    // WallaceCountryFilter
-    // WallaceRegistrationFilter
+    showClearAllFilterButton(){
+
+      if (this.WallaceFilterList.length > 1){
+        return true
+      }else{
+        return false
+      }
+    },
+
 
     wallaceShipFilter() {
       return this.WallaceShipFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
-    wallacePlaceRegistrationFilter() {
+    wallaceRegistrationFilter() {
       return this.WallacePlaceRegistrationFilter
         ? 'mdi-filter'
         : 'mdi-menu-down'
@@ -232,6 +222,7 @@ export default {
     },
 
     ships() {
+      if(this.WallaceCart.length >0){
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
@@ -250,9 +241,10 @@ export default {
         console.log('Vessel Name', tmp2.length)
         return tmp2
       }
-    },
+    }else{return []}},
 
-    registration() {
+    shipRegistration() {
+      if(this.WallaceCart.length >0){
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         const tmp = this.WallaceCurrentFilter.map((ele) => {
@@ -262,20 +254,17 @@ export default {
         }).sort()
         return tmp
       } else {
-        tmp = this.WallaceCart.map((ele) => {
-          if (ele.prov != '' || ele.prov.trim() !== undefined) {
-            return ele.prov
-          }
-        }).sort()
+        tmp = this.WallaceCart.map((ele) => {return ele.prov}).sort()
         let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
-        console.log('Prov', tmp2.length)
+        console.log('prov', tmp2.length)
         return tmp2
       }
-    },
+    }else{return []}},
 
     rigs() {
+     if(this.WallaceCart.length >0){
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
@@ -296,9 +285,10 @@ export default {
         console.log("Rig", tmp2.length)
         return tmp2
       }
-    },
+    }else{return []}},
 
     place() {
+     if(this.WallaceCart.length >0){
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
@@ -319,9 +309,10 @@ export default {
         console.log('Build Prov', tmp2.length)
         return tmp2
       }
-    },
+    }else{return []}},
 
     builders() {
+    if(this.WallaceCart.length >0){
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
@@ -342,9 +333,10 @@ export default {
         console.log('Build Name', tmp2.length)
         return tmp2
       }
-    },
+    }else{return []}},
 
     owners() {
+    if(this.WallaceCart.length >0){
       let tmp
       if (this.WallaceFilter || this.WallaceGlobal) {
         tmp = this.WallaceCurrentFilter.map((ele) => {
@@ -365,7 +357,7 @@ export default {
         console.log('Owners', tmp2.length)
         return tmp2
       }
-    },
+    }else {return []}},
 
     loadingDataTable() {
       return this.WallaceCartIsLoading
@@ -392,13 +384,13 @@ export default {
         })
     },
 
-    registrationSelected(val, oldval) {
+    regSelected(val, oldval) {
 
       if (val != '' && val != oldval)
         this.applyFilterToCartwithRegExp({
-          key: 'registration',
+          key: 'prov',
           value: val,
-          varfilter: 'registrationSelected',
+          varfilter: 'regSelected',
         })
     },
 
@@ -460,8 +452,8 @@ export default {
     resetWallaceSearchFilters() {
       //  Remove the current selection from each of the picklists
       this.shipSelected = ''
-      this.registedSelected = ''
-      this.rigFilter = ''
+      this.regSelected = ''
+      this.rigSelected = ''
       this.placeBuiltSelected = ''
       this.builderSelected = ''
       this.ownerSelected = ''
@@ -475,8 +467,8 @@ export default {
         case 'shipSelected':
           this.shipSelected = ''
           break
-        case 'registrationSelected':
-          this.registrationSelected = ''
+        case 'regSelected':
+          this.regSelected = ''
           break
         case 'rigSelected':
           this.rigSelected = ''
@@ -503,8 +495,8 @@ export default {
 
 <style scoped>
 .queryform {
-  max-height: 60vh;
-  overflow-y: auto;
+  /* max-height: 60vh;
+  overflow-y: auto; */
   border-radius: 10px;
   box-sizing: border-box;
   margin-top: 1em;
@@ -516,6 +508,7 @@ export default {
   width: 100%;
   margin-left: 0.5em;
   margin-right: 0.5em;
+  color:black;
 }
 
 .v-text-field >>> input {

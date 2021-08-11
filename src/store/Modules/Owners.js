@@ -5,12 +5,13 @@ const state = () =>({
       OwnersAppliedFilters: [],
       OwnersFilterList: [],
       OwnersCurrentFilter: [],
+      OwnersCurrentDetail:{},
       OwnersGlobal: false,
       OwnersCartIsLoading: false,
       OwnersFilter: false,
       ClearingOwnersFilters: false,
       OwnersOwnersFilter:false,
-      OwnersMarmumFilter:false,
+      OwnersMarnumFilter:false,
       OwnersPortIDFilter:false,
       OwnersOwnersIDFilter:false,
       OwnersSharesFilter:false,
@@ -103,6 +104,10 @@ const mutations = {
       }
   },
 
+  LOAD_OWNERS_DETAILS(state, payload){
+    state.OwnersCurrentDetail = payload
+  },
+
   LOAD_OWNERS_CART: (state, payload) => {
     state.OwnersCart = [...payload]
     state.OwnersCartIsLoading = false
@@ -128,7 +133,7 @@ const mutations = {
     state.OwnersGlobal = false
     state.OwnersFilter = false,
     state.OwnersOwnersFilter=false,
-    state.OwnersMarmumFilter=false,
+    state.OwnersMarnumFilter=false,
     state.OwnersPortIDFilter=false,
     state.OwnersOwnersIDFilter=false,
     state.OwnersSharesFilter=false,
@@ -151,7 +156,7 @@ const mutations = {
           break;
 
         case 'marnum':
-          state.OwnersMarmumFilter=false
+          state.OwnersMarnumFilter=false
           break;
 
         case 'portnum':
@@ -263,6 +268,17 @@ const actions = {
 
   addItemToOwnersCart: ({ commit }, payload) => {
     commit("ADD_ITEM_TO_OWNERS_CART", payload)
+  },
+
+  async getOwnersDetailByID({commit},id){
+    try{
+      let response = await  ApiServices.getOwnersDetailByID(`'${id}'`)
+      commit('LOAD_OWNERS_DETAILS', response.data)
+    }
+    catch(err){
+      return alert(err.message)
+    }
+
   },
 
   removeItemFromOwnersCart: ({ commit }, payload) => {

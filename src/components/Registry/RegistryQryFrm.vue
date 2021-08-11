@@ -69,7 +69,7 @@
 
       <v-autocomplete
         v-model="rigSelected"
-        :append-icon="vesselFilter"
+        :append-icon="rigFilter"
         :items="rigs"
         label="Rig Type"
         required
@@ -78,50 +78,39 @@
     </v-form>
 
     <!-- Filters Go Here -->
-    <v-row
-      v-show="RegistryFilter"
-      class="justify-center"
+    <div
+      v-if="RegistryFilter"
+      style="display:flex; flex-direction:column; justify-content:space-around;  align-items:center; background-color:#A9D6D1; color:black; "
     >
       <v-btn
+        class="my-4"
+        @click="removeLastFilter"
+      >
+        Remove Last Filter
+      </v-btn>
+
+      <v-btn
+        v-show="showClearAllFilterButton"
+        class="my-4"
         @click="resetRegistrySearchFilters"
       >
-        Clear Filters
+        Clear All Filters
       </v-btn>
-    </v-row>
-    <v-row
-      v-show="clearingFilters"
-      class="justify-center white--text mt-2"
-    >
-      <p>
-        {{ msg }}
-      </p>
-    </v-row>
-    <v-row
-      v-if="filtersOn"
-      class="justify-center white--text mt-2"
-    >
-      <p>Filter(s) Active</p>
-      <v-col>
-        <v-btn @click="removeLastFilter">
-          Remove Last Filter
-        </v-btn>
-      </v-col>
-      <v-col>
-        <p>{{ numberOfFilters }} {{ filtersInSync }}</p>
-      </v-col>
-    </v-row>
-    <v-row
+    </div>
+    <div
       v-else
-      class="justify-center white--text mt-2"
+      style="display:flex; flex-direction:column;justify-content:center; background-color:#A9D6D1; color:black; align-items:center; padding:1em; border-radius:4px;"
     >
-      <p>UnFiltered</p>
-    </v-row>
-    <v-row
-      v-show="isLoading"
-      class="justify-center white--text mt-2 pl-4"
+      <span>Un-Filtered</span>
+      <span>Data</span>
+    </div>
+
+    <div
+      v-show="loadingDataTable"
+      style="display:flex; color:white; background-color:green; justify-content:center; align-items:center;"
     >
-      <p>Data is Loading...<br> please wait</p>
-    </v-row>
+      <span>Data is Loading<br>...please wait...</span>
+    </div>
   </div>
 </template>
 
@@ -166,43 +155,53 @@ export default {
       'RegistryCurrentFilter',
       'RegistryCartIsLoading',
       'RegistryFilter',
-      'regNumberFilter',
-      'regVesselFilter',
-      'regRegistrationFilter',
-      'regRegistrationDateFilter',
-      'regBuilderFilter',
-      'regRigFilter',
+      'RegNumberFilter',
+      'RegVesselFilter',
+      'RegRegistrationFilter',
+      'RegRegistrationDateFilter',
+      'RegBuilderFilter',
+      'RegRigFilter',
       'ClearingRegistryFilters',
       'RegistryAppliedFilters',
       'RegistryFilterList',
     ]),
 
     numberFilter() {
-      return this.regNumberFilter ? 'mdi-filter' : 'mdi-menu-down'
+      return this.RegNumberFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
     vesselFilter() {
-      return this.regVesselFilter ? 'mdi-filter' : 'mdi-menu-down'
+      return this.RegVesselFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
     regFilter() {
-      return this.regRegistrationFilter ? 'mdi-filter' : 'mdi-menu-down'
+      return this.RegRegistrationFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
     regDateFilter() {
-      return this.regRegistrationDateFilter ? 'mdi-filter' : 'mdi-menu-down'
+      return this.RegRegistrationDateFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
     builderFilter() {
-      return this.regBuilderFilter ? 'mdi-filter' : 'mdi-menu-down'
+      return this.RegBuilderFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
     rigFilter() {
-      return this.regRigFilter ? 'mdi-filter' : 'mdi-menu-down'
+      return this.RegRigFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
     filtersOn() {
       return this.RegistryFilter
     },
 
+    showClearAllFilterButton(){
+      if(this.RegistryFilterList.length>1){
+        return true
+      }else{
+        return false
+      }
+    },
+
     off_nums() {
-      let tmp
+      if(this.RegistryCart.length > 0){
+
+        let tmp
       if (this.RegistryFilter || this.RegistryGlobal) {
         tmp = this.RegistryCurrentFilter.map((ele) => {
           if (ele.officialnum != '' || ele.officialnum.trim() !== 'undefined') {
@@ -212,7 +211,7 @@ export default {
         return tmp
       } else {
         tmp = this.RegistryCart.map((ele) => {
-            if (ele.officialnum != '' || ele.officialnum.trim() !== 'undefined')  {
+          if (ele.officialnum != '' || ele.officialnum.trim() !== 'undefined')  {
             return ele.officialnum
           }
         }).sort()
@@ -222,9 +221,11 @@ export default {
         console.log('OffNums', tmp2.length)
         return tmp2
       }
+      }else{return []}
     },
 
     vessels() {
+      if(this.RegistryCart.length > 0){
       let tmp
       if (this.RegistryFilter || this.RegistryGlobal) {
         tmp = this.RegistryCurrentFilter.map((ele) => {
@@ -245,9 +246,10 @@ export default {
         console.log('vessels', tmp2.length)
         return tmp2
       }
-    },
+    }else{return []}},
 
     registrations() {
+      if(this.RegistryCart.length > 0){
       let tmp
       if (this.RegistryFilter || this.RegistryGlobal) {
         tmp = this.RegistryCurrentFilter.map((ele) => {
@@ -269,9 +271,10 @@ export default {
         console.log('Registrations', tmp2.length)
         return tmp2
       }
-    },
+    }else{return []}},
 
     regDates() {
+      if(this.RegistryCart.length > 0){
       let tmp
       if (this.RegistryFilter || this.RegistryGlobal) {
         tmp = this.RegistryCurrentFilter.map((ele) => {
@@ -291,10 +294,11 @@ export default {
         })
         console.log('RegDates', tmp2.length)
         return tmp2
-      }
+      }}else{return []}
     },
 
     builders() {
+      if(this.RegistryCart.length > 0){
       var tmp
       if (this.RegistryFilter || this.RegistryGlobal) {
         const tmp = this.RegistryCurrentFilter.map((ele) => {
@@ -314,10 +318,11 @@ export default {
         })
         console.log('Builders', tmp2.length)
         return tmp2
-      }
+      }}else{return []}
     },
 
     rigs() {
+      if(this.RegistryCart.length > 0){
       var tmp
       if (this.RegistryFilter || this.RegistryGlobal) {
         const tmp = this.RegistryCurrentFilter.map((ele) => {
@@ -337,14 +342,14 @@ export default {
         })
         console.log('Rigs', tmp2.length)
         return tmp2
-      }
+      }}else{return []}
     },
 
     clearingFilters() {
       return this.ClearingRegistryFilters
     },
 
-    isLoading() {
+    loadingDataTable() {
       return this.RegistryCartIsLoading
     },
 
@@ -371,7 +376,7 @@ export default {
         this.applyFilterToCartwithRegExp({
           key: 'officialnum',
           value: val,
-          varfilter: 'officalNum',
+          varfilter: 'officialNum',
         })
     },
 
@@ -463,17 +468,17 @@ export default {
       let last = this.RegistryFilterList.length - 1
       let ele = this.RegistryFilterList[last].varfilter
       switch (ele) {
-        case 'officialnum':
+        case 'officialNum':
           this.off_numSelected = ''
           break
-        case 'vesselname':
+        case 'vesselName':
           this.vesselSelected = ''
           break
-        case 'reg':
+        case 'registration':
           this.regSelected = ''
           break
         case 'registrationDate':
-          this.regDatSelected = ''
+          this.regDateSelected = ''
           break
         case 'builder':
           this.builderSelected = ''

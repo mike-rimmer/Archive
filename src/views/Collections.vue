@@ -1,7 +1,7 @@
 <template>
   <div>
     <ResearchBase>
-      <template v-slot:images>
+      <template v-slot:slotbody>
         <SearchForm />
       </template>
     </ResearchBase>
@@ -16,8 +16,7 @@ export default {
   name: 'Collections',
   components:{
   ResearchBase,
-  SearchForm
-  // PlaceHolder
+  SearchForm,
 }
 
 

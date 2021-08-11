@@ -15,6 +15,7 @@ export default new Vuetify({
       light: {
         museumblue: "#091154",
         museumgreen: '#39947f',
+        primary:'#1976D2',
         secondary: "#424242",
         accent: "#82B1FF",
         error: "#FF5252",

@@ -11,24 +11,20 @@
       </h1>
     </v-row>
 
-    <DetailStoreCart
-      :selection-data="
-        cartData"
+    <DetailStoreCards
+      :selection-data="cartData"
     />
-    </h1>
-    </v-row>
   </div>
 </template>
 
 <script>
-import DetailStoreCart from '@/components/CSL/CSLDetailStoreCart.vue'
-
+import DetailStoreCards from '@/components/ResearchCards.vue'
 import {mapState} from 'vuex'
 
   export default {
   name:'CSLDetails',
    components:{
-   DetailStoreCart,
+   DetailStoreCards,
 
     },
 
@@ -39,15 +35,15 @@ import {mapState} from 'vuex'
     },
 
     computed:{
-      ...mapState('CSL', ['CSLDetailCart', 'CSLDetailCartIsLoaded', 'CSLCart']),
+      ...mapState('Cart', ['ResearchCart', 'ResearchCartIsLoaded']),
 
 
     detailCartQty(){
-      return this.CSLDetailCart.length
+      return this.ResearchCart.length
     },
 
     cartData(){
-      return this.CSLDetailCart
+      return this.ResearchCart
     },
 
 
@@ -62,6 +58,7 @@ import {mapState} from 'vuex'
 <style scoped>
 .background{
     margin-top:6em;
+    padding:1em;
     height:auto;
 }
 </style>

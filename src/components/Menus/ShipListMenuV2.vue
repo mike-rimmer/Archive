@@ -1,102 +1,103 @@
 <template>
-  <v-toolbar
-    dense
-    bottom
-    height="64"
-    color="var(--museum-blue)"
-  >
-    <v-toolbar-title
-      class="pl-10"
+  <div class="layout">
+    <v-toolbar
+      dense
+      bottom
+      height="64"
       color="var(--museum-blue)"
     >
-      <img
-        style="margin-left:10px;"
-        class="logo"
-        src="../../assets/images/museumlogo.svg"
-        height="80"
-        alt="Museum Logo"
-        srcset=""
+      <v-toolbar-title
+        class="pl-10"
+        color="var(--museum-blue)"
       >
-    </v-toolbar-title>
-    <v-row>
-      <v-col
-        cols="8"
-        class="d-flex justify-end align-center"
-      >
-        <v-menu
-          v-for="item in mainmenu"
-          :key="item.id"
-          transition="scale-transition"
-          content-class="dropdown"
-          offset-y
-          open-on-hover
-          class="d-flex justify-space-between"
+        <img
+          style="margin-left:10px;"
+          class="logo d-none d-lg-flex"
+          src="../../assets/images/museumlogo.svg"
+          height="80"
+          alt="Museum Logo"
+          srcset=""
         >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-if="item.title ==='MUSEUM'"
-              text
-              v-bind="attrs"
-              v-on="on"
-            >
-              <a
-                href="https://marmuseum.ca"
-              >{{ item.title }}</a>
-            </v-btn>
-            <v-btn
-              v-else
-              text
-              v-bind="attrs"
-              v-on="on"
-            >
-              <router-link
-                :to="item.route"
-              >
-                {{ item.title }}
-              </router-link>
-              <v-icon
-                v-show="item.submenu.length>0"
-                right
-                color="white"
-              >
-                mdi-chevron-down
-              </v-icon>
-            </v-btn>
-          </template>
-
-          <v-list
-            v-if="item.submenu.length > 0"
-            color="var(--museum-blue)"
+      </v-toolbar-title>
+      <v-row>
+        <v-col
+          cols="8"
+          class="d-flex justify-end align-center"
+        >
+          <v-menu
+            v-for="item in mainmenu"
+            :key="item.id"
+            transition="scale-transition"
+            content-class="dropdown"
+            offset-y
+            open-on-hover
+            class="d-flex justify-space-between"
           >
-            <v-list-item
-              v-for="(sub, index) in item.submenu"
-              :key="index"
-            >
-              <router-link
-                :to="sub.route"
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-if="item.title ==='MUSEUM'"
+                text
+                v-bind="attrs"
+                v-on="on"
               >
-                {{ sub.title }}
-              </router-link>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-col>
-      <v-spacer />
-      <v-col cols="4">
-        <div class="logoandtheme">
-          <v-switch
-            v-model="$vuetify.theme.dark"
-            class="mt-5"
-            dark
-            inset
-            label="Theme"
-            persistent-hint
-          />
-          <span style="font-size:.6em; color:white; ">Ver 1.7 Dated:05-19-2021</span>
-        </div>
-      </v-col>
+                <a
+                  href="https://marmuseum.ca"
+                >{{ item.title }}</a>
+              </v-btn>
+              <v-btn
+                v-else
+                text
+                v-bind="attrs"
+                v-on="on"
+              >
+                <router-link
+                  :to="item.route"
+                >
+                  {{ item.title }}
+                </router-link>
+                <v-icon
+                  v-show="item.submenu.length>0"
+                  right
+                  color="white"
+                >
+                  mdi-chevron-down
+                </v-icon>
+              </v-btn>
+            </template>
 
-    <!-- <v-btn
+            <v-list
+              v-if="item.submenu.length > 0"
+              color="var(--museum-blue)"
+            >
+              <v-list-item
+                v-for="(sub, index) in item.submenu"
+                :key="index"
+              >
+                <router-link
+                  :to="sub.route"
+                >
+                  {{ sub.title }}
+                </router-link>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-col>
+        <v-spacer />
+        <v-col cols="4">
+          <div class="logoandtheme">
+            <v-switch
+              v-model="$vuetify.theme.dark"
+              class="mt-5"
+              dark
+              inset
+              label="Theme"
+              persistent-hint
+            />
+            <span style="font-size:.6em; color:white; ">Ver 1.12 Dated: 06-17-2021</span>
+          </div>
+        </v-col>
+
+        <!-- <v-btn
           style="background-color: var(--museum-blue); color: grey"
           @click="toggleTheme"
         >
@@ -104,9 +105,10 @@
             mdi-contrast-circle
           </v-icon>
         </v-btn> -->
-    <!-- class="d-flex justify-space-between orange" -->
-    </v-row>
-  </v-toolbar>
+        <!-- class="d-flex justify-space-between orange" -->
+      </v-row>
+    </v-toolbar>
+  </div>
 </template>
 <script>
 export default {
@@ -138,31 +140,35 @@ export default {
               route: '/shiplists/crl',
             },
             {
-              title: 'Canada Steamship Lines',
+              title: 'CSL List',
               route: '/shiplists/csl',
             },
             {
-              title: 'Mills',
+              title: 'Mills List',
               route: '/shiplists/mills',
             },
             {
-              title: 'Ship Owners',
+              title: 'Ship Owners List',
               route: '/shiplists/sol',
             },
             {
-              title: 'Wallace',
+              title: 'Wallace List',
               route: '/shiplists/wallace',
             },
             {
               // title: "Snyder's Schooner Days Index",
-              title: "Snider's Index",
+              title: "Sniders Index",
               route: '/shiplists/snider',
+            },
+            {
+              title: 'Wallace Images',
+              route: '/shiplists/images',
             },
 
             {
               // title: "Snyder's Schooner Days Index",
               title: 'Research Selection Cart',
-              route: '/shiplists/detail',
+              route: '/shiplists/cart',
             },
           ],
         },
@@ -177,12 +183,14 @@ export default {
 
           ],
         },
-        { id: 0, title: 'MUSEUM', route: 'https://marmuseum.ca', submenu: [] },
+        { id: 5, title: 'MUSEUM', route: 'https://marmuseum.ca', submenu: [] },
+        // { id: 6, title: 'TEST', route: '/gsap', submenu: [] }
       ],
     }
   },
   methods: {
     toggleTheme() {
+      // this.$vuetify.theme.themes.dark.anchor ='#41B883'
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
     },
   },
@@ -190,6 +198,10 @@ export default {
 </script>
 
 <style scoped>
+
+.layout{
+  font-family:'Roboto-Regular', sans-serif;
+}
 
 .logo{
   margin-top:15px;
@@ -206,6 +218,9 @@ export default {
   padding: 0px !important;
 }
 
+v-list-item{
+  font-family: 'Roboto-Regular', sans-serif;
+}
 li {
   list-style-type: none;
   background-color: var(--museum-blue);
@@ -219,6 +234,7 @@ li a {
 
 a {
   color: white !important;
+  font-family:'Roboto-Regular', sans-serif;
   text-decoration: none;
   transition: all 0.5s ease-in-out;
 }

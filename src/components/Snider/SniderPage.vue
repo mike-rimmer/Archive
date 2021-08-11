@@ -44,10 +44,11 @@ export default {
    data() {
     return {
        headers: [
-        { text: 'Article Title', value: 'articletitle', width:'35%' },
+        { text: 'Article Title', value: 'articletitle', width:'30%' },
+        { text: 'Num', value: 'articlenum', width:'8%'},
         { text: 'Ship Name', value: 'shipname', width:'15%' },
-        { text: 'Ship Type', value: 'shiptype', width:'15%' },
-        { text: 'Where Built', value: 'places', width:'15%' },
+        { text: 'Ship Type', value: 'shiptype', width:'12%' },
+        { text: 'Where Built', value: 'wherebuilt', width:'12%' },
         // { text: 'Built', value: 'whenbuilt', width:'10%' },
         // { text: 'Captain', value: 'captain', width: '5%'},
         // { text: 'Builder', value: 'builder', width:'5%' },

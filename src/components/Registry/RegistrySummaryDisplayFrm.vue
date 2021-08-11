@@ -13,30 +13,37 @@ If a user click on a row a function is called to fetch the detailed info from th
         {{ title }}
       </h3>
 
-      <div>
-        <v-data-table
-          dense
-          :headers="headers"
-          fixed-header
-          :loading="isLoading"
-          loading-text="Data is loading ... please wait!"
-          :items="tableData"
-          height="60vh"
-          :footer-props="{
-            'items-per-page-options':[100,200,300,400,500,1000,-1]}"
-          :items-per-page="-1"
-          class="elevation-6"
-          @click:row="getDetailedRecord"
-          @contextmenu:row="loadDetailCart"
-        />
-      </div>
 
+      <v-data-table
+        :class="{ msgborder: msgAlert }"
+        dense
+        :headers="headers"
+        fixed-header
+        :loading="isLoading"
+        loading-text="Data is loading ... please wait!"
+        :items="tableData"
+        height="60vh"
+        :footer-props="{
+          'items-per-page-options':[100,200,300,400,500,1000,-1]}"
+        :items-per-page="-1"
+        class="elevation-6"
+        @contextmenu:row="loadDetailCart"
+        @click:row="getDetailedRecord"
+      />
+
+      <div
+        v-if="msgAlert"
+        style="text-align: center; color: green; font-size:1em;"
+      >
+        {{ msg }}
+      </div>
 
       <!-- Transitions class kepts in App.vue -->
       <transition name="moveleft">
         <BaseDetailPopUp
           v-show="showDetailFrm"
           :record="detailData"
+          list-type="registry"
           @closefrm="closePopUp"
         />
       </transition>
@@ -46,8 +53,7 @@ If a user click on a row a function is called to fetch the detailed info from th
 
 <script>
 
-import {mapState, mapGetters} from 'vuex'
-import APIServices from '@/services/ApiServices';
+import {mapState, mapActions, mapGetters} from 'vuex'
 import BaseDetailPopUp from '@/components/BaseComponents/BaseDetailPopUp';
 export default {
   name:"RegistrySummaryDisplayFrm",
@@ -77,23 +83,14 @@ export default {
   data() {
     return {
       search: '',
-      // headers: [
-      //   { text: 'Vessel Name & Date', value: 'field1', width:'15%' },
-      //   { text: 'Registry Infomation', value: 'field2', width:'30%' },
-      //   { text: 'Remarks', value: 'remark' },
-      // ],
-
+      msgAlert: false,
+      msg: 'This is a Message',
       showDetailFrm: false,
-      // Used to initially test the v-data-table
-      // isLoading:false,
-      detailData: {},
-
-      fetchResults:''
     }
   },
 
   computed:{
-    ...mapState('Registry', ['RegistryCurrentFilter', 'RegistryGlobal', 'RegistryCart', 'RegistryFilter', 'RegistryCartIsLoading']),
+    ...mapState('Registry', ['RegistryCurrentFilter', 'RegistryGlobal', 'RegistryCart', 'RegistryFilter', 'RegistryCartIsLoading','RegistryCurrentDetail']),
     ...mapGetters('Registry',['RegistryCartIsLoaded']),
 
     tableData(){
@@ -106,6 +103,12 @@ export default {
 
     isLoading(){
       return this.RegistryCartIsLoading
+    },
+
+    detailData(){
+      let tmp = this.RegistryCurrentDetail
+      console.log(tmp)
+      return this.RegistryCurrentDetail
     }
 
   },
@@ -119,47 +122,36 @@ export default {
 
   },
   methods: {
+    ...mapActions('Registry', ['getRegistryDetailedRecordById'] ),
+    ...mapActions('Cart',['addDetailsFromRegistry']),
 
     closePopUp(){
       this.showDetailFrm = false
     },
 
-  loadDetailCart(event, row){
-    // eslint-disable-next-line no-debugger
-    // debugger
-    event.preventDefault();
-    let resp =''
-    resp = confirm(`Add ${row.item.officialnum} to Researcher Cart`)
-    if(resp){
-      alert(` ${row.item.officialnum} added to Researcher Cart`)
-      // const payload={id:`"${item.item.notis}"`, list:'CSL' }
-      // this.loadCSLCurrentDetailandUpDateDetailCart(payload)
-    }
-    this.showMsg(row.item.officialnum)
+    loadDetailCart(event, row){
+      event.preventDefault();
+      let resp =''
+      resp = confirm(`Add ${row.item.Id} to Researcher Cart`)
+      if(resp){
+       const id = row.item.Id
+       this.addDetailsFromRegistry(id)
+       this.showMsg(id)
+      }
   },
 
+      showMsg(payload) {
+      this.msg = `Details of ${payload} saved to Cart`
+      this.msgAlert = true
+      setTimeout(() => {
+        this.msgAlert = false
+      }, 2000)
+    },
 
-
-
-    getDetailedRecord(rowData) {
-      let id = rowData.Id
-      APIServices. getRegistryDetailedRecordById(`'${id}'`)
-        .then((response) => {
-          if (!response.data.message) {
-            this.fetchResults = ''
-            this.showPopUp = false
-            this.detailData = response.data
-            this.showDetailFrm = true
-            // console.log(this.detailData)
-          } else {
-            this.fetchResults = response.data.message
-            this.showPopUp = true
-          }
-        })
-        .catch((error) => {
-          this.fetchResults = error
-          this.showPopUp = true
-        })
+  getDetailedRecord(row) {
+    let id = row.Id
+    this.getRegistryDetailedRecordById(id)
+    if(this.RegistryCurrentDetail) this.showDetailFrm = true
     },
   }
 }
@@ -177,48 +169,23 @@ h3 {
   padding: 1em;
   width: 100%;
   background-color:hsl(175, 35%,75%);
-  font-size:.7em;
+  color:black;
+  font-size:1em;
 }
 
+/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
 .v-data-table >>> table > tbody > tr > td {
 font-size: 0.8rem !important;
 }
 
-/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
-.v-data-table >>> .sticky-header {
-  position: sticky;
-  top: 0px;
-  height: 30px;
-  font-weight: bold;
-  /* background: linear-gradient(
-    to right bottom,
-    rgba(247, 248, 247, 0),
-    rgba(252, 255, 252, 0)
-  ) */
+.v-data-table >>> thead th {
+  font-weight:bold;
+  font-size:1em !important;
 }
 
-/* .glasslook{
-   background: linear-gradient(
-    to right bottom,
-    rgba(247, 248, 247, 0),
-    rgba(252, 255, 252, 0)
-    );
- } */
-
-
-.v-data-table{
-  font-size:.8em;
+.msgborder {
+  border: solid green 2px;
 }
-
-/* .theme--light.v-data-table{
-   background: linear-gradient(
-    to right bottom,
-    rgba(100,128,64,0),
-    rgba(100,128,64,.7)
-  );
-    backdrop-filter:blur(4px);
-
-} */
 
 .fade-enter-active,
 .fade-leave-active {

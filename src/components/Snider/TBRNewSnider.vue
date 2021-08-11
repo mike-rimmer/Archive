@@ -108,6 +108,7 @@ export default {
         this.showPopUp = false
         this.latestFilter = response.data
         this.isLoading = false
+        // TODO:Look into this !!!! why loadMillsCart()
         this.loadMillsCart()
       } else {
         this.errMsg = response.data.message

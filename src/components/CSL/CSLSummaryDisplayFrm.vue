@@ -25,16 +25,16 @@ If a user click on a row a function is called to fetch the detailed info from th
           'items-per-page-options': [100, 200, 300, 400, 500, 1000, -1],
         }"
         :items-per-page="-1"
-        class="glasslook elevation-6"
+        class="elevation-6"
         @contextmenu:row="loadDetailCart"
         @click:row="getDetailedRecord"
       />
 
       <div
-        v-show="msgAlert"
-        style="text-align: center; color: green"
+        v-if="msgAlert"
+        style="text-align: center; color: green; font-size:1em;"
       >
-        {{ msg }}}
+        {{ msg }}
       </div>
 
       <transition
@@ -43,7 +43,8 @@ If a user click on a row a function is called to fetch the detailed info from th
       >
         <BaseDetailPopUp
           v-show="showDetailFrm"
-          :record="currentDetail"
+          :record="detailData"
+          list-type="csl"
           @closefrm="closePopUp"
         />
       </transition>
@@ -64,11 +65,6 @@ export default {
   },
 
   props: {
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-
     headers: {
       type: Array,
       default: () => [],
@@ -92,13 +88,7 @@ export default {
       search: '',
       msgAlert: false,
       msg: 'This is a Message',
-
-      // Used to initially test the v-data-table
-
-      // isLoading:false,
       showDetailFrm: false,
-      detailData: {},
-      fetchResults: '',
     }
   },
 
@@ -122,15 +112,16 @@ export default {
       }
     },
 
-    //  showDetailFrm(){
-    //    return this.CSLShowDetail
-    //  },
+    isLoading(){
+      return this.CSLCartIsLoading
+    },
 
-    currentDetail() {
+
+    detailData() {
       if (this.CSLCurrentDetail) {
         return this.CSLCurrentDetail
       } else {
-        return ''
+        return {}
       }
     },
   },
@@ -141,12 +132,10 @@ export default {
       'loadCSLCurrentDetailandUpDateDetailCart',
     ]),
 
+    ...mapActions('Cart',['addDetailsFromCSL']),
+
     closePopUp() {
       this.showDetailFrm = false
-    },
-
-    showAlert() {
-      alert()
     },
 
     loadDetailCart(event, item) {
@@ -154,13 +143,13 @@ export default {
       // debugger
       event.preventDefault()
       let resp = ''
-      resp = confirm(`Add ${item.item.notis} to Researcher Cart`)
+      resp = confirm(`Add ${item.item.Notis} to Researcher Cart`)
       if (resp) {
-        console.log(` ${item.item.notis} added to Researcher Cart`)
-        const payload = { id: `"${item.item.notis}"`, list: 'CSL' }
-        this.loadCSLCurrentDetailandUpDateDetailCart(payload)
+        console.log(` ${item.item.Notis} added to Researcher Cart`)
+        const payload = `'${item.item.Notis}'`
+        this.addDetailsFromCSL(payload)
+        this.showMsg(item.item.Notis)
       }
-      this.showMsg(item.item.notis)
     },
 
     showMsg(payload) {
@@ -172,7 +161,7 @@ export default {
     },
 
     getDetailedRecord(rowData) {
-      this.loadCSLCurrentDetail(`'${rowData.notis}'`)
+      this.loadCSLCurrentDetail(`'${rowData.Notis}'`)
       if (this.CSLCurrentDetail) this.showDetailFrm = true
       // // this.loadCSLDetail(`'${rowData.notis}'`)
     },
@@ -191,36 +180,24 @@ h3 {
   padding: 1em;
   width: 100%;
   background-color: hsl(175, 35%, 75%);
-  font-size: 0.7em;
+  color:black;
+  font-size: 1em;
 }
 
+/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
 .v-data-table >>> table > tbody > tr > td {
   font-size: 0.8rem !important;
 }
 
-/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
-.v-data-table >>> .sticky-header {
-  position: sticky;
-  top: 0px;
-  height: 30px;
-  font-weight: bold;
-  /* background:var(--component-background-theme); */
+.v-data-table >>> thead th {
+  font-weight:bold;
+  font-size:1em !important;
 }
 
 .msgborder {
   border: solid green 2px;
 }
 
-/* .glasslook{
-  background:var(--component-background-theme);
- } */
 
-.v-data-table {
-  font-size: 0.8em;
-}
 
-/* .theme--light.v-data-table{
-   background:var(--component-background-theme);
-    backdrop-filter:blur(4px);
-} */
 </style>

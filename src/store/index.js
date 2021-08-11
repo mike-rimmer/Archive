@@ -6,6 +6,8 @@ import Registry from './Modules/Registry'
 import Owners from './Modules/Owners'
 import CSL from './Modules/CSL'
 import Snider from './Modules/Snider'
+import Cart from './Modules/Cart'
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -15,6 +17,7 @@ export default new Vuex.Store({
     Registry,
     Owners,
     CSL,
-    Snider
+    Snider,
+    Cart
     }
 })

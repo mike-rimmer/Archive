@@ -99,51 +99,40 @@
       />-->
     </v-form>
 
-    <v-row
-      v-show="OwnersFilter"
-      class="justify-center"
+    <div
+      v-if="OwnersFilter"
+      style="display:flex; flex-direction:column; justify-content:space-around;  align-items:center; background-color:#A9D6D1; color:black; "
     >
       <v-btn
+        class="my-4"
+        @click="removeLastFilter"
+      >
+        Remove Last Filter
+      </v-btn>
+
+      <v-btn
+        v-show="showClearAllFilterButton"
+        class="my-4"
         @click="resetOwnersSearchFilters"
       >
-        Clear Filters
+        Clear All Filters
       </v-btn>
-    </v-row>
-    <v-row
-      v-show="clearingFilters"
-      class="justify-center white--text mt-2"
-    >
-      <p>
-        {{ msg }}
-      </p>
-    </v-row>
-    <v-row
-      v-if="filtersOn"
-      class="justify-center white--text mt-2"
-    >
-      <p>Filter(s) Active</p>
-      <v-col>
-        <v-btn @click="removeLastFilter">
-          Remove Last Filter
-        </v-btn>
-      </v-col>
-      <v-col>
-        {{ numberOfFilters }} {{ filtersInSync }}
-      </v-col>
-    </v-row>
-    <v-row
+    </div>
+
+    <div
       v-else
-      class="justify-center white--text mt-2"
+      style="display:flex; flex-direction:column;justify-content:center; background-color:#A9D6D1; color:black; align-items:center; padding:1em; border-radius:4px;"
     >
-      <p>UnFiltered</p>
-    </v-row>
-    <v-row
+      <span>Un-Filtered</span>
+      <span>Data</span>
+    </div>
+
+    <div
       v-show="loadingDataTable"
-      justify="center"
-      class="justify-center white--text mt-2 px-4"
+      style="display:flex; color:white; background-color:green; justify-content:center; align-items:center;"
     >
-      <p>Data is Loading...<br> please wait</p>
-    </v-row>
+      <span>Data is Loading<br>...please wait...</span>
+    </div>
   </div>
 </template>
 
@@ -199,16 +188,26 @@ name:'OwnersQryFrm',
     'OwnersFilter',
     'ClearingOwnersFilters',
     'OwnersOwnersFilter',
-    'OwnersMarmumFilter',
+    'OwnersMarnumFilter',
     'OwnersPortIDFilter',
     'OwnersOwnersIDFilter',
     'OwnersSharesFilter',
     'OwnersPurchasedFilter',
     'OwnersSoldFilter',
     'OwnersResidenceFilter',
+    'OwnersFilterList'
      ]),
 
+     showClearAllFilterButton(){
+       if(this.OwnersFilterList.length  > 1){
+         return true
+       }else{
+         return false
+       }
+     },
+
      owners(){
+       if(this.OwnersCart.length>0){
        let tmp
         if(this.OwnersFilter || this.OwnersGlobal){
         tmp = this.OwnersCurrentFilter.map((ele)=>{
@@ -227,9 +226,11 @@ name:'OwnersQryFrm',
         })
         console.log("Owners", tmp2.length)
         return tmp2
-     }},
+     }
+     }else{return []}},
 
    marnum(){
+         if(this.OwnersCart.length>0){
      let tmp
        if(this.OwnersFilter || this.OwnersGlobal){
         tmp = this.OwnersCurrentFilter.map((ele)=>{
@@ -248,9 +249,11 @@ name:'OwnersQryFrm',
         })
         console.log("MarNum", tmp2.length)
         return tmp2
-     }},
+     }
+     }else{return []}},
 
    portnum(){
+         if(this.OwnersCart.length>0){
      let tmp
        if(this.OwnersFilter || this.OwnersGlobal){
         tmp = this.OwnersCurrentFilter.map((ele)=>{
@@ -270,11 +273,12 @@ name:'OwnersQryFrm',
         console.log('Port Num',tmp2.length)
         return tmp2
 
-    }},
+    }}else{return []}},
 
 
 
     residence(){
+     if(this.OwnersCart.length>0){
       let tmp
       if(this.OwnersFilter || this.OwnersGlobal){
         tmp = this.OwnersCurrentFilter.map((ele)=>{
@@ -294,7 +298,7 @@ name:'OwnersQryFrm',
         })
         console.log("Residence", tmp2.length)
         return tmp2
-    }},
+    }}else{return []}},
 
 
 
@@ -311,7 +315,7 @@ name:'OwnersQryFrm',
      },
 
     marnumFilter(){
-      return this.OwnersMarmumFilter ? 'mdi-filter' : 'mdi-menu-down'
+      return this.OwnersMarnumFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
     portFilter(){

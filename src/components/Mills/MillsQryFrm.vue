@@ -80,53 +80,39 @@
     </v-form>
 
     <!-- <BaseButton -->
-    <v-row
-      v-show="MillsFilter"
-      class="justify-center"
+    <div
+      v-if="MillsFilter"
+      style="display:flex; flex-direction:column; justify-content:space-around;  align-items:center; background-color:#A9D6D1; color:black; "
     >
       <v-btn
+        class="my-4"
+        @click="removeLastFilter"
+      >
+        Remove Last Filter
+      </v-btn>
+      <v-btn
+        v-show="showClearAllFilterButton"
+        class="my-4"
         @click="resetMillsSearchFilters"
       >
-        Clear Filters
+        Clear All Filters
       </v-btn>
-    </v-row>
-    <v-row
-      v-show="clearingFilters"
-      class="justify-center white--text mt-2"
-    >
-      <p>
-        {{ msg }}
-      </p>
-    </v-row>
-    <v-row
-      v-if="filtersOn"
-      class="justify-center white--text mt-2"
-    >
-      <p>Filter(s) Active</p>
-      <v-col>
-        <v-btn @click="removeLastFilter">
-          Remove Last Filter
-        </v-btn>
-      </v-col>
-      <v-col>
-        {{ numberOfFilters }} {{ filtersInSync }}
-      </v-col>
-    </v-row>
-    <v-row
+    </div>
+
+
+    <div
       v-else
-      class="justify-center white--text mt-2"
+      style="display:flex; flex-direction:column;justify-content:center; background-color:#A9D6D1; color:black; align-items:center; padding:1em; border-radius:4px;"
     >
-      <p>UnFiltered</p>
-    </v-row>
-    <v-row
+      <span>Un-Filtered</span>
+      <span>Data</span>
+    </div>
+    <div
       v-show="loadingDataTable"
-      justify="center"
-      class="justify-center white--text mt-2 px-4"
+      style="display:flex; color:white; background-color:green; justify-content:center; align-items:center;"
     >
-      <p>Data is Loading...<br> please wait</p>
-    </v-row>
-    <!-- {{ MillsFilter }} {{ MillsGlobal }} -->
-    <!-- </BaseButton> -->
+      <span>Data is Loading...<br>...please wait...</span>
+    </div>
   </div>
 </template>
 
@@ -174,6 +160,7 @@ export default {
       'MillsGlobal',
       'MillsCartIsLoading',
       'MillsFilter',
+      'MillsOwnerFilter',
       'MillsVesselFilter',
       'MillsDateFilter',
       'MillsProvinceFilter',
@@ -193,7 +180,7 @@ export default {
     },
 
     ownersFilter() {
-      return this.MillsOwnersFilter ? 'mdi-filter' : 'mdi-menu-down'
+      return this.MillsOwnerFilter ? 'mdi-filter' : 'mdi-menu-down'
     },
 
     vesselFilter() {
@@ -232,7 +219,16 @@ export default {
       return this.ClearingMillsFilters
     },
 
+    showClearAllFilterButton(){
+      if(this.MillsFilterList.length> 1){
+        return true
+      }else{
+        return false
+      }
+    },
+
     owners() {
+      if(this.MillsCart.length>0){
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
@@ -248,12 +244,15 @@ export default {
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
+         console.log("Mills Query Begin")
         console.log('Owners', tmp2.length)
         return tmp2
       }
+    }else{return []}
     },
 
     years() {
+       if(this.MillsCart.length>0){
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
@@ -272,9 +271,11 @@ export default {
         console.log('Date Built', tmp2.length)
         return tmp2
       }
+      }else{return []}
     },
 
     ships() {
+       if(this.MillsCart.length>0){
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
@@ -293,9 +294,11 @@ export default {
         console.log('Vessel Name', tmp2.length)
         return tmp2
       }
+    }else{return []}
     },
 
     place() {
+       if(this.MillsCart.length>0){
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
@@ -314,10 +317,12 @@ export default {
         console.log('Places', tmp2.length)
         return tmp2
       }
+      }else{return []}
     },
 
 
     reasonList() {
+      if(this.MillsCart.length>0){
       let tmp
       if (this.MillsFilter || this.MillsGlobal) {
         tmp = this.MillsCurrentFilter.map((ele) => {
@@ -334,8 +339,10 @@ export default {
           return array.indexOf(ele) == index
         })
         console.log('Reason Closed', tmp2.length)
+        console.log("Mills Query End")
         return tmp2
       }
+      }else{return []}
     },
 
 
@@ -429,6 +436,9 @@ export default {
       let last = this.MillsFilterList.length - 1
       let ele = this.MillsFilterList[last].varfilter
       switch (ele) {
+        case 'ownersSelected':
+          this.ownersSelected=''
+          break;
         case 'reasonSelected':
           this.reasonSelected = ''
           break

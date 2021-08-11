@@ -2,7 +2,9 @@
   <div>
     <ResearchBase :isgray="noGray">
       <template v-slot:intro>
-        <h3>SUPPORT THE COLLECTION</h3>
+        <h3 style="margin-bottom:15px;">
+          SUPPORT THE COLLECTION
+        </h3>
         <p>Thank you for your interest in supporting the Museum’s collections. There are a number of ways you can support the collection; including monetary contributions.  Donations to our General Fund supports collections and exhibit work, along with other Museum projects; while donations to the Digital Collections Fund will provide funds for the digitising of the collection - namely ship plans and photographs. If you would like to contribute to either of the funds, please use the form below.</p>
 
         <p><span style="font-weight:bold;">Why digitise the collection? </span>Digital collections provide greater access for educational and research purposes, allowing individuals to access the collections remotely. A digital collection also facilitates virtual educational programs with local schools and the community.</p>

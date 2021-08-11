@@ -22,6 +22,15 @@
         dense
       />
 
+      <v-autocomplete
+        v-model="articleNumSelected"
+        :append-icon="articleNumFilter"
+        :items="articleNum"
+        label="Article Number:"
+        required
+        dense
+      />
+
 
       <v-autocomplete
         v-model="shipSelected"
@@ -62,52 +71,39 @@
     </v-form>
 
     <!-- <BaseButton -->
-    <v-row
-      v-show="SniderFilter"
-      class="justify-center"
+    <div
+      v-if="SniderFilter"
+      style="display:flex; flex-direction:column; justify-content:space-around;  align-items:center; background-color:#A9D6D1; color:black; "
     >
       <v-btn
+        class="my-4"
+        @click="removeLastFilter"
+      >
+        Remove Last Filter
+      </v-btn>
+
+      <v-btn
+        v-show="showClearAllFilterButton"
+        class="my-4"
         @click="resetSniderSearchFilters"
       >
-        Clear Filters
+        Clear All Filters
       </v-btn>
-    </v-row>
-    <v-row
-      v-show="clearingFilters"
-      class="justify-center white--text mt-2"
-    >
-      <p>
-        {{ msg }}
-      </p>
-    </v-row>
-    <v-row
-      v-if="filtersOn"
-      class="justify-center white--text mt-2"
-    >
-      <p>Filter(s) Active</p>
-      <v-col>
-        <v-btn @click="removeLastFilter">
-          Remove Last Filter
-        </v-btn>
-      </v-col>
-      <v-col>
-        {{ numberOfFilters }} {{ filtersInSync }}
-      </v-col>
-    </v-row>
-    <v-row
+    </div>
+
+
+    <div
       v-else
-      class="justify-center white--text mt-2"
+      style="display:flex; flex-direction:column;justify-content:center; background-color:#A9D6D1; color:black; align-items:center; padding:1em; border-radius:4px;"
     >
       <p>UnFiltered</p>
-    </v-row>
-    <v-row
+    </div>
+    <div
       v-show="loadingDataTable"
-      justify="center"
-      class="justify-center white--text mt-2 px-4"
+      style="display:flex; color:white; background-color:green; justify-content:center; align-items:center;"
     >
-      <p>Data is Loading...<br>please wait</p>
-    </v-row>
-    <!-- </BaseButton> -->
+      <span>Data is Loading<br>...please wait...</span>
+    </div>
   </div>
 </template>
 
@@ -130,6 +126,7 @@ name:'SniderQryFrm',
     return {
       SniderName:'Owners Registry ',
       articleSelected:'',
+      articleNumSelected:'',
       shipSelected:'',
       shipTypeSelected:'',
       placeBuiltSelected:'',
@@ -161,14 +158,19 @@ name:'SniderQryFrm',
     'SniderFilter',
     'ClearingSniderFilters',
     'SniderArticleFilter',
+    'SniderArticleNumFilter',
     'SniderShipFilter',
-    'SniderShipTypeFilter ',
+    'SniderShipTypeFilter',
     'SniderPlaceBuiltFilter',
     'SniderPeopleFilter'
     ]),
 
       articleFilter(){
         return this.SniderArticleFilter ?  'mdi-filter' : 'mdi-menu-down'
+      },
+
+      articleNumFilter(){
+        return this.SniderArticleNumFilter ?  'mdi-filter' : 'mdi-menu-down'
       },
 
       shipFilter(){
@@ -203,7 +205,16 @@ name:'SniderQryFrm',
         return this.ClearingSniderFilters
       },
 
+      showClearAllFilterButton(){
+        if(this.SniderFilterList.length > 1){
+          return true
+        }else{
+          return false
+        }
+      },
+
     article(){
+      if(this.SniderCart.length > 0){
       let tmp
         if(this.SniderFilter || this.SniderGlobal){
           tmp = this.SniderCurrentFilter.map((ele)=>{
@@ -222,9 +233,34 @@ name:'SniderQryFrm',
         console.log('Article Title', tmp2.length)
         return tmp2
 
-    }},
+    }}else{return []}
+    },
+
+    articleNum(){
+      if(this.SniderCart.length > 0){
+      let tmp
+        if(this.SniderFilter || this.SniderGlobal){
+          tmp = this.SniderCurrentFilter.map((ele)=>{
+          if (ele.articlenum != '' || ele.articlenum.trim() !== 'undefined')
+          return parseInt(ele.articlenum)
+          }).sort()
+        return tmp
+        }else{
+          tmp = this.SniderCart.map((ele)=>{
+           if (ele.articlenum != '' || ele.articlenum.trim() !== 'undefined')
+            return parseInt(ele.articlenum)
+        }).sort((a, b)=> parseInt(a) > parseInt(b))
+        let tmp2 = tmp.filter((ele, index, array) => {
+          return array.indexOf(ele) == index
+        })
+        console.log('Article Number', tmp2.length)
+        return tmp2
+
+    }}else{return []}
+    },
 
     ship(){
+      if(this.SniderCart.length > 0){
       let tmp
       if(this.SniderFilter || this.SniderGlobal){
         tmp = this.SniderCurrentFilter.map((ele)=>{
@@ -242,9 +278,10 @@ name:'SniderQryFrm',
         })
         console.log('Ship Name',tmp2.length)
         return tmp2
-   }},
+   }}else{return []}},
 
     shipType(){
+      if(this.SniderCart.length > 0){
       let tmp
       if(this.SniderFilter || this.SniderGlobal){
         tmp = this.SniderCurrentFilter.map((ele)=>{
@@ -262,29 +299,30 @@ name:'SniderQryFrm',
         })
         console.log('Ship type', tmp2.length)
         return tmp2
-   }},
+   }}else{return []}},
 
 
 
     placeBuilt(){
+      if(this.SniderCart.length > 0){
       let tmp
       if(this.SniderFilter || this.SniderGlobal){
         tmp = this.SniderCurrentFilter.map((ele)=>{
-       if (ele.places != '' || ele.places.trim() !== 'undefined')
-             return ele.places
+       if (ele.wherebuilt != '' || ele.wherebuilt.trim() !== 'undefined')
+             return ele.wherebuilt
          }).sort()
        return tmp
        }else{
         tmp = this.SniderCart.map((ele)=>{
-             if (ele.places != '' || ele.places.trim() !== 'undefined')
-            return ele.places
+             if (ele.wherebuilt != '' || ele.wherebuilt.trim() !== 'undefined')
+            return ele.wherebuilt
       }).sort()
        let tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
         console.log('Places', tmp2.length)
         return tmp2
-   }},
+   }}else{return []}},
 
   //   builder(){
   //     if(this.SniderFilter || this.SniderGlobal){
@@ -299,6 +337,7 @@ name:'SniderQryFrm',
   //  }},
 
     people(){
+      if(this.SniderCart.length > 0){
       let tmp
       if(this.SniderFilter || this.SniderGlobal){
         tmp = this.SniderCurrentFilter.map((ele)=>{
@@ -316,7 +355,7 @@ name:'SniderQryFrm',
         })
         console.log('People', tmp2.length)
         return tmp2
-   }},
+   }}else{return []}},
 
   loadingDataTable(){
     return this.SniderCartIsLoading
@@ -340,6 +379,14 @@ name:'SniderQryFrm',
       if (val!='' && val != oldVal)
        this.applyFilterToCartwithRegExp({ key:"articletitle", value:val, varfilter:'articleSelected' })
     },
+
+    articleNumSelected(val, oldVal) {
+      // Note the key is the field name that represents each of the columns in the v-data-table
+      if (val!='' && val != oldVal){
+       const exp = new RegExp('\\b'+ val +'\\b')
+       this.applyFilterToCartwithRegExp({ key:"articlenum", value:exp, varfilter:'articleNumSelected' })
+    }
+    },
      shipSelected(val,oldVal){
       if (val!='' && val != oldVal)
       this.applyFilterToCartwithRegExp({ key:"shipname", value:val, varfilter:'shipSelected' })
@@ -351,7 +398,7 @@ name:'SniderQryFrm',
 
       placeBuiltSelected(val, oldVal){
         if (val!='' && val != oldVal)
-       this.applyFilterToCartwithRegExp({ key:"places", value:val, varfilter:'placeBuiltSelected' })
+       this.applyFilterToCartwithRegExp({ key:"wherebuilt", value:val, varfilter:'placeBuiltSelected' })
      },
     //  builderSelected(val, oldVal){
     //     if (val!='' && val != oldVal)
@@ -382,22 +429,25 @@ name:'SniderQryFrm',
 
     resetSniderSearchFilters(){
       this.articleSelected='',
+      this.articleNumSelected='',
       this.shipSelected='',
       this.shipTypeSelected='',
-      this.shipTypeSelected='',
-      this.yearBuiltSelected='',
-      this.builderSelected='',
+      this.placeBuiltSelected='',
       this.peopleSelected='',
       this.clearSniderFilters(true)
     },
 
 
     removeLastFilter(){
+
       let last = this.SniderFilterList.length-1
       let ele = this.SniderFilterList[last].varfilter
       switch(ele){
         case 'articleSelected':
           this.articleSelected = ''
+          break;
+        case 'articleNumSelected':
+          this.articleNumSelected = ''
           break;
         case 'shipSelected':
           this.shipSelected=''
@@ -418,56 +468,6 @@ name:'SniderQryFrm',
 
     },
 
-
-
-    // resetSearch(){
-    //   this.$emit('clearSniderSummaryFrm')
-    //   this.searchVariable=''
-    //   this.resetSearchVariables()
-    // },
-
-    // getSniderSummaryList(val){
-    //   if(val=='Select None'){
-    //   this.$emit('clearSniderSummaryFrm')
-    //   return
-    //   }
-    //   this.$emit('SnidersearchAll', this.allSelected)
-    //   this.searchVariable = 'searchAll'
-    //   this.resetSearchVariables()
-    // },
-
-
-    //   performGlobalSearch(){
-    //   // alert(` Search Criteria ${this.globalSearch}`)
-    //   this.$emit('SniderglobalSearch', this.globalSearch)
-    //   this.searchVariable = 'general'
-    //   this.resetSearchVariables()
-    // },
-
-
-
-    // resetSearchVariables() {
-    //   // close the popupfrm showing record details
-    //   this.$emit('hidePopUp')
-    //   switch (this.searchVariable) {
-    //     case '':
-    //       this.allSelected =''
-    //       this.globalSearch = ''
-    //       break
-
-    //     case 'searchAll':
-    //       // this.SniderSelected =''
-    //       this.globalSearch = ''
-    //       break
-
-    //     case 'general':
-    //      this.SniderSelected =''
-    //       // this.globalSearch = ''
-    //       break
-
-    //     default:
-    //   }
-    // },
   },
 }
 </script>

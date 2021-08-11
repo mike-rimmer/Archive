@@ -4,7 +4,7 @@ const csl = {
   intro:
   `
   <h1>Marine Museum of the Great Lakes</h1>
-  <h1 style='margin-bottom:15px;'>is pleased to host the <span style="color:#39947f;">Canada Steamship Registry</span></h1>
+  <h1 style='margin-bottom:15px;'>is pleased to host the <span style="color:#39947f;">CSL List</span></h1>
 
   <h3>Preface</h3>
 

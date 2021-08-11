@@ -46,13 +46,13 @@ export default {
       return {
         height:'380',
         csl:[],
-        title:"CANADIAN SHIP REGISTRY LIST",
+        title:"CANADIAN REGISTRY",
         // registryTitle:'CANADIAN SHIP REGISTRY LIST',
         showPopUp:false,
         registryData:[],
         errMsg:'',
         headers: [
-        { text: 'Official Num', value: 'officialnum', width:'15%'},
+        { text: 'Official #', value: 'officialnum', width:'10%'},
         { text: 'Vessel', value: 'vessel', width:'18%'},
         { text: 'Registration', value: 'reg', width:'18%'},
         { text: 'Reg Date', value: 'regyear', width:'10%' },

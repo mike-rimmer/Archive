@@ -16,8 +16,8 @@
       <v-autocomplete
         v-model="notisSelected"
         :append-icon="notisFilter"
-        :items="notis"
-        label="MarMuseum No:"
+        :items="Notis"
+        label="Notis No:"
         required
         dense
       />
@@ -76,51 +76,39 @@
     </v-form>
 
     <!-- <BaseButton -->
-    <v-row
-      v-show="CSLFilter"
-      class="justify-center"
+    <div
+      v-if="showCSLFilter"
+      style="display:flex; flex-direction:column; justify-content:space-around;  align-items:center; background-color:#A9D6D1; color:black; "
     >
       <v-btn
+        class="my-4"
+        @click="removeLastFilter"
+      >
+        Remove Last Filter
+      </v-btn>
+
+      <v-btn
+        v-show="showClearAllFilterButton"
+        class="my-4"
         @click="resetCSLSearchFilters"
       >
-        Clear Filters
+        Clear All Filters
       </v-btn>
-    </v-row>
-    <v-row
-      v-show="clearingFilters"
-      class="justify-center white--text mt-2"
-    >
-      <p>
-        {{ msg }}
-      </p>
-    </v-row>
-    <v-row
-      v-if="filtersOn"
-      class="justify-center white--text mt-2"
-    >
-      <p>Filter(s) Active</p>
-      <v-col>
-        <v-btn @click="removeLastFilter">
-          Remove Last Filter
-        </v-btn>
-      </v-col>
-      <v-col>
-        {{ numberOfFilters }} {{ filtersInSync }}
-      </v-col>
-    </v-row>
-    <v-row
+    </div>
+
+    <div
       v-else
-      class="justify-center white--text mt-2"
+      style="display:flex; flex-direction:column;justify-content:center; background-color:#A9D6D1; color:black; align-items:center; padding:1em; border-radius:4px;"
     >
-      <p>UnFiltered</p>
-    </v-row>
-    <v-row
+      <span>UnFiltered</span>
+    </div>
+
+    <div
       v-show="loadingDataTable"
-      justify="center"
-      class="justify-center white--text mt-2 px-4"
+      style="display:flex; color:white; background-color:green; justify-content:center; align-items:center;"
     >
       <p>Data is Loading...<br>please wait</p>
-    </v-row>
+    </div>
     <!-- </BaseButton> -->
   </div>
 </template>
@@ -176,41 +164,41 @@ name:'CSLQryFrm',
     'CSLCartIsLoading',
     'CSLFilter',
     'ClearingCSLFilters',
-    'CSLnotisFilter',
-    'CSLofficialNumFilter',
-    'CSLshipNameFilter ',
-    'CSLshipTypeFilter',
-    'CSLbuiltFilter',
-    'CSLbuilderFilter',
-    'CSLcountryFilter'
+    'CSLNotisFilter',
+    'CSLOfficialNumFilter',
+    'CSLVesselFilter',
+    'CSLVesselTypeFilter',
+    'CSLYearBuiltFilter',
+    'CSLBuilderFilter',
+    'CSLBuildCountryFilter',
     ]),
 
       notisFilter(){
-        return this.CSLnotisFilter ?  'mdi-filter' : 'mdi-menu-down'
+        return this.CSLNotisFilter ?  'mdi-filter' : 'mdi-menu-down'
       },
 
       officialNumFilter(){
-        return this.CSLofficialNumFilter ?  'mdi-filter' : 'mdi-menu-down'
+        return this.CSLOfficialNumFilter ?  'mdi-filter' : 'mdi-menu-down'
       },
 
       shipNameFilter(){
-        return this.CSLshipNameFilter ?  'mdi-filter' : 'mdi-menu-down'
+        return this.CSLVesselFilter ?  'mdi-filter' : 'mdi-menu-down'
       },
 
       shipTypeFilter(){
-        return this.CSLshipTypeFilter ?  'mdi-filter' : 'mdi-menu-down'
+        return this.CSLVesselTypeFilter ?  'mdi-filter' : 'mdi-menu-down'
       },
 
       yearBuiltFilter(){
-        return this.CSLbuiltFilter ?  'mdi-filter' : 'mdi-menu-down'
+        return this.CSLYearBuiltFilter ?  'mdi-filter' : 'mdi-menu-down'
       },
 
       builderFilter(){
-        return this.CSLbuilderFilter ?  'mdi-filter' : 'mdi-menu-down'
+        return this.CSLBuilderFilter ?  'mdi-filter' : 'mdi-menu-down'
       },
 
       countryFilter(){
-        return this.CSLcountryFilter ?  'mdi-filter' : 'mdi-menu-down'
+        return this.CSLBuildCountryFilter ?  'mdi-filter' : 'mdi-menu-down'
       },
 
       filtersOn(){
@@ -221,27 +209,42 @@ name:'CSLQryFrm',
         return this.ClearingCSLFilters
       },
 
-      notis(){
-      let tmp
-        if(this.CSLFilter || this.CSLGlobal){
-          tmp = this.CSLCurrentFilter.map((ele)=>{
-          if (ele.notis != '' || ele.notis.trim() !== 'undefined')
-          return ele.notis
-          }).sort()
-        return tmp
+      showCSLFilter(){
+         return this.CSLFilter
+      },
+
+      showClearAllFilterButton(){
+        if(this.CSLFilterList.length > 1){
+          return true
         }else{
+          return false
+        }
+      },
+
+      Notis(){
+        if(this.CSLCart.length > 0){
+         let tmp
+          if(this.CSLFilter || this.CSLGlobal){
+            tmp = this.CSLCurrentFilter.map((ele)=>{
+            return ele.Notis
+            }).sort()
+          return tmp
+          }else{
         tmp = this.CSLCart.map((ele)=>{
-          if (ele.notis != '' || ele.notis.trim() !== 'undefined')
-            return ele.notis
+          return ele.Notis
         }).sort()
         var tmp2 = tmp.filter((ele, index, array) => {
           return array.indexOf(ele) == index
         })
         console.log('Notis', tmp2.length)
         return tmp2
-    }},
+    }}else{
+      return []
+    }
+    },
 
     officialNum(){
+       if(this.CSLCart.length > 0){
       let tmp
       if(this.CSLFilter || this.CSLGlobal){
         tmp = this.CSLCurrentFilter.map((ele)=>{
@@ -259,9 +262,12 @@ name:'CSLQryFrm',
         })
         console.log('num', tmp2.length)
         return tmp2
-   }},
+   }}
+   else{return []}
+   },
 
     shipName(){
+       if(this.CSLCart.length > 0){
       var tmp
       if(this.CSLFilter || this.CSLGlobal){
         tmp = this.CSLCurrentFilter.map((ele)=>{
@@ -280,9 +286,10 @@ name:'CSLQryFrm',
         console.log('Ship Name', tmp2.length)
         return tmp2
 
-   }},
+   }}else{return []}},
 
     shipType(){
+       if(this.CSLCart.length > 0){
       let tmp
       if(this.CSLFilter || this.CSLGlobal){
         tmp = this.CSLCurrentFilter.map((ele)=>{
@@ -301,9 +308,10 @@ name:'CSLQryFrm',
         console.log('Ship Type', tmp2.length)
         return tmp2
 
-   }},
+   }} else {return []}},
 
     yearBuilt(){
+       if(this.CSLCart.length > 0){
       let tmp
       if(this.CSLFilter || this.CSLGlobal){
         tmp = this.CSLCurrentFilter.map((ele)=>{
@@ -321,9 +329,11 @@ name:'CSLQryFrm',
         })
         console.log('Year Built', tmp2.length)
         return tmp2
-   }},
+       }
+   }else{return []}},
 
     builder(){
+       if(this.CSLCart.length > 0){
       let tmp
       if(this.CSLFilter || this.CSLGlobal){
         tmp = this.CSLCurrentFilter.map((ele)=>{
@@ -341,9 +351,11 @@ name:'CSLQryFrm',
         })
         console.log('Builders', tmp2.length)
         return tmp2
-   }},
+   }}else{return []}
+    },
 
     country(){
+       if(this.CSLCart.length > 0){
       let tmp
       if(this.CSLFilter || this.CSLGlobal){
       tmp = this.CSLCurrentFilter.map((ele)=>{
@@ -361,7 +373,7 @@ name:'CSLQryFrm',
         })
         console.log('OffNums', tmp2.length)
         return tmp2
-   }},
+   }}else {return []}},
 
   loadingDataTable(){
     return this.CSLCartIsLoading
@@ -382,32 +394,45 @@ name:'CSLQryFrm',
 
     notisSelected(val, oldVal) {
       // Note the key is the field name that represents each of the columns in the v-data-table
-      if (val!='' && val != oldVal)
-       this.applyFilterToCartwithRegExp({ key:"notis", value:val, varfilter:'notisSelected' })
+      if (val!='' && val != oldVal){
+        let tmp = '\\'+ val.substring(0,6)+'\\'+val.substring(6)
+       this.applyFilterToCartwithRegExp({ key:"Notis", value:tmp, varfilter:'notisSelected' })
+      }
     },
+
+     shipNameSelected(val, oldVal){
+      if (val!='' && val != oldVal)
+        this.applyFilterToCartwithRegExp({ key:"name", value:val, varfilter:'shipNameSelected' })
+      },
+
      officialNumSelected(val,oldVal){
       if (val!='' && val != oldVal)
       this.applyFilterToCartwithRegExp({ key:"num", value:val, varfilter:'officialNumSelected' })
      },
-     shipNameSelected(val, oldVal){
-      if (val!='' && val != oldVal)
-       this.applyFilterToCartwithRegExp({ key:"name", value:val, varfilter:'shipNameSelected' })
-     },
+
      shipTypeSelected(val, oldVal){
-        if (val!='' && val != oldVal)
-       this.applyFilterToCartwithRegExp({ key:"type", value:val, varfilter:'shipTypeSelected' })
+      if (val!='' && val != oldVal){
+       var exp = val.indexOf('(')
+       if(exp != -1){
+         exp = this.optimizeExp(val)
+         this.applyFilterToCartwithRegExp({ key:"type", value:exp, varfilter:'shipTypeSelected' })
+       }else{
+         this.applyFilterToCartwithRegExp({ key:"type", value:val, varfilter:'shipTypeSelected' })
+       }
+
+      }
      },
       yearBuiltSelected(val, oldVal){
         if (val!='' && val != oldVal)
-       this.applyFilterToCartwithRegExp({ key:"yearbuilt", value:val, varfilter:'officialNumSelected' })
+       this.applyFilterToCartwithRegExp({ key:"yearbuilt", value:val, varfilter:'yearBuiltSelected' })
      },
      builderSelected(val, oldVal){
         if (val!='' && val != oldVal)
-       this.applyFilterToCartwithRegExp({ key:"builder", value:val, varfilter:'officialNumSelected' })
+       this.applyFilterToCartwithRegExp({ key:"builder", value:val, varfilter:'builderSelected' })
      },
      countrySelected(val, oldVal){
         if (val!='' && val != oldVal)
-       this.applyFilterToCartwithRegExp({ key:"buildcntry", value:val, varfilter:'officialNumSelected' })
+       this.applyFilterToCartwithRegExp({ key:"buildcntry", value:val, varfilter:'countrySelected' })
      }
 
   },
@@ -420,6 +445,16 @@ name:'CSLQryFrm',
 
   methods: {
     ...mapActions('CSL',['setCSLCartIsLoading', 'clearCSLFilters', 'setCSLFilteredCart', 'removeCSLLastFilter', 'CSLGlobalSearch']),
+
+    optimizeExp(val){
+      // find index of 1st occurance of '(')
+      const p1 = val.indexOf('(')
+      const p2 = -1
+      let newstr = val.split('')
+      newstr.splice(p1,0,'\\')
+      newstr.splice(p2,0,'\\')
+      return newstr.join('')
+    },
 
     applyFilterToCartwithRegExp(payload){
       this.setCSLCartIsLoading(true)
@@ -466,6 +501,7 @@ name:'CSLQryFrm',
           this.countrySelected =''
           break;
       }
+
       this.removeCSLLastFilter()
 
     },

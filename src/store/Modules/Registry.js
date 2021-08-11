@@ -7,13 +7,14 @@ const state = () =>({
   RegistryCartIsLoading: false,
   RegistryAppliedFilters: [],
   RegistryFilterList: [],
+  RegistryCurrentDetail : {},
   RegistryFilter: false,
-  regNumberFilter: false,
-  regVesselFilter: false,
-  regRegistrationFilter: false,
-  regRegistrationDateFilter: false,
-  regBuilderFilter: false,
-  regRigFilter: false,
+  RegNumberFilter: false,
+  RegVesselFilter: false,
+  RegRegistrationFilter: false,
+  RegRegistrationDateFilter: false,
+  RegBuilderFilter: false,
+  RegRigFilter: false,
   ClearingRegistryFilters: false,
   RegistryGlobal: false,
 })
@@ -45,18 +46,22 @@ const mutations = {
     state.RegistryGlobalCart = [...payload]
   },
 
+  LOAD_REGISTRY_DETAILS(state, payload){
+    state.RegistryCurrentDetail = payload
+  },
+
 
   CLEAR_REGISTRY_FILTERS: (state) => {
     state.ClearingRegistryFilters = true
     state.RegistryGlobal = false
     state.RegistryFilter = false,
-      state.regNumberFilter = false,
-      state.regVesselFilter = false,
-      state.regRegistrationFilter = false,
-      state.regRegistrationDateFilter = false,
-      state.regBuilderFilter = false,
-      state.regRigFilter = false,
-      state.ClearingRegistryFilters = false
+    state.RegNumberFilter = false,
+    state.RegVesselFilter = false,
+    state.RegRegistrationFilter = false,
+    state.RegRegistrationDateFilter = false,
+    state.RegBuilderFilter = false,
+    state.RegRigFilter = false,
+    state.ClearingRegistryFilters = false
     // Set RegistryCurrentFilter to zero length
     state.RegistryAppliedFilters.length = 0
     state.RegistryCurrentFilter.length = 0
@@ -70,27 +75,27 @@ const mutations = {
 
       switch (filter.key) {
         case 'officialnum':
-          state.regNumberFilter = false;
+          state.RegNumberFilter = false;
           break;
 
         case 'vessel':
-          state.regVesselFilter = false;
+          state.RegVesselFilter = false;
           break;
 
         case 'reg':
-          state.regRegistrationFilter = false;
+          state.RegRegistrationFilter = false;
           break;
 
-        case 'regdate':
-          state.regRegistrationDateFilter = false;
+        case 'regyear':
+          state.RegRegistrationDateFilter = false;
           break;
 
         case 'builder':
-          state.regBuilderFilter = false;
+          state.RegBuilderFilter = false;
           break;
 
         case 'rig':
-          state.regRigFilter = false;
+          state.RegRigFilter = false;
           break;
 
         default:
@@ -118,22 +123,22 @@ const mutations = {
   SET_REGISTRY_FILTERED_CART: (state, { key, value, varfilter }) => {
     switch (key) {
       case 'officialnum':
-        state.regNumberFilter = true
+        state.RegNumberFilter = true
         break;
       case 'vessel':
-        state.regVesselFilter = true
+        state.RegVesselFilter = true
         break;
       case 'reg':
-        state.regRegistrationFilter = true
+        state.RegRegistrationFilter = true
         break;
       case 'regyear':
-        state.regRegistrationDateFilter = true
+        state.RegRegistrationDateFilter = true
         break;
       case 'builder':
-        state.regBuilderFilter = true
+        state.RegBuilderFilter = true
         break;
       case 'rig':
-        state.regRigFilter = true
+        state.RegRigFilter = true
         break;
       default:
     }
@@ -189,6 +194,16 @@ const actions ={
     catch (err) {
       return alert(err.message)
     }
+  },
+
+  async getRegistryDetailedRecordById({commit}, id){
+  try{
+    let response = await ApiServices.getRegistryDetailedRecordById(`'${id}'`)
+    commit('LOAD_REGISTRY_DETAILS', response.data)
+  }
+  catch(err){
+    return alert(err.message)
+  }
   },
 
   async registryGlobalSearch ({ commit }, payload) {

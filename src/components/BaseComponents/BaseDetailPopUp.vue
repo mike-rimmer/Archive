@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="scrollToMe"
     class="detailcard"
     :record="record"
   >
@@ -41,11 +42,11 @@
             </p>
           </div>
           <div
-            v-if="showImage"
+            v-if="DisplayImage"
             class="imagearea"
           >
             <img
-              :src="IMGPATH+mapInfo.url"
+              :src="$IMGPATH+mapInfo.url"
               :alt="mapInfo.name"
             >
           </div>
@@ -123,9 +124,15 @@ export default {
       default: () => {},
       required: true,
     },
+
+    listType:{
+      type:String,
+      default:''
+    },
+
     mapInfo: {
       type: Object,
-      default: () => ({ url: '', name: '' }),
+      default: () => ({url:'none', name:'none'}) ,
     },
   },
 
@@ -133,20 +140,25 @@ export default {
     return {
       fab: false,
       showbtn:true,
-      IMGPATH:
-        'http://localhost/shiplists2/list-db-server/images/wallaceships/',
     }
   },
 
-  methods: {
-    ...mapActions('CSL', ['loadCSLDetailToCart']),
-
-    showImage() {
-      if (this.mapInfo.url) {
+  computed:{
+    DisplayImage() {
+      if (this.mapInfo.url == 'none') {
+        return false
+      }else{
         return true
       }
-      return false
     },
+  },
+
+  updated(){
+    this.goToTop()
+  },
+
+  methods: {
+    ...mapActions('Cart', ['addDetailsFromRegistry','addDetailsFromCSL', 'addDetailsFromMills','addDetailsFromOwners', 'addDetailsFromWalls', 'addDetailsFromSnider' ]),
 
     CloseDetailPopUp() {
       this.visible = false
@@ -154,8 +166,37 @@ export default {
     },
 
     addItem2Store() {
-      // alert(this.record.Notis)
-      this.loadCSLDetailToCart(this.record)
+      let token =''
+      switch (this.listType){
+        case 'registry':
+          token = this.record.Id
+          this.addDetailsFromRegistry(token)
+          break;
+        case 'csl':
+          token = `"${this.record.Notis}"`
+          this.addDetailsFromCSL(token)
+          break;
+        case 'mills':
+        token = this.record.mills
+          this.addDetailsFromMills(token)
+          break;
+        case 'owners':
+          token = this.record.Id
+          this.addDetailsFromOwners(token)
+          break;
+        case 'wallace':
+          token = this.record.id
+          this.addDetailsFromWalls(token)
+          break;
+        case 'sniders':
+          token = this.record.id
+          this.addDetailsFromSnider(token)
+          break;
+
+          default:
+
+      }
+
     },
 
     printCard() {
@@ -185,9 +226,11 @@ export default {
     },
 
     goToTop() {
-      let tag = document.getElementById('basePop')
-      tag.scroll(0, 0)
-    },
+      const el = this.$refs.scrollToMe
+      if (el){
+        el.scrollTop =  20
+      }
+      },
   },
 }
 
@@ -214,19 +257,28 @@ export default {
   z-index: 500;
 }
 
-.details {
+/* .details {
   display: grid;
+  grid-template-columns: 40% 5% 55%;
+  grid-template-areas: 't . i';
+} */
+
+.details {
+  display: flex;
   grid-template-columns: 40% 5% 55%;
   grid-template-areas: 't . i';
 }
 
 .textarea {
-  grid-area: 't';
+  flex-basis:1,1, 45%
+  /* grid-area: 't'; */
 }
 
 .imagearea {
-  grid-area: 'i';
+  flex-basis: 1, 1, 45%;
   padding-left: 2em;
+  /* grid-area: 'i'; */
+
 }
 
 .imagearea img {

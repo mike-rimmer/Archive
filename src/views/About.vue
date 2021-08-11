@@ -48,7 +48,7 @@
           <transition name="fade">
             <div
               v-show="isValid"
-              style="background-color:hsla(60,20%,80%,.7); padding:1em; min-height:300px;"
+              style="background-color:hsla(60,20%,80%,.7); padding:1em; min-height:300px; margin-top:15px;"
             >
               <AboutInfo :aboutdata="AboutInfo.intro" />
               <v-btn
@@ -67,7 +67,7 @@
 <script>
 const IMGPATH = 'https://marmuseum.ca/shiplists2/list-db-server/images/'
  import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
- import AboutInfo from '@/components/BaseComponents/BaseAbout2'
+ import AboutInfo from '@/components/BaseComponents/BaseAbout'
  import artifacts from '@/data/artifactsData.js'
  import archives from '@/data/archivesData.js'
  import library from '@/data/libraryData.js'
@@ -105,7 +105,7 @@ export default {
         },
 
         {
-          url: IMGPATH + 'Photographs.png',
+          url: IMGPATH + 'pictorial.png',
           alt: 'Photographs',
           title: 'Photographs',
           route: '/collections',

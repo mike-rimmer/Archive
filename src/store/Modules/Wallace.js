@@ -2,7 +2,7 @@ import ApiServices from '../../services/ApiServices.js';
 const state = () =>({
       // Wallace Related State flags
       WallaceCart: [],
-      WallaceDetail:{},
+      WallaceCurrentDetail:{},
       WallaceLandScape:[],
       WallacePortrait:[],
       LandScapeLoaded:false,
@@ -31,9 +31,7 @@ const getters = {
     }
   },
 
-  WallacePopUpCardDetail(state){
-    return state.WallaceDetail
-  }
+
 }
 
 const mutations = {
@@ -44,7 +42,7 @@ const mutations = {
         case 'vname':
           state.WallaceShipFilter = true
           break;
-        case 'registration':
+        case 'prov':
           state.WallacePlaceRegistrationFilter = true
           break;
         case 'rig':
@@ -102,47 +100,16 @@ const mutations = {
   },
 
   LOAD_WALLACE_CART: (state, payload) => {
-    // const tmp = payload.map(
-    //   ele => {
-    //     if(ele.url===null){
-    //       return{
-    //       id:ele.id,
-    //       vname:`${ele.vname}`,
-    //       isimage:'',
-    //       registration:ele.registration,
-    //       rig:ele.rig,
-    //       buildloc:ele.buildloc,
-    //       bildnme:ele.bildnme,
-    //       own:ele.own,
-    //       url:ele.url
-    //     }
-    //     }else{
-    //       return{
-    //         id:ele.id,
-    //         vname:`${ele.vname}`,
-    //         isimage:'*',
-    //         registration:ele.registration,
-    //         rig:ele.rig,
-    //         buildloc:ele.buildloc,
-    //         bildnme:ele.bildnme,
-    //         own:ele.own,
-    //         url:ele.url
-    //       }
-    //     }
-    //   }
-    // )
-
     state.WallaceCart = [...payload]
-    state.WallaceCartIsLoading = false
   },
 
   LOAD_WALLACE_PORTRAIT:( state, payload)=>{
-    state.WallacePortrait.push(payload)
+    state.WallacePortrait = [...payload]
     state.PortraitLoaded = true
   },
 
   LOAD_WALLACE_LANDSCAPE:( state, payload)=>{
-    state.WallaceLandScape.push(payload)
+    state.WallaceLandScape=[...payload]
     state.LandScapeLoaded = true
   },
 
@@ -152,7 +119,7 @@ const mutations = {
   },
 
   LOAD_WALLACE_DETAILS(state, payload){
-     state.WallaceDetail=payload
+     state.WallaceCurrentDetail=payload
   },
 
   LOAD_WALLACE_GLOBAL_SUMMARY (state, payload) {
@@ -194,7 +161,7 @@ const mutations = {
           state.WallaceShipFilter = false;
           break;
 
-        case 'registration':
+        case 'prov':
           state.WallacePlaceRegistrationFilter = false;
           break;
 
@@ -268,7 +235,7 @@ const actions = {
   async loadWallaceCart ({ commit }) {
     commit('SET_WALLACE_CART_IS_LOADING', true)
     try {
-      let response = await ApiServices. getWallsSummaryInitialLoad ()
+      let response = await ApiServices.getWallsSummaryInitialLoad ()
       commit('LOAD_WALLACE_CART', response.data)
       commit('SET_WALLACE_CART_IS_LOADING', false)
     }

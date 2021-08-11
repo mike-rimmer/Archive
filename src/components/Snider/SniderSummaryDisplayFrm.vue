@@ -12,22 +12,31 @@ If a user click on a row a function is called to fetch the detailed info from th
         {{ formtitle }}
       </h3>
 
-      <div>
-        <v-data-table
-          dense
-          :headers="headers"
-          fixed-header
-          :loading="isLoading"
-          loading-text="Data is loading ... please wait!"
-          :items="tableData"
-          height="60vh"
-          :footer-props="{
-            'items-per-page-options':[100,200,300,400,500,1000,-1]}"
-          :items-per-page="-1"
-          class="elevation-6 "
-          @click:row="getDetailedRecord"
-        />
+
+      <v-data-table
+        :class="{ msgborder: msgAlert }"
+        dense
+        :headers="headers"
+        fixed-header
+        :loading="isLoading"
+        loading-text="Data is loading ... please wait!"
+        :items="tableData"
+        height="60vh"
+        :footer-props="{
+          'items-per-page-options':[100,200,300,400,500,1000,-1]}"
+        :items-per-page="-1"
+        class="elevation-6 "
+        @click:row="getDetailedRecord"
+        @contextmenu:row="loadDetailCart"
+      />
+
+      <div
+        v-if="msgAlert"
+        style="text-align: center; color: green; font-size:1em;"
+      >
+        {{ msg }}
       </div>
+
 
       <transition
         name="moveleft"
@@ -35,7 +44,8 @@ If a user click on a row a function is called to fetch the detailed info from th
       >
         <BaseDetailPopUp
           v-show="showDetailFrm"
-          :record="currentDetail"
+          :record="detailData"
+          list-type="sniders"
           @closefrm="closePopUp"
         />
       </transition>
@@ -56,7 +66,6 @@ export default {
   },
 
    props: {
-
 
       headers:{
       type:Array,
@@ -79,13 +88,10 @@ export default {
   data() {
     return {
       search: '',
+      msgAlert: false,
+      msg: 'This is a Message',
 
-      // Used to initially test the v-data-table
-
-      // isLoading:false,
       showDetailFrm:false,
-      detailData: {},
-      fetchResults:''
     }
   },
 
@@ -93,25 +99,23 @@ export default {
     ...mapState('Snider', ['SniderCurrentFilter', 'SniderGlobal', 'SniderCart', 'SniderFilter', 'SniderCartIsLoading','SniderCurrentDetail']),
     ...mapGetters('Snider',[' SniderCartIsLoaded',]),
 
+     tableData(){
+       if(this.SniderFilter || this.SniderGlobal){
+         return this.SniderCurrentFilter;
+       }else{
+         return this.SniderCart
+       }
+     },
+
    isLoading(){
       return this.SniderCartIsLoading
     },
 
-    tableData(){
-      if(this.SniderFilter || this.SniderGlobal){
-        return this.SniderCurrentFilter;
-      }else{
-        return this.SniderCart
-      }
-    },
 
-  //  showDetailFrm(){
-  //    return this.SniderShowDetail
-  //  },
 
-  currentDetail(){
+
+  detailData(){
       if( this.SniderCurrentDetail){
-
         return this.SniderCurrentDetail
       }
         else{
@@ -122,9 +126,29 @@ export default {
 
   methods: {
     ...mapActions('Snider', ['loadSniderDetail']),
+    ...mapActions('Cart',['addDetailsFromSnider']),
 
     closePopUp(){
       this.showDetailFrm = false
+    },
+
+    loadDetailCart(event, row){
+      event.preventDefault();
+      let resp =''
+      resp = confirm(`Add ${row.item.id} to Researcher Cart`)
+      if(resp){
+      let id = row.item.id
+      this.addDetailsFromSnider(id)
+      this.showMsg(id)
+      }
+  },
+
+    showMsg(payload) {
+      this.msg = `Details of ${payload} saved to Cart`
+      this.msgAlert = true
+      setTimeout(() => {
+        this.msgAlert = false
+      }, 2000)
     },
 
     getDetailedRecord(rowData) {
@@ -132,27 +156,6 @@ export default {
       if(this.SniderCurrentDetail) this.showDetailFrm  = true
     },
 
-    // getSniderDetailByID(`'${id}'`) {
-    // },
-
-      // // alert(id)
-      // APIServices.getSniderDetailByID(`'${id}'`)
-      //   .then((response) => {
-      //     if (!response.data.message) {
-      //       this.fetchResults = ''
-      //       this.showPopUp = false
-      //       this.detailData = response.data
-      //       this.showDetailFrm = true
-      //       // console.log(this.detailData)
-      //     } else {
-      //       this.fetchResults = response.data.message
-      //       this.showPopUp = true
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     this.fetchResults = error
-      //     this.showPopUp = true
-      //   })
   }
 }
 
@@ -171,35 +174,24 @@ h3 {
   background-color:hsl(174, 35%,75%);
   /* background:var(--component-background-theme);
   backdrop-filter:blur(4px); */
-  font-size:.7em;
+  font-size:1em;
 }
 
+/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
 .v-data-table >>> table > tbody > tr > td {
 font-size: 0.8rem !important;
 }
 
-/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
-.v-data-table >>> .sticky-header {
-  position: sticky;
-  top: 0px;
-  height: 30px;
-  font-weight: bold;
-  /* background:var(--component-background-theme); */
+.v-data-table >>> thead th {
+  font-weight:bold;
+  font-size:1em !important;
 }
 
-/* .glasslook{
-  background:var(--component-background-theme);
- } */
 
-
-.v-data-table{
-  font-size:.8em;
+.msgborder {
+  border: solid green 2px;
 }
 
-/* .theme--light.v-data-table{
-   background:var(--component-background-theme);
-    backdrop-filter:blur(4px);
-} */
 
 
 </style>

@@ -8,7 +8,7 @@
         <hr> -->
         <div class="logo">
           <img
-            src="../../assets/images/museumfooterlogo.svg"
+            src="../../assets/images/logo.svg"
             height="180"
             alt="Museum Logo"
             srcset=""
@@ -26,7 +26,7 @@
           <div>
             <ShareNetwork
               network="facebook"
-              url="https://marmuseum.ca/shiplists2"
+              url="https://www.facebook.com/marinemuseumkingston"
               title="Kingston Marine Museum announces our new Research Portal."
               description="The Marine Museum of Kinston has completing Phase One of a 'Five' Phase implementation of our new Research Portal. When completed the public will have access to over 3,500 linear feet of historial records including 50,000 ship plans. The Artifact's collection includes over 4,000 objects and art. Our Photograph collection alone contains over 31,000 images and finally our Library holdings will offer over 12,000 titles."
               quote="We are looking forward to offering our community even greater access to our Museum from the comfort of their home. - Michelle Clarabut"
@@ -42,7 +42,7 @@
           <div>
             <ShareNetwork
               network="twitter"
-              url="https://marmuseum.ca/shiplists2"
+              url="https://twitter.com/MMGLK"
               title="Kingston Marine Museum announces new Research Portal."
               description="The Marine Museum of Kinston has completing Phase One of a 'Five' Phase implementation of our new Research Portal. When completed the public will have access to over 3,500 linear feet of historial records including 50,000 ship plans. The Artifact's collection includes over 4,000 objects and art. Our Photograph collection alone contains over 31,000 images and finally our Library holdings will offer over 12,000 titles."
               quote="We are looking forward to offering our community even greater access to our Museum from the comfort of their home. - Michelle Clarabut"
@@ -75,6 +75,8 @@
         <div class="layout-donate">
           <v-btn
             color="#3B928A"
+            class="white--text pa-8 donate-btn"
+            @click="$router.push('/support')"
           >
             Donate
           </v-btn>
@@ -83,13 +85,24 @@
 
       <v-col cols="4">
         <h4>QUICK LINKS</h4>
-        <hr>
+        <hr style="width:70%">
         <ul style="margin-top:0px;">
-          <li><a href="#">Principle Collections Now</a></li>
+          <li
+            @mouseover="showCollections = true"
+            @mouseleave="showCollections = false"
+          >
+            <a href="#">Principle Collections</a>
+            <span
+              v-show="showCollections"
+              style="color:lightBlue"
+            >
+              : Artifact, Archival, Biblio, DSerial, Pictorial)
+            </span>
+          </li>
           <li><a href="#">Maritime History Research Forum</a></li>
-          <li><a href="#">Ask a Curatory</a></li>
+          <li><a href="#">Ask a Curator</a></li>
           <li><a href="#">Reproduction and Curatorial Service Fees</a></li>
-          <li><a href="#">Museum News</a></li>
+          <li><a href="https://www.marmuseum.ca/news">Museum News</a></li>
         </ul>
       </v-col>
     </v-row>
@@ -98,7 +111,13 @@
 
 <script>
 export default {
-  name:'BaseFooter'
+  name:'BaseFooter',
+  data(){
+    return{
+      showCollections:false,
+    }
+  }
+
 }
 </script>
 
@@ -107,7 +126,7 @@ export default {
   margin-top:2em;
   /* background-color:var(--museum-blue); */
   background-color:#000D2B;
-  height:300px;
+  height:250px;
   width:100%;
   padding:3em 1em;
   position:relative
@@ -117,16 +136,19 @@ export default {
   display:flex;
   justify-content:space-between;
   width:40%;
-  margin-top:2em;
+  margin-top:1em;
 }
 
 .layout-donate{
   display:flex;
   justify-content:start;
-  margin-top:3em;
+  margin-top:2em;
   height:100px;
 }
 
+.donate-btn{
+  font-size:17px;
+}
 
 h4{
   font-family:'Roboto-Regular', 'San-Serif';
@@ -144,10 +166,13 @@ ul{
 
 a{
 color:white;
+text-decoration: none;
+
 }
 
 li{
   text-decoration: none;
+  color:white;
 }
 
 .logo{

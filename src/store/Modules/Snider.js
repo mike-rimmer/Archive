@@ -17,6 +17,7 @@ const state = () =>({
    SniderReasonClosedFilter: false,
    ClearingSniderFilters: false,
    SniderArticleFilter: false,
+   SniderArticleNumFilter:false,
    SniderShipFilter: false,
    SniderShipTypeFilter: false,
    SniderPlaceBuiltFilter: false,
@@ -58,6 +59,7 @@ const mutations = {
         state.SniderGlobal = false
         state.SniderFilter = false,
         state.SniderArticleFilter = false,
+        state.SniderArticleNumFilter = false,
         state.SniderShipFilter = false,
         state.SniderShipTypeFilter = false,
         state.SniderPlaceBuiltFilter = false,
@@ -76,13 +78,16 @@ const mutations = {
           case 'articletitle':
             state.SniderArticleFilter = true
             break;
+          case 'articlenum':
+            state.SniderArticleNumFilter = true
+            break;
           case 'shipname':
             state.SniderShipFilter = true
             break;
           case 'shiptype':
             state.SniderShipTypeFilter = true
             break;
-          case 'places':
+          case 'wherebuilt':
             state.SniderPlaceBuiltFilter = true
             break;
           case 'people':
@@ -150,6 +155,10 @@ const mutations = {
               state.SniderArticleFilter = false;
               break;
 
+            case 'articlenum':
+              state.SniderArticleNumFilter = false;
+              break;
+
             case 'shipname':
               state.SniderShipFilter = false;
               break;
@@ -158,7 +167,7 @@ const mutations = {
               state.SniderShipTypeFilter = false;
               break;
 
-            case 'places':
+            case 'wherebuilt':
               state.SniderPlaceBuiltFilter = false;
               break;
 

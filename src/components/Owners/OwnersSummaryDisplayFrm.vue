@@ -12,21 +12,28 @@ If a user click on a row a function is called to fetch the detailed info from th
         {{ title.toUpperCase() }}
       </h3>
 
-      <div>
-        <v-data-table
-          dense
-          :headers="headers"
-          fixed-header
-          :loading="isLoading"
-          loading-text="Data is loading ... please wait!"
-          :items="tableData"
-          height="60vh"
-          :footer-props="{
-            'items-per-page-options':[100,200,300,400,500,1000,-1]}"
-          :items-per-page="-1"
-          class="elevation-6"
-          @click:row="getDetailedRecord"
-        />
+      <v-data-table
+        :class="{ msgborder: msgAlert }"
+        dense
+        :headers="headers"
+        fixed-header
+        :loading="isLoading"
+        loading-text="Data is loading ... please wait!"
+        :items="tableData"
+        height="60vh"
+        :footer-props="{
+          'items-per-page-options':[100,200,300,400,500,1000,-1]}"
+        :items-per-page="-1"
+        class="elevation-6"
+        @contextmenu:row="loadDetailCart"
+        @click:row="getDetailedRecord"
+      />
+
+      <div
+        v-if="msgAlert"
+        style="text-align: center; color: green; font-size:1em;"
+      >
+        {{ msg }}
       </div>
 
 
@@ -34,6 +41,7 @@ If a user click on a row a function is called to fetch the detailed info from th
         <BaseDetailPopUp
           v-show="showDetailFrm"
           :record="detailData"
+          list-type="owners"
           @closefrm="closePopUp"
         />
       </transition>
@@ -43,8 +51,7 @@ If a user click on a row a function is called to fetch the detailed info from th
 
 
 <script>
-import {mapState, mapGetters} from 'vuex'
-import APIServices from '@/services/ApiServices';
+import {mapState, mapActions, mapGetters} from 'vuex'
 import BaseDetailPopUp from '@/components/BaseComponents/BaseDetailPopUp';
 export default {
   name:"OwnersSummaryDisplayFrm",
@@ -53,10 +60,10 @@ export default {
   },
 
   props: {
-    height:{
-      type:[String, Number],
-      default:'450'
-    },
+    // height:{
+    //   type:[String, Number],
+    //   default:'450'
+    // },
 
     headers:{
        type: Array,
@@ -72,17 +79,19 @@ export default {
   data() {
     return {
       search: '',
+      msgAlert: false,
+      msg: 'This is a Message',
       showDetailFrm: false,
-      // Used to initially test the v-data-table
-      isLoading:false,
-      detailData: {},
-      fetchResults:''
     }
   },
 
     computed:{
-    ...mapState('Owners', ['OwnersCurrentFilter', 'OwnersGlobal', 'OwnersCart', 'OwnersFilter', 'OwnersCartIsLoading']),
+    ...mapState('Owners', ['OwnersCurrentFilter', 'OwnersGlobal', 'OwnersCart', 'OwnersCurrentDetail', 'OwnersFilter', 'OwnersCartIsLoading']),
     ...mapGetters('Owners',[' OwnersCartIsLoaded']),
+
+    detailData(){
+      return this.OwnersCurrentDetail
+    },
 
     tableData(){
       if(this.OwnersFilter || this.OwnersGlobal){
@@ -92,42 +101,46 @@ export default {
       }
     },
 
-    // isLoading(){
-    //   return this.OwnersCartIsLoading
-    // }
+    isLoading(){
+      return this.OwnersCartIsLoading
+    }
 
   },
 
   methods: {
+    ...mapActions('Owners',['getOwnersDetailByID']),
+    ...mapActions('Cart',['addDetailsFromOwners']),
 
     closePopUp(){
       this.showDetailFrm = false
     },
 
+    loadDetailCart(event, row){
+
+    event.preventDefault();
+    let resp =''
+    resp = confirm(`Add ${row.item.id} to Researcher Cart`)
+    if(resp){
+      const id =row.item.id
+     this.addDetailsFromOwners(id)
+     this.showMsg(id)
+    }
+  },
+
+      showMsg(payload) {
+      this.msg = `Details of ${payload} saved to Cart`
+      this.msgAlert = true
+      setTimeout(() => {
+        this.msgAlert = false
+      }, 2000)
+    },
+
     getDetailedRecord(rowData) {
       const id = rowData.id
       this.getOwnersDetailByID(id)
+      if(this.OwnersCurrentDetail) this.showDetailFrm = true
     },
-    getOwnersDetailByID(id) {
-      // alert(id)
-      APIServices.getOwnersDetailByID(`'${id}'`)
-        .then((response) => {
-          if (!response.data.message) {
-            this.fetchResults = ''
-            this.showPopUp = false
-            this.detailData = response.data
-            this.showDetailFrm = true
-            // console.log(this.detailData)
-          } else {
-            this.fetchResults = response.data.message
-            this.showPopUp = true
-          }
-        })
-        .catch((error) => {
-          this.fetchResults = error
-          this.showPopUp = true
-        })
-    },
+
   }
 }
 
@@ -144,36 +157,27 @@ h3 {
   padding: 1em;
   width: 100%;
   background-color:hsl(173, 35%, 75%);
-  font-size:.7em;
+  color:black;
+  font-size:1em;
 }
 
+/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
 .v-data-table >>> table > tbody > tr > td {
 font-size: 0.8rem !important;
 }
 
-/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
-.v-data-table >>> .sticky-header {
-  position: sticky;
-  top: 0px;
-  height: 30px;
-  font-weight: bold;
-  /* background:var(--component-background-theme); */
+.v-data-table >>> thead th {
+  font-weight:bold;
+  font-size:1em !important;
 }
 
-/* .glasslook{
-    background:var(--component-background-theme);
- } */
-
-
-.v-data-table{
-  font-size:.8em;
+.msgborder {
+  border: solid green 2px;
 }
 
-.theme--light.v-data-table{
-  /* background:var(--component-background-theme);
-  backdrop-filter:blur(4px); */
-  /* background-color: rgba(100,128,64,.2); */
-}
+
+
+
 
 
 </style>

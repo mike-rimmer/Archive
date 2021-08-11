@@ -1,9 +1,22 @@
 <template>
-  <div class="background" />
+  <ResearchBase>
+    <template v-slot:images>
+      <div class="imglayout">
+        <img
+          src="../assets/images/constructionpage.png"
+        >
+      </div>
+    </template>
+  </Researchbase>
 </template>
 
 <script>
+import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
   export default {
+    components:{
+      ResearchBase
+    },
+
     data(){
       return{
 
@@ -14,26 +27,14 @@
 </script>
 
 <style scoped>
-.background {
-  position: relative;
-  width: 100vw;
-  height:80vh;
-  z-index: 1;
+
+
+.imglayout{
+  width:60%;
+  transform:translate(24%, 0%);
 }
 
-
-.background::before {
-  content: '';
-  background: url('../assets/images/underconstruction.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: -100;
-  opacity: 1;
+img{
+  object-fit: cover;
 }
 </style>

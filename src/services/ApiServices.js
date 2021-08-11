@@ -31,23 +31,23 @@ export default {
   },
 
 
-  getCSLSummaryByGlobalSearch () {
-  },
+  // getCSLSummaryByGlobalSearch () {
+  // },
 
   // ***********************************Owners********************************
 
-  getOwnersNamesLookup () {
-    return AxiosApi.get(
-      `owners/getOwnersNamesLookup.php`
-    );
-  },
+  // getOwnersNamesLookup () {
+  //   return AxiosApi.get(
+  //     `owners/getOwnersNamesLookup.php`
+  //   );
+  // },
 
-  getOwnersSummaryByOwner (payload) {
+  // getOwnersSummaryByOwner (payload) {
 
-    return AxiosApi.get(
-      `owners/getOwnerSummaryWithOwner.php?${new URLSearchParams({ owner: payload })}`,
-    );
-  },
+  //   return AxiosApi.get(
+  //     `owners/getOwnerSummaryWithOwner.php?${new URLSearchParams({ owner: payload })}`,
+  //   );
+  // },
 
   getOwnersSummaryList () {
     return AxiosApi.get(
@@ -62,11 +62,11 @@ export default {
     );
   },
 
-  getOwnersSummaryByGlobalSearch (payload) {
-    return AxiosApi.get(
-      `owners/getOwnersSummaryWithGlobalSearch.php?${new URLSearchParams({ search: payload })}`,
-    );
-  },
+  // getOwnersSummaryByGlobalSearch (payload) {
+  //   return AxiosApi.get(
+  //     `owners/getOwnersSummaryWithGlobalSearch.php?${new URLSearchParams({ search: payload })}`,
+  //   );
+  // },
 
   // ***********************************Mills********************************
 
@@ -77,49 +77,51 @@ export default {
     );
   },
 
-  getMillsSummaryByProv (payload) {
-    return AxiosApi.get(
-      `mills/getMillsSummaryWithProv.php?${new URLSearchParams({ prov: payload })}`,
-    );
-  },
-
-  getMillsLookupVesselNames () {
-    return AxiosApi.get(
-      'mills/getMillsLookupShipnames.php',
-    );
-  },
-
-
-  getMillsSummaryByYear (payload) {
-    return AxiosApi.get(
-      `mills/getMillsSummaryWithYear.php?${new URLSearchParams({ year: payload })}`,
-    );
-  },
-
-  getMillsSummaryByReason (payload) {
-    return AxiosApi.get(
-      `mills/getMillsSummaryWithReasonForClosing.php?${new URLSearchParams({ reasonclosed: payload })}`,
-    );
-  },
-
-  getMillsSummaryByShip (payload) {
-    return AxiosApi.get(
-      `mills/getMillsSummaryWithShipName.php?${new URLSearchParams({ shipname: payload })}`,
-    );
-  },
-
-  getMillsSummaryWithGlobal (payload) {
-    return AxiosApi.get(
-      `mills/getMillsSummaryWithGlobal.php?${new URLSearchParams({ exp: payload })}`,
-    )
-  },
-
-  // Detail Searches start here.
   getMillsDetailByMills (payload) {
     return AxiosApi.get(
       `mills/getMillsDetailWithMillsNum.php?${new URLSearchParams({ mills: payload })}`,
     );
   },
+
+  // getMillsSummaryByProv (payload) {
+  //   return AxiosApi.get(
+  //     `mills/getMillsSummaryWithProv.php?${new URLSearchParams({ prov: payload })}`,
+  //   );
+  // },
+
+  // getMillsLookupVesselNames () {
+  //   return AxiosApi.get(
+  //     'mills/getMillsLookupShipnames.php',
+  //   );
+  // },
+
+
+  // getMillsSummaryByYear (payload) {
+  //   return AxiosApi.get(
+  //     `mills/getMillsSummaryWithYear.php?${new URLSearchParams({ year: payload })}`,
+  //   );
+  // },
+
+  // getMillsSummaryByReason (payload) {
+  //   return AxiosApi.get(
+  //     `mills/getMillsSummaryWithReasonForClosing.php?${new URLSearchParams({ reasonclosed: payload })}`,
+  //   );
+  // },
+
+  // getMillsSummaryByShip (payload) {
+  //   return AxiosApi.get(
+  //     `mills/getMillsSummaryWithShipName.php?${new URLSearchParams({ shipname: payload })}`,
+  //   );
+  // },
+
+  // getMillsSummaryWithGlobal (payload) {
+  //   return AxiosApi.get(
+  //     `mills/getMillsSummaryWithGlobal.php?${new URLSearchParams({ exp: payload })}`,
+  //   )
+  // },
+
+  // Detail Searches start here.
+
 
   // ********************************Registry Data Fetches**********************
   getRegistrySummaryList () {
@@ -135,12 +137,12 @@ export default {
     );
   },
 
-  getRegistrySummaryByGlobalSearch (payload) {
-    // alert()
-    return AxiosApi.get(
-      `registry/getRegistrySummaryWithGlobalSearch.php?${new URLSearchParams({ search: payload })}`
-    );
-  },
+  // getRegistrySummaryByGlobalSearch (payload) {
+  //   // alert()
+  //   return AxiosApi.get(
+  //     `registry/getRegistrySummaryWithGlobalSearch.php?${new URLSearchParams({ search: payload })}`
+  //   );
+  // },
 
   // ********************************Snider Data Fetches**********************
   getSniderDetailsById (payload) {
@@ -205,11 +207,11 @@ export default {
 
   // ********************************Walls Fetches**********************
 
-  getWallsLookupVesselNames () {
-    return AxiosApi.get(
-      `walls/getWallsLookupShipNames.php`
-    );
-  },
+  // getWallsLookupVesselNames () {
+  //   return AxiosApi.get(
+  //     `walls/getWallsLookupShipNames.php`
+  //   );
+  // },
 
   getWallsImagesPortrait(){
     return AxiosApi.get(
@@ -235,29 +237,29 @@ export default {
     );
   },
 
-  getWallsSummaryByShip (payload) {
-    return AxiosApi.get(
-      `walls/getWallsSummaryWithShipName.php?${new URLSearchParams({ shipname: payload })}`
-    );
-  },
+  // getWallsSummaryByShip (payload) {
+  //   return AxiosApi.get(
+  //     `walls/getWallsSummaryWithShipName.php?${new URLSearchParams({ shipname: payload })}`
+  //   );
+  // },
 
-  getWallsSummaryByYear (payload) {
-    return AxiosApi.get(
-      `walls/getWallsSummaryWithYear.php?${new URLSearchParams({ year: payload })}`
-    );
-  },
+  // getWallsSummaryByYear (payload) {
+  //   return AxiosApi.get(
+  //     `walls/getWallsSummaryWithYear.php?${new URLSearchParams({ year: payload })}`
+  //   );
+  // },
 
-  getWallsSummaryByProv (payload) {
-    return AxiosApi.get(
-      `walls/getWallsSummaryWithProv.php?${new URLSearchParams({ prov: payload })}`
-    );
-  },
+  // getWallsSummaryByProv (payload) {
+  //   return AxiosApi.get(
+  //     `walls/getWallsSummaryWithProv.php?${new URLSearchParams({ prov: payload })}`
+  //   );
+  // },
 
-  getWallsSummaryByBuilder (payload) {
-    return AxiosApi.get(
-      `walls/getWallsSummaryWithBuilder.php?${new URLSearchParams({ builder: payload })}`
-    );
-  },
+  // getWallsSummaryByBuilder (payload) {
+  //   return AxiosApi.get(
+  //     `walls/getWallsSummaryWithBuilder.php?${new URLSearchParams({ builder: payload })}`
+  //   );
+  // },
 
   getWallsDataByGlobalSearch (payload) {
     return AxiosApi.get(
@@ -265,10 +267,10 @@ export default {
     );
   },
 
-  getWallsSummaryByReason (payload) {
-    return AxiosApi.get(
-      `walls/getWallsSummaryWithReasonForClosing.php?${new URLSearchParams({ reason: payload })}`
-    );
-  },
+  // getWallsSummaryByReason (payload) {
+  //   return AxiosApi.get(
+  //     `walls/getWallsSummaryWithReasonForClosing.php?${new URLSearchParams({ reason: payload })}`
+  //   );
+  // },
 
 };

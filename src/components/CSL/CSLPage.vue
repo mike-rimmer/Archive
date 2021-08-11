@@ -32,7 +32,7 @@ import CartIndicator from '@/components/BaseComponents/BaseDetailCartIndicator.v
 
 import {mapActions, mapState} from 'vuex'
 export default {
-  title:"CSL Record of Canadian Shipping",
+  title:"CANADA STEAMSHIP LINE Page",
   name: 'CSLPage',
   components: {
     CSLQryFrm,
@@ -44,16 +44,16 @@ export default {
    data() {
     return {
        headers: [
-        { text: 'Notis', value: 'notis', width:'10%' },
-        { text: 'Official Num', value: 'num', width:'5%' },
+        { text: 'Notis', value: 'Notis', width:'10%' },
+        { text: 'Official #', value: 'num', width:'10%' },
         { text: 'Name', value: 'name', width:'10%' },
         { text: 'Type', value: 'type', width:'25%' },
-        { text: 'Built', value: 'yearbuilt', width:'5%' },
+        { text: 'Built', value: 'yearbuilt', width:'10%' },
         { text: 'Builder', value: 'builder', width: '20%'},
         { text: 'Country', value: 'buildcntry', width:'10%' },
       ],
       csl:[],
-      formtitle:"CANADA STEAMSHIP LINES FLEET LISTS",
+      formtitle:"CANADA STEAMSHIP LINES",
       showPopUp:false,
       // CSLData:[],
       errMsg:'',

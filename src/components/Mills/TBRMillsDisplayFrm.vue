@@ -26,6 +26,7 @@ MillsDisplayFrm
           'items-per-page-options':[100,200,300,400,500,1000,-1]}"
         :items-per-page="-1"
         class="elevation-6"
+        @contextmenu:row="loadDetailCart"
         @click:row="getDetailedRecord"
       />
     </div>
@@ -129,6 +130,20 @@ export default {
      this.showDetailFrm = false
     },
 
+    loadDetailCart(event, item) {
+      // eslint-disable-next-line no-debugger
+      // debugger
+      event.preventDefault()
+      let resp = ''
+      resp = confirm(`Add ${item.item.notis} to Researcher Cart`)
+      if (resp) {
+        console.log(` ${item.item.notis} added to Researcher Cart`)
+        const payload = { id: `"${item.item.notis}"`, list: 'CSL' }
+        this.loadCSLCurrentDetailandUpDateDetailCart(payload)
+      }
+      this.showMsg(item.item.notis)
+    },
+
     getDetailedRecord(rowData) {
       const millsRecord = rowData.mills
       this.getMillsDetailFromServer(millsRecord)
@@ -172,6 +187,7 @@ h3 {
   padding: 1em;
   width: 100%;
   background-color:hsl(175, 35%, 75%);
+  color:black;
   font-size:.7em;
 }
 

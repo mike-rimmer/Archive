@@ -2,7 +2,7 @@
   <div class="mt-1 mr-12 pa-1 px-2">
     <v-btn
       style="background-color:hsl(174, 35%, 75%)"
-      @click="$router.push('/shiplists/detail')"
+      @click="$router.push('/shiplists/cart')"
     >
       <span><v-icon class="black--text">mdi-cart</v-icon></span>
       <span class="black--text">In Research Cart: {{ qty }}</span>
@@ -38,10 +38,10 @@ import {mapState} from 'vuex'
  },
 
 computed:{
-  ...mapState('CSL', ['CSLDetailCart']),
+  ...mapState('Cart', ['ResearchCart']),
 
   qty(){
-    return this.CSLDetailCart.length
+    return this.ResearchCart.length
   }
 }
  }

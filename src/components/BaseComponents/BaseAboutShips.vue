@@ -5,7 +5,7 @@
       appear
     >
       <h3
-        v-if="showhint"
+        v-if="showPrompt"
       >
         <v-icon>mdi-arrow-left</v-icon>
         Just hover over a Card to the left to See more...
@@ -16,6 +16,8 @@
       name="fade"
     >
       <div
+        v-if="show"
+        @click="alert()"
         v-html="animated"
       />
     </transition>
@@ -39,18 +41,23 @@ import gsap from 'gsap'
 
     data(){
       return{
-
+       show:true,
+       showdata:this.aboutdata,
+       animatedData:'',
+       showhelp: this.showhint
       }
     },
 
     computed:{
       animated(){
-        return this.aboutdata
+        return this.animatedData
       },
 
       showPrompt(){
-        return this.showhint
+        return this.showhelp
       }
+
+
      },
 
 
@@ -58,7 +65,7 @@ import gsap from 'gsap'
   watch:{
     aboutdata(old, newval){
     if( newval !== old){
-      this.showhint=false
+      this.showhelp=false
       this.show=false
       this.animatedData=old
       setTimeout(() => {
@@ -122,6 +129,12 @@ import gsap from 'gsap'
 </script>
 
 <style scoped>
+
+.v-btn > .filter-select{
+  background-color:#39947f;
+  border-radius:5px;
+
+}
 /* .pagelayout{
 
 } */

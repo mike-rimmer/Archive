@@ -1,0 +1,8 @@
+<svg width="59" height="132" viewBox="0 0 59 132" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M29.5 45L55.0477 110.25H3.95225L29.5 45Z" fill="#404040"/>
+<circle class = 'head' cx="29.5" cy="22.5" r="22.5" fill="#EDB96C"/>
+<ellipse class="eyes" cx="40.5" cy="18.5" rx="6.5" ry="4.5" fill="#121111"/>
+<ellipse class="eyes" cx="17.5" cy="18.5" rx="6.5" ry="4.5" fill="#121111"/>
+<line x1="30.4743" y1="23.1581" x2="27.4743" y2="32.1581" stroke="black"/>
+<line x1="27.8419" y1="31.5257" x2="33.8419" y2="29.5257" stroke="black"/>
+</svg>

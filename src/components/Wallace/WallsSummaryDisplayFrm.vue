@@ -12,26 +12,36 @@ If a user click on a row a function is called to fetch the detailed info from th
         {{ formtitle.toUpperCase() }}
       </h3>
 
-      <div>
-        <v-data-table
-          dense
-          :headers="headers"
-          fixed-header
-          :items="tableData"
-          height="60vh"
-          :footer-props="{
-            'items-per-page-options':[100,200,300,400,500,1000,-1]}"
-          :items-per-page="-1"
-          class="elevation-6"
-          @click:row="getDetailedRecord"
-        />
+
+      <v-data-table
+        :class="{ msgborder: msgAlert }"
+        dense
+        :headers="headers"
+        fixed-header
+        :loading="isLoading"
+        loading-text="Data is loading ... please wait!"
+        :items="tableData"
+        height="60vh"
+        :footer-props="{
+          'items-per-page-options':[100,200,300,400,500,1000,-1]}"
+        :items-per-page="-1"
+        class="elevation-6"
+        @contextmenu:row="loadDetailCart"
+        @click:row="getDetailedRecord"
+      />
+
+      <div
+        v-if="msgAlert"
+        style="text-align: center; color: green; font-size:1em;"
+      >
+        {{ msg }}
       </div>
 
       <transition name="moveleft">
         <BaseDetailPopUp
-          v-show="recordAvailable"
+          v-show="showDetailFrm"
           :record="detailData"
-          :map-info="mapInfo"
+          list-type="wallace"
           @closefrm="closePopUp"
         />
       </transition>
@@ -40,12 +50,9 @@ If a user click on a row a function is called to fetch the detailed info from th
 </template>
 
 <script>
-// import millsData from '@/data/datasource';
-// import Bus from '@/services/Bus';
-// const BaseDetailPopUp = () => import('@/components/BaseComponents/BaseDetailPopUp.vue');
-// const APIServices = () => import('../../services/ApiServices.js');
 
-import {mapState, mapGetters, mapActions } from 'vuex'
+
+import {mapState, mapActions } from 'vuex'
 import BaseDetailPopUp from '@/components/BaseComponents/BaseDetailPopUp';
 export default {
   components: {
@@ -53,10 +60,10 @@ export default {
   },
 
   props: {
-    height:{
-      type:[String, Number],
-      default:'450'
-    },
+    // height:{
+    //   type:[String, Number],
+    //   default:'450'
+    // },
 
     headers:{
       type:Array,
@@ -73,45 +80,14 @@ export default {
   data() {
     return {
       search: '',
-
-
-
+      msgAlert: false,
+      msg: 'This is a Message',
       showDetailFrm: false,
-      // // Used to initially test the v-data-table
-      // millsDatatest: millsData.testData,
-      // detailData: {},
-      // rowsPerPage:12
     }
   },
 
   computed:{
-    ...mapState('Wallace', ['WallaceCart', 'WallaceCurrentFilter', 'WallaceGlobal','WallaceFilter', 'WallaceCartIsLoading']),
-    ...mapGetters('Wallace',['WallacePopUpCardDetail']),
-
-    detailData(){
-      return this.WallacePopUpCardDetail
-    },
-
-    recordAvailable(){
-       if(! this.isEmpty(this.WallacePopUpCardDetail)){
-         return true
-       }else{
-         return false
-       }
-    },
-
-   mapInfo(){
-     if(this.recordAvailable){
-       const {url, name} = this.WallacePopUpCardDetail
-      if( url == null ){
-        return  ({url:'wallace(0).jpg', name:'Front Page'})
-      }else{
-        return {url, name}
-      }
-     }
-        return  ({url:'wallace(0).jpg', name:'Front Page'})
-    },
-
+    ...mapState('Wallace', ['WallaceCart', 'WallaceCurrentFilter', 'WallaceGlobal','WallaceFilter', 'WallaceCartIsLoading', 'WallaceCurrentFilter', 'WallaceCurrentDetail']),
 
     tableData(){
       if(this.WallaceFilter || this.WallaceGlobal){
@@ -121,37 +97,60 @@ export default {
       }
     },
 
-  },
-  mounted() {
+    isLoading(){
+      return this.WallaceCartIsLoading
+    },
+
+    detailData(){
+      if(this.WallaceCurrentDetail){
+        return this.WallaceCurrentDetail
+      }
+      else{
+        return {}
+      }
+        // return this.WallacePopUpCardDetail
+    },
 
   },
+
 
   methods: {
     ...mapActions('Wallace', ['getWallsDetailFromServer', 'removeDetailedRecord']),
-
+    ...mapActions('Cart',['addDetailsFromWalls']),
     closePopUp(){
-      this.removeDetailedRecord()
+      this.showDetailFrm=false
     },
 
-    isEmpty(obj){
-      if(Object.keys(obj).length === 0){
-        return true
-      }else{
-        return false
+
+
+  loadDetailCart(event, row){
+      // eslint-disable-next-line no-debugger
+      // debugger
+      event.preventDefault();
+      let resp =''
+      resp = confirm(`Add ${row.item.id} to Researcher Cart`)
+      if(resp){
+        const id = row.item.id
+        this.addDetailsFromWalls(id)
+        this.showMsg(id)
       }
-    },
+  },
 
-    //  isEmpty(url){
-    //   if(url==''){
-    //     return true
-    //   }
-    //   return false
-    // },
+  showMsg(payload) {
+      this.msg = `Details of ${payload} saved to Cart`
+      this.msgAlert = true
+      setTimeout(() => {
+        this.msgAlert = false
+      }, 2000)
+    },
 
     getDetailedRecord(rowData) {
       const id = rowData.id
       this.getWallsDetailFromServer(id)
+      if(this.WallaceCurrentDetail) this.showDetailFrm = true
     },
+
+
   }
 }
 
@@ -168,35 +167,42 @@ h3 {
   padding: 1em;
   width: 100%;
   background-color:hsl(174, 35%,75%);
-  font-size: 0.7em;
-}
-
-.v-data-table >>> table > tbody > tr > td {
-  font-size: 0.8rem !important;
+  color:black;
+  font-size: 1em;
 }
 
 /* Can use / deep / or >>> or ::v-deep to force style on classes within components */
-.v-data-table >>> .sticky-header {
+.v-data-table >>> table > tbody > tr > td {
+  font-size: .8rem !important;
+}
+
+.v-data-table >>> thead th {
+  font-weight:bold;
+  font-size:1em !important;
+}
+
+/* Can use / deep / or >>> or ::v-deep to force style on classes within components */
+/* .v-data-table >>> .sticky-header {
   position: sticky;
   top: 0px;
   height: 30px;
   font-weight: bold;
-  /* background: var(--component-background-theme); */
-}
-
-/* .glasslook {
-  background: var(--component-background-theme);
+  cursor: pointer;
 } */
 
-.v-data-table {
-  font-size: 0.8em;
+.msgborder {
+  border: solid green 2px;
 }
 
-.theme--light.v-data-table {
-  /* background: var(--component-background-theme);
-  backdrop-filter: blur(4px); */
-  /* background-color: rgba(100,128,64,.2); */
+.table-cursor tbody tr:hover {
+  cursor:pointer;
 }
+
+/* .v-data-table {
+  font-size: 0.8em;
+} */
+
+
 
 .fade-enter-active,
 .fade-leave-active {

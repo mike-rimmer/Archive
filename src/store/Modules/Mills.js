@@ -8,8 +8,10 @@ const state = () =>({
    MillsCartIsLoading: false,
    MillsAppliedFilters: [],
    MillsFilterList: [],
-   MillsFilter: false,
+   MillsCurrentDetail:{},
    MillsGlobal: false,
+   MillsOwnerFilter:false,
+   MillsFilter: false,
    MillsVesselFilter: false,
    MillsDateFilter: false,
    MillsProvinceFilter: false,
@@ -39,16 +41,21 @@ const mutations = {
         state.MillsCartIsLoading = payload
       },
 
+      LOAD_MILLS_DETAIL(state, payload){
+        state.MillsCurrentDetail= payload
+      },
+
 
       CLEAR_MILLS_FILTERS: (state) => {
         state.ClearingMillsFilters = true
         state.MillsGlobal = false
         state.MillsFilter = false,
+        state.MillsOwnerFilter = false,
         state.MillsVesselFilter = false,
-          state.MillsDateFilter = false,
-          state.MillsProvinceFilter = false,
-          state.MillsReasonClosedFilter = false,
-          state.MillsCurrentFilter.length = 0
+        state.MillsDateFilter = false,
+        state.MillsProvinceFilter = false,
+        state.MillsReasonClosedFilter = false,
+        state.MillsCurrentFilter.length = 0
         state.ClearingMillsFilters = false
         // Set MillsCurrentFilter to zero length
         state.MillsCurrentFilter.length = 0
@@ -59,6 +66,9 @@ const mutations = {
 
       SET_MILLS_FILTERED_CART: (state, { key, value, varfilter }) => {
         switch (key) {
+          case 'owners':
+            state.MillsOwnerFilter = true
+            break;
           case 'vesselName':
             state.MillsVesselFilter = true
             break;
@@ -127,6 +137,9 @@ const mutations = {
           filter = state.MillsFilterList.pop()
 
           switch (filter.key) {
+            case 'owners':
+              state.MillsOwnerFilter = false
+              break;
             case 'vesselName':
               state.MillsVesselFilter = false;
               break;
@@ -176,6 +189,16 @@ const mutations = {
       }
       catch (err) {
         return alert(err.message)
+      }
+    },
+
+    async getMillsDetailFromServer({commit},millsRecord){
+      try{
+        let response = await  ApiServices.getMillsDetailByMills(`'${millsRecord}'`)
+        commit('LOAD_MILLS_DETAIL',   response.data)
+      }
+      catch(err){
+        return alert(err)
       }
     },
 

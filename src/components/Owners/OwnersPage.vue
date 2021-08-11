@@ -47,7 +47,7 @@ export default {
         headers: [
         { text: 'Owners', value: 'owner', width:'15%' },
         { text: 'Museum #', value: 'marnum', width:'10%' },
-        { text: 'Port #', value: 'portnum', width:'5%' },
+        { text: 'Port #', value: 'portnum', width:'10%' },
         { text: 'Owner #', value: 'ownernum', width:'10%' },
         { text: 'Shares', value: 'shares', width:'10%' },
         { text: 'Purchased', value: 'datebought', width:'10%' },
@@ -57,7 +57,7 @@ export default {
       errMsg:'',
       tableheight:'380',
       formtitle:"Ship Owners List",
-      qryformtitle:'Ship Owners Registry',
+      qryformtitle:'Ship Owners List',
     }
   },
 

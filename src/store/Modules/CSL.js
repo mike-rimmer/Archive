@@ -18,13 +18,13 @@ const state = () =>({
    CSLGlobal: false,
    CSLReasonClosedFilter: false,
    ClearingCSLFilters: false,
-   CSLnotisFilter: false,
-   CSLofficialNumFilter: false,
-   CSLshipNameFilter : false,
-   CSLshipTypeFilter: false,
-   CSLbuiltFilter: false,
-   CSLbuilderFilter: false,
-   CSLcountryFilter : false,
+   CSLNotisFilter: false,
+   CSLOfficialNumFilter: false,
+   CSLVesselFilter : false,
+   CSLVesselTypeFilter: false,
+   CSLYearBuiltFilter: false,
+   CSLBuilderFilter: false,
+   CSLBuildCountryFilter : false,
 })
 const getters = {
   CSLCartIsLoaded: (state) => {
@@ -97,32 +97,42 @@ const mutations = {
         state.ClearingCSLFilters = true
         state.CSLGlobal = false
         state.CSLFilter = false,
+        state.CSLNotisFilter = false,
+        state.CSLOfficialNumFilter = false,
         state.CSLVesselFilter = false,
-        state.CSLDateFilter = false,
-        state.CSLProvinceFilter = false,
-        state.CSLReasonClosedFilter = false,
-        state.CSLCurrentFilter.length = 0
-        state.ClearingCSLFilters = false
-        // Set CSLCurrentFilter to zero length
+        state.CSLVesselTypeFilter = false,
+        state.CSLYearBuiltFilter = false,
+        state.CSLBuilderFilter = false,
+        state.CSLBuildCountryFilter = false,
         state.CSLCurrentFilter.length = 0
         state.CSLAppliedFilters.length = 0
         state.CSLFilterList.length = 0
+        state.ClearingCSLFilters = false
       },
 
 
       SET_CSL_FILTERED_CART: (state, { key, value, varfilter }) => {
         switch (key) {
-          case 'vesselName':
+          case 'Notis':
+            state.CSLNotisFilter = true
+            break;
+          case 'num':
+          state.CSLOfficialNumFilter = true
+          break;
+          case 'name':
             state.CSLVesselFilter = true
             break;
-          case 'dateBuilt':
-            state.CSLDateFilter = true
+          case 'type':
+            state.CSLVesselTypeFilter = true
             break;
-          case 'whereBuilt':
-            state.CSLProvinceFilter = true
+          case 'yearbuilt':
+            state.CSLYearBuiltFilter = true
             break;
-          case 'reasonClosed':
-            state.CSLReasonClosedFilter = true
+          case 'builder':
+            state.CSLBuilderFilter = true
+            break;
+          case 'buildcntry':
+            state.CSLBuildCountryFilter = true
             break;
           default:
         }
@@ -160,7 +170,6 @@ const mutations = {
           state.CSLAppliedFilters.push([...tmp])
           state.CSLFilterList.push({ key, value, varfilter })
           state.CSLFilter = true
-          state.CSL
           state.CSLCartIsLoading = false
           // console.log()
         }
@@ -186,22 +195,27 @@ const mutations = {
           filter = state.CSLFilterList.pop()
 
           switch (filter.key) {
-            case 'vesselName':
-              state.CSLVesselFilter = false;
+            case 'Notis':
+              state.CSLNotisFilter = false
               break;
-
-            case 'dateBuilt':
-              state.CSLDateFilter = false;
+            case 'num':
+            state.CSLOfficialNumFilter = false
+            break;
+            case 'name':
+              state.CSLVesselFilter = false
               break;
-
-            case 'whereBuilt':
-              state.CSLProvinceFilter = false;
+            case 'type':
+              state.CSLVesselTypeFilter = false
               break;
-
-            case 'reasonClosed':
-              state.CSLReasonClosedFilter = false;
+            case 'yearbuilt':
+              state.CSLYearBuiltFilter = false
               break;
-
+            case 'builder':
+              state.CSLBuilderFilter = false
+              break;
+            case 'buildcntry':
+              state.CSLBuildCountryFilter = false
+              break;
             default:
           }
           //if (state.CSLFilterList.length == 0) {

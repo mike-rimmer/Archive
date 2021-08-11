@@ -21,8 +21,8 @@ const options = {
   // ]
 }
 
-Vue.prototype.$IMGPATH = 'http://marmuseum.ca/shiplists2/list-db-server/images/wallaceships/',
-// Vue.prototype.$IMGPATH = 'http://localhost/shiplists2/list-db-server/images/wallaceships/',
+Vue.prototype.$IMGPATH = 'https://marmuseum.ca/shiplists2/list-db-server/images/wallaceships/',
+// Vue.prototype.$IMGPATH = 'https://localhost/shiplists2/list-db-server/images/wallaceships/',
 
 Vue.use(VueHtmlToPaper, options);
 // Vue.use(MultiFiltersPlugin);
