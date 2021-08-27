@@ -16,7 +16,7 @@ import VueRouter from 'vue-router';
 // import Mills from '../views/Mills.vue';
 Vue.use(VueRouter)
 
-function lazyLoad (view, chunkName){
+function lazyLoad (view){
 
   // return () => import(/*webpackPrefetch : true*/`../views/${view}.vue`)
   // The above line is not required as apparantly all lazy load components are prefetched ... who knew???
@@ -31,84 +31,84 @@ const router = new VueRouter({
     path: '/',
     name: 'ShipListLandingPage',
     // component:Menu
-    component : lazyLoad('ShipListLandingPage', "ShipListLandPage")
+    component : lazyLoad('ShipListLandingPage')
   },
 
   {
     path: '/collections',
     name: 'Collections',
     // component:Menu
-    component : lazyLoad('Collections', 'Collections')
+    component : lazyLoad('Collections')
   },
 
   {
     path: '/collections/library',
     name: 'Library',
     // component:Menu
-    component : lazyLoad('Library', 'Library')
+    component : lazyLoad('Library')
   },
 
   {
     path: '/support',
     name: 'Support',
     // component:Menu
-    component : lazyLoad('Support', 'Support')
+    component : lazyLoad('Support')
   },
 
   {
     path: '/about',
     name: 'About',
     // component:Menu
-    component : lazyLoad('About', 'About')
+    component : lazyLoad('About')
   },
 
   {
     path:'/support/fees',
     name:'ResearchFees',
-    component: lazyLoad('ResearchFees', 'ResearchFees')
+    component: lazyLoad('ResearchFees')
   },
 
 
   {
     path: '/shiplists/wallace',
     name:'Wallace',
-    component: lazyLoad('Wallace', 'Wallace')
+    component: lazyLoad('Wallace')
   },
 
   {
     path: '/shiplists/snider',
     name:'Snider',
-    component: lazyLoad('Snider', 'Snider')
+    component: lazyLoad('Snider')
   },
 
   {
     path: '/shiplists/crl',
     name: 'Registry',
-    component: lazyLoad('Registry', 'Registry')
+    component: lazyLoad('Registry')
   },
 
   {
     path: '/shiplists/sol',
     name: 'Owners',
-    component: lazyLoad('Owners', 'Owners')
+    component: lazyLoad('Owners')
   },
 
   {
     path: '/shiplists/mills',
     name: 'Mills',
-    component: lazyLoad('Mills', 'Mills')
+    component: lazyLoad('Mills')
   },
 
   {
     path:'/shiplists/csl',
     name:'CSL',
-    component:lazyLoad('CSL', 'CSL')
+    component:lazyLoad('CSL')
   },
 
   {
     path: '/shiplists/cart',
     name: 'ResearchCartPage',
-    component:lazyLoad('ResearchCartPage', 'ResearchCartPage')
+    component:lazyLoad('ResearchCartPage')
   },
 
   // {
@@ -120,13 +120,13 @@ const router = new VueRouter({
   {
     path: '/shiplists/images',
     name: 'WallaceImages',
-    component:lazyLoad('WallaceImages', 'WallaceImages')
+    component:lazyLoad('WallaceImages')
   },
 
   {
     path: '/gsap',
     name: 'gsap',
-    component:lazyLoad('UsingGSAP', 'UsingGSAP')
+    component:lazyLoad('UsingGSAP')
   }
 
 

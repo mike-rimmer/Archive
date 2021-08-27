@@ -22,7 +22,7 @@
     "vue-dynamic-dropdown": "^1.0.12",
     "vue-html-to-paper": "^1.3.1",
     "vue-router": "^3.2.0",
-    "vue-social-sharing": "^3.0.7",
+    "vue-social-sharing": "^3.0.8",
     "vuetify": "^2.2.11",
     "vuex": "^3.4.0"
   },
