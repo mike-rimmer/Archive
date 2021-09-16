@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// Added GeneralSearch components to this Collection
  import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
  import SearchForm from '@/components/GeneralSearch'
 // import PlaceHolder from '@/components/BaseComponents/BasePlaceHolder'
