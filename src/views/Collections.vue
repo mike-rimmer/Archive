@@ -10,7 +10,7 @@
 
 <script>
  import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
- import SearchForm from '@/components/SearchForm'
+ import SearchForm from '@/components/GeneralSearch'
 // import PlaceHolder from '@/components/BaseComponents/BasePlaceHolder'
 export default {
   name: 'Collections',
