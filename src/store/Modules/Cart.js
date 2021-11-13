@@ -1,3 +1,5 @@
+// This cart holds the records selected by the enduser for further investigation.
+
 import ApiServices from '../../services/ApiServices.js';
 
 const state =() => ({

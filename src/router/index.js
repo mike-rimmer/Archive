@@ -1,19 +1,6 @@
  /* eslint-disable */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import TestFilter from '../views/TestFilter.vue';
-// import Snyder from '../views/Snyder.vue'
-// import TestPage from '../views/TestPage.vue'
-// import Store from '../views/Store.vue';
-// import Cart from '../views/Cart.vue';
-// import Construct from '../views/UnderConstruction.vue'
-// import Home from '../views/Home.vue';
-// import CSL from '../views/CSL.vue';
-// import Menu from '../views/Menu.vue'
-// import Registry from '../views/Registry.vue';
-// import Owners from '../views/Owners.vue';
-// import Wallace from '../views/Wallace.vue'
-// import Mills from '../views/Mills.vue';
 Vue.use(VueRouter)
 
 function lazyLoad (view){
@@ -34,15 +21,54 @@ const router = new VueRouter({
     component : lazyLoad('ShipListLandingPage')
   },
 
+  // {
+  //   path: '/collections/',
+  //   name: 'Collections',
+  //   // component:Menu
+  //   component : lazyLoad('Collections')
+  // },
   {
-    path: '/collections',
-    name: 'Collections',
+    path: '/collections/archives',
+    name: 'CollectionsArchives',
     // component:Menu
-    component : lazyLoad('Collections')
+    component : lazyLoad('CollectionArchives')
+  },
+  {
+    path: '/collections/artifacts',
+    name: 'CollectionsArtifacts',
+    // component:Menu
+    component : lazyLoad('CollectionArtifacts')
   },
 
   {
+    path: '/collections/Pictorial',
+    name: 'CollectionsPictorial',
+    // component:Menu
+    component : lazyLoad('CollectionPictorial')
+  },
+
+  {
+    path: '/collections/dserial',
+    name: 'CollectionsDSerial',
+    // component:Menu
+    component : lazyLoad('CollectionDSerial')
+  },
+  {
     path: '/collections/library',
+    name: 'CollectionsLibray',
+    // component:Menu
+    component : lazyLoad('CollectionLibrary')
+  },
+
+  {
+    path: '/collections/biblio',
+    name: 'CollectionsBiblio',
+    // component:Menu
+    component : lazyLoad('CollectionBiblio')
+  },
+
+  {
+    path: '/library',
     name: 'Library',
     // component:Menu
     component : lazyLoad('Library')
@@ -123,11 +149,11 @@ const router = new VueRouter({
     component:lazyLoad('WallaceImages')
   },
 
-  {
-    path: '/gsap',
-    name: 'gsap',
-    component:lazyLoad('UsingGSAP')
-  }
+  // {
+  //   path: '/gsap',
+  //   name: 'gsap',
+  //   component:lazyLoad('UsingGSAP')
+  // }
 
 
 ]

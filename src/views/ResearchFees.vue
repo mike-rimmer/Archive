@@ -2,7 +2,7 @@
   <div>
     <ResearchBase>
       <template v-slot:intro>
-        <v-container>
+        <v-container style="background-color:var(--accent)">
           <h3 class="mb-4">
             Research Service Support Fees
           </h3>
@@ -253,7 +253,7 @@ import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
 }
 
 .flex-row-group:nth-child(2n){
-  background-color:hsl(166, 56%,91%);
+  background-color:var(--accent-light);
   color:black;
 }
 

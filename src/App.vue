@@ -3,7 +3,7 @@
     <v-app-bar
       app
     >
-      <ShipListsMenu />
+      <ShipListsMenuV2 />
     </v-app-bar>
     <transition
       name="fade"
@@ -17,12 +17,12 @@
 
 <script>
 
-import ShipListsMenu from '@/components/Menus/ShipListMenuV2'
+import ShipListsMenuV2 from '@/components/Menus/ShipListMenuV2'
 export default {
   name: 'App',
 
   components: {
-    ShipListsMenu,
+    ShipListsMenuV2,
     // Footer
   },
 
@@ -44,6 +44,9 @@ export default {
 :root{
   --museum-blue:#091154;
   --museum-green:#39947f;
+  --accent:hsla(60,20%,80%,.7);
+  --accent-light:hsl(60, 56%,91%);
+  --cols:3;
 }
 
 @font-face{
@@ -79,7 +82,7 @@ body{
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all .4s ease-in-out;
+  transition: all .7s ease-in-out;
 }
 
 

@@ -1,26 +1,8 @@
 <template>
-  <div class="pagelayout">
-    <transition
-      name="drop"
-      appear
-    >
-      <h3
-        v-if="showhint"
-      >
-        <v-icon>mdi-arrow-left</v-icon>
-        Just hover over a Card to the left to See more...
-      </h3>
-    </transition>
-
-    <transition
-      name="fade"
-    >
-      <div
-        @click="alert()"
-        v-html="animated"
-      />
-    </transition>
-  </div>
+  <div
+    v-if="show"
+    v-html="aboutdata"
+  />
 </template>
 
 <script>
@@ -40,7 +22,7 @@ import gsap from 'gsap'
 
     data(){
       return{
-
+        show:false,
       }
     },
 
@@ -123,9 +105,7 @@ import gsap from 'gsap'
 </script>
 
 <style scoped>
-/* .pagelayout{
 
-} */
 
  .drop-enter,
  .drop-leave-to{

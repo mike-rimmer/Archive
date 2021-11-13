@@ -119,7 +119,7 @@
 
 
 <script>
-// import staticData from '@/data/datasource'
+
 import { mapState, mapActions } from 'vuex'
 // import Bus from '@/services/Bus'
 

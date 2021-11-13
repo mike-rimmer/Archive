@@ -54,7 +54,7 @@ If a user click on a row a function is called to fetch the detailed info from th
 </template>
 
 <script>
-// import millsData from '@/data/datasource';
+
 // import Bus from '@/services/Bus';
 import {mapState, mapGetters, mapActions} from 'vuex'
 // import APIServices from '@/services/ApiServices';

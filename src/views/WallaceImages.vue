@@ -46,7 +46,7 @@
               >
                 <v-img
                   class="thumbnail"
-                  :src="$IMGPATH+image.url"
+                  :src="$WALLACEIMGPATH+image.url"
                   :alt="image.name"
                   @click="showEnlargedImage(image.url, 'landscape', index)"
                 />
@@ -75,7 +75,7 @@
               >
                 <v-img
                   class="thumbnail"
-                  :src="$IMGPATH+image.url"
+                  :src="$WALLACEIMGPATH+image.url"
                   :alt="image.name"
                   @click="showEnlargedImage(image.url, 'portrait', index)"
                 />
@@ -112,9 +112,10 @@
               <img
                 id="largeImage"
                 class="enlarged-image"
-                :src="currentUrl"
+                :src="$WALLACEIMGPATH+currentUrl"
                 @click="showEnlargedImg = false"
               >
+
               <p
                 @click="showEnlargedImg = false"
               >
@@ -142,12 +143,9 @@ import {mapActions, mapState} from 'vuex'
 import gsap from 'gsap'
 export default {
 
-
   data() {
     return {
       showEnlargedImg:false,
-      // images: wallaceImg,
-      // IMGPATH:'http://marmuseum.ca/shiplists2/list-db-server/images/wallaceships/',
       absolute: true,
       opacity: 0.8,
       overlay: false,
@@ -203,7 +201,7 @@ export default {
       this.currentEnlargedImg.index = index
       this.currentEnlargedImg.type = type
 
-      this.currentUrl = this.$IMGPATH + url
+      this.currentUrl = url
       this.showEnlargedImg = true
       // this.animateEnlargedImage()
     },
@@ -219,7 +217,7 @@ export default {
         let index = this.currentEnlargedImg.index + 1
         // check to make sure that index is withing array range
         if (index >= this.images.length) index = 0
-          this.currentUrl = this.$IMGPATH + this.images[index].url
+          this.currentUrl = this.images[index].url
           this.currentEnlargedImg.index = index
       },
 
@@ -229,19 +227,17 @@ export default {
         let index = this.currentEnlargedImg.index - 1
         // check to make sure that index is withing array range
         if (index < 0) index = this.images.length-1
-          this.currentUrl = this.$IMGPATH + this.images[index].url
+          this.currentUrl = this.images[index].url
           this.currentEnlargedImg.index = index
       },
 
     // Animations go here
     enter(el, done){
-      console.log(el)
       gsap.from(el,{scale:0, opacity:0, duration:1,
       onComplete:done})
     },
 
     leave(el, done){
-      console.log(el)
       gsap.to(el,{scale:0, opacity:0, duration:1,
       onComplete:done})
     }
@@ -259,8 +255,9 @@ export default {
 
     .image-popUp{
       display:flex;
-      background-color:rgb(223,205,157);
-      background-color:rgb(209, 206, 206);
+      /* background-color:rgb(223,205,157);
+      background-color:rgb(209, 206, 206); */
+      background-color:var(--accent);
       position:fixed;
       z-index:1;
       max-height:80%;
@@ -270,7 +267,7 @@ export default {
       width:70%;
       left:50%;
       top:50%;
-       padding:1em;
+      padding:1em;
       transform:translate(-50%, -50%);
       overflow-y: auto;
       box-shadow: 5px 5px 5px rgba(40,40,40,.7);
@@ -301,7 +298,6 @@ export default {
  }
 
 
-
 .enlarged-image{
   max-height:700px;
   max-width:90%;
@@ -320,39 +316,39 @@ export default {
 
 
 
-      .title{
-      text-align:center;
-      font-weight:bold;
-      color:black;
-      }
+.title{
+text-align:center;
+font-weight:bold;
+color:black;
+}
 
-      .mytest {
-      display: flex !important;
-      flex-direction: column !important;
-      }
+.mytest {
+display: flex !important;
+flex-direction: column !important;
+}
 
-      .thumbnail {
-      border: solid 1px black;
-      border-radius:4px;
-      filter: grayscale(10%) drop-shadow(8px 8px 10px gray);
-      /* object-fit:; */
-      }
+.thumbnail {
+border: solid 1px black;
+border-radius:4px;
+filter: grayscale(10%) drop-shadow(8px 8px 10px gray);
+/* object-fit:; */
+}
 
-      .thumbnail :hover{
-        cursor:pointer;
-      }
+.thumbnail :hover{
+  cursor:pointer;
+}
 
 
-      .fade-enter-active,
-      .fade-leave-active {
-      transition: all 1s ease-in-out;
-      }
+.fade-enter-active,
+.fade-leave-active {
+transition: all 1s ease-in-out;
+}
 
-      .fade-enter,
-      .fade-leave-to {
-      transform: scale(0);
-      opacity: 0;
-      }
+.fade-enter,
+.fade-leave-to {
+transform: scale(0);
+opacity: 0;
+}
 </style>
 
 

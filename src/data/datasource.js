@@ -78,7 +78,7 @@ const millsData = (function test () {
     'Wrecked',
   ]
 
-  const IMGPATH = 'https://marmuseum.cat/mills-list-server/images/';
+  const IMGPATH = 'https://marmuseum.ca/mills-list-server/images/';
 
   const images = [
     { id: 1, url: `${IMGPATH}SteamboatBenCampbellb.jpg`, alt: 'BenCampbellb' },
@@ -86,7 +86,6 @@ const millsData = (function test () {
     { id: 3, url: `${IMGPATH}cayuga.jpg`, alt: 'cayuga' },
     { id: 4, url: `${IMGPATH}cayugacolor.jpg`, alt: 'cayugacolor' },
   ];
-
 
 
   const WallaceDates = [

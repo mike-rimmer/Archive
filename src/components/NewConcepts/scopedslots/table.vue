@@ -15,8 +15,8 @@
     </thead>
     <tbody>
       <tr
-        v-for="row in rows"
-        :key="row.id"
+        v-for="(row, index) in rows"
+        :key="index"
         class="rows"
       >
         <slot
@@ -24,14 +24,14 @@
           :row="row"
         >
           <td>
-            {{ row.id }}
+            {{ index }}
           </td>
           <td>
-            {{ row.data }}
+            {{ row.artifact_name }}
           </td>
-          <td>
+          <!-- <td>
             {{ row.loc }}
-          </td>
+          </td> -->
         </slot>
       </tr>
     </tbody>

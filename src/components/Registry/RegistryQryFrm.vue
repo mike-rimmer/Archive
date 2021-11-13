@@ -115,7 +115,7 @@
 </template>
 
 <script>
-// import staticData from '@/data/datasource'
+
 import { mapState, mapActions } from 'vuex'
 // import APIServices from '@/services/ApiServices';
 // import Bus from '@/services/Bus'

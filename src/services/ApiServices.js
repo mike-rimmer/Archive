@@ -4,9 +4,10 @@
 import axios from 'axios'
 const AxiosApi = axios.create({
   // Change baseUrl to rimike.ca for Production
-  baseURL: 'https://marmuseum.ca/shiplists2/list-db-server/api/',
+  // baseURL: 'https://marmuseum.ca/shiplists2/list-db-server/api/',
 
-  // baseURL: 'http://localhost/shiplists2/list-db-server/api/',
+  baseURL: 'http://localhost/shiplists2/list-db-server/api/',
+
 
   withCredentials: false,
   headers: {
@@ -261,16 +262,38 @@ export default {
   //   );
   // },
 
-  getWallsDataByGlobalSearch (payload) {
-    return AxiosApi.get(
-      `walls/getWallsSummaryWithGlobalSearch.phpn?${new URLSearchParams({ search: payload })}`
-    );
-  },
+  // getWallsDataByGlobalSearch (payload) {
+  //   return AxiosApi.get(
+  //     `walls/getWallsSummaryWithGlobalSearch.phpn?${new URLSearchParams({ search: payload })}`
+  //   );
+  // },
 
   // getWallsSummaryByReason (payload) {
   //   return AxiosApi.get(
   //     `walls/getWallsSummaryWithReasonForClosing.php?${new URLSearchParams({ reason: payload })}`
   //   );
   // },
+
+    // ********************************Artifacts Fetches**********************
+    getAvailableArtifacts(){
+      return AxiosApi.get(
+        'artifacts/getAvailableArtifacts.php'
+
+      )
+    },
+
+    getArtifactSummary(){
+      return AxiosApi.get(
+        'artifacts/getArtifactSummary.php'
+      )
+    },
+
+    // ******************************** Pictorial Fetches **********************
+    getAvailablePictorials(){
+      return AxiosApi.get(
+        'pictorials/getAvailablePictorials.php'
+
+      )
+    }
 
 };

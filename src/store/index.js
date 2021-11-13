@@ -7,6 +7,8 @@ import Owners from './Modules/Owners'
 import CSL from './Modules/CSL'
 import Snider from './Modules/Snider'
 import Cart from './Modules/Cart'
+import Artifacts from './Modules/Artifacts'
+import Pictorials from './Modules/Pictorials'
 
 Vue.use(Vuex);
 
@@ -18,6 +20,8 @@ export default new Vuex.Store({
     Owners,
     CSL,
     Snider,
-    Cart
+    Cart,
+    Artifacts,
+    Pictorials
     }
 })

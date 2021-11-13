@@ -8,6 +8,7 @@ import VueSocialSharing from 'vue-social-sharing'
 // import MultiFiltersPlugin from './plugins/MultiFilters'
 import titleMixin from './services/titleMixin'
 // import 'material-design-icons-iconfont/dist/material-design-icons.css'
+
 const options = {
   name: '_blank',
   specs: [
@@ -21,8 +22,14 @@ const options = {
   // ]
 }
 
-Vue.prototype.$IMGPATH = 'https://marmuseum.ca/shiplists2/list-db-server/images/wallaceships/',
-// Vue.prototype.$IMGPATH = 'https://localhost/shiplists2/list-db-server/images/wallaceships/',
+Vue.prototype.$IMAGE_PATH = "http://localhost/shiplists2/list-db-server/images"
+// Vue.prototype.$IMAGE_PATH = "https://marmuseum.ca/shiplists2/list-db-server/images/"
+
+Vue.prototype.$WALLACEIMGPATH = 'https://marmuseum.ca/shiplists2/list-db-server/images/wallaceships/',
+// Vue.prototype.$WALLACEIMGPATH = 'https://localhost/shiplists2/list-db-server/images/wallaceships/',
+
+Vue.prototype.$BASEURL =  'http://localhost/shiplists2/list-db-server/api/',
+// Vue.prototype.$BASEURL =  'http://marmuseum.ca/shiplists2/list-db-server/api/',
 
 Vue.use(VueHtmlToPaper, options);
 // Vue.use(MultiFiltersPlugin);

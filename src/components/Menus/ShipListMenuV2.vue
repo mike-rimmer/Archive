@@ -93,7 +93,7 @@
               label="Theme"
               persistent-hint
             />
-            <span style="font-size:.6em; color:white; ">Ver 1.12 Dated: 06-17-2021</span>
+            <span style="font-size:.6em; color:white; ">Ver 1.16 Dated: 10-04-2021</span>
           </div>
         </v-col>
 
@@ -122,11 +122,12 @@ export default {
           title: 'Collections',
           route: '/collections',
           submenu: [
-            // {id:'1.1', title:'Collections', route:'/collections'},
-            // {id:'1.1.5', title:'Support', route:'/collections/support'},
-            // {id:'1.2', title:'Artifacts', route:'/collections/artifacts'},
-            // {id:'1.3', title:'Archives', route:'/collections/archives'},
-            // {id:'1.4', title:'Photos', route:'/collections/photos'}
+            {id:'1.1', title:'Archives', route:'/collections/archives'},
+            {id:'1.2', title:'Artifacts', route:'/collections/artifacts'},
+            {id:'1.3', title:'Biblio', route:'/collections/biblio'},
+            {id:'1.4', title:'Library', route:'/collections/library'},
+            {id:'1.5', title:'Pictorials', route:'/collections/pictorial'},
+            {id:'1.6', title:'DSerials', route:'/collections/dserial'},
           ],
         },
         {
@@ -172,7 +173,7 @@ export default {
             },
           ],
         },
-        { id: 3, title: 'Library', route: '/collections/library', submenu: [] },
+        { id: 3, title: 'Library', route: '/library', submenu: [] },
         {
           id: 4,
           title: 'About',

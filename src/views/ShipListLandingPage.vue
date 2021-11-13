@@ -1,7 +1,7 @@
 <template>
   <div>
     <ResearchBase>
-      <template v-slot:slotbody>
+      <template v-slot:intro>
         <div class="pagelayout">
           <div class="menulayout">
             <v-row>
@@ -15,17 +15,17 @@
                   open-delay="200"
                 >
                   <v-card
-                    :to="image.route"
-                    class="card-layout"
+                    class="card-layout pa-5"
+                    style="background-color:var(--accent)"
                     :class="{'on-hover':hover}"
                     :elevation="hover ? 12 : 4"
-                    @mouseover="selectAboutInfo(image.title)"
+                    @click="selectAboutInfo(image.title)"
                   >
-                    <img
-                      :src="image.url"
+                    <v-img
+                      :src="$IMAGE_PATH+image.url"
                       :alt="image.alt"
                       ripple
-                    >
+                    />
                     <v-card-title
                       class="justify-center py-0 align-self-center"
                     />
@@ -34,14 +34,16 @@
               </v-col>
             </v-row>
           </div>
-          <div>
-            <button
-              v-show="showBtn"
-              class="searchBtn"
-              @click="searchList"
-            >
-              Search
-            </button>
+          <div style="margin-top:20px;">
+            <transition name="fade">
+              <button
+                v-show="showBtn"
+                class="searchBtn"
+                @click="searchList"
+              >
+                Search {{ selectedTitle }}
+              </button>
+            </transition>
             <About
               :aboutdata="AboutInfo.data.intro"
               :showhint="showhelp"
@@ -54,7 +56,7 @@
 </template>
 
 <script>
-const IMGPATH = 'https://marmuseum.ca/shiplists2/list-db-server/images/'
+import gsap from 'gsap'
 import ResearchBase from '@/components/BaseComponents/ResearchBasePage'
 import About from '@/components/BaseComponents/BaseAboutShips'
 import mills from '@/data/millsData.js'
@@ -76,45 +78,46 @@ export default {
       showhelp:true,
       images: [
         {
-          url: IMGPATH + 'crl.jpg',
+          url:  'crl.jpg',
           alt: 'CRL',
           title: 'Canadian Registry',
           route: '/shiplists/CRL',
         },
         {
-          url: IMGPATH + 'mills.jpg',
+          url: 'mills.jpg',
           alt: 'MILLS',
           title: 'Mills',
           route: '/shiplists/mills',
         },
 
         {
-          url: IMGPATH + 'owners.jpg',
+          url: 'owners.jpg',
           alt: 'SOL',
           title: 'Ship Owners List',
           route: '/shiplists/SOL',
         },
 
         {
-          url: IMGPATH + 'wallace.jpg',
+          url: 'wallace.jpg',
           alt: 'WALLACE',
           title: 'Wallace',
           route: '/shiplists/Wallace',
         },
         {
-          url: IMGPATH + 'csl.jpg',
+          url: 'csl.jpg',
           alt: 'CSL',
           title: 'Canada Steamship',
           route: '/shiplists/CSL',
         },
         {
-          url: IMGPATH + 'snider.jpg',
+          url: 'snider.jpg',
           alt: 'SNYDERS',
           title: 'Sniders',
           route: '/shiplists/snider',
         },
       ],
-      museumLogo: IMGPATH + 'shipswheel.jpg',
+      selectedTitle:"Canadian Registry",
+      museumLogo: 'shipswheel.jpg',
       AboutInfo:{route:'', data:''},
 
       // tabs: 0,
@@ -124,39 +127,52 @@ export default {
   },
 
   computed:{
-    showBtn(){
-      return (this.AboutInfo.route!='' && true)
-    }
+  showBtn(){
+      return this.AboutInfo.route!='' && true
+      }
+    },
+
+  mounted: function(){
+    this.$nextTick(this.selectAboutInfo('Canadian Registry'))
   },
 
   methods: {
   searchList(){
+
     this.$router.push(this.AboutInfo.route)
     // alert(this.AboutInfo.route)
   },
 
-    selectAboutInfo(title) {
+fadeSearchButton(){
+ gsap.from('.searchBtn',{
+   duration:2,
+   opacity:0,
+   scale:.1,
+   y:-90,
+   ease:"power3",
+ })
 
+},
+
+    selectAboutInfo(title) {
+      this.selectedTitle=title
       switch (title) {
         case 'Canadian Registry':
           this.AboutInfo.data = registry
           this.AboutInfo.route= '/shiplists/crl'
-          this.forceRerender()
+
           break
         case 'Mills':
           this.AboutInfo.data = mills
           this.AboutInfo.route= '/shiplists/mills'
-          this.forceRerender()
           break
         case 'Ship Owners List':
           this.AboutInfo.data = owners
           this.AboutInfo.route= '/shiplists/owners'
-          this.forceRerender()
           break
         case 'Wallace':
           this.AboutInfo.data = wallace
           this.AboutInfo.route= '/shiplists/wallace'
-          this.forceRerender()
           break
         case 'Sniders':
           this.AboutInfo.data = snider
@@ -169,26 +185,16 @@ export default {
           break
         default:
           this.AboutInfo.data = tooltip
-          this.AboutInfo.route= ''
+          // this.AboutInfo.route= ''
       }
-
-
-      // this.showInfo=true
-      // setTimeout(() => {
-      //    this.showInfo = true
-      // }, 1000);
+        this.fadeSearchButton()
     },
 
-    forceRerender() {
-      this.$forceUpdate()
-      // this.rendeComponent = false;
-      // this.$nextTick(() =>{
-      //   this.renderComponent = true;
-      // })
+
     },
 
   }
-}
+
 </script>
 
 <style scoped>
@@ -296,13 +302,12 @@ p .msg {
   color: white;
 }
 
-.test-enter-from,
-.test-leave-to{
+.fade-enter-from,
+.fade-leave-to{
   opacity:0;
-  transform:translateY(-60px);
 }
 
-.test-enter-active{
+.fade-enter-active{
   transition:all 1s ease;
 }
 

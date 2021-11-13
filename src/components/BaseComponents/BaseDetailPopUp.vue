@@ -41,15 +41,6 @@
               </span>
             </p>
           </div>
-          <div
-            v-if="DisplayImage"
-            class="imagearea"
-          >
-            <img
-              :src="$IMGPATH+mapInfo.url"
-              :alt="mapInfo.name"
-            >
-          </div>
         </div>
       </div>
       <v-row justify-lg="center">
@@ -74,20 +65,6 @@
             <v-icon>mdi-printer</v-icon>
             Print
           </v-btn>
-
-        <!-- <v-fab-transition>
-          <v-btn
-            v-show="fab"
-            fab="fab"
-            fixed
-            center
-            right
-            color="blue"
-            @click="goToTop"
-          >
-            <v-icon>mdi-arrow-up-bold-circle</v-icon>
-          </v-btn>
-        </v-fab-transition> -->
         </div>
       </v-row>
     </v-card>
@@ -130,10 +107,7 @@ export default {
       default:''
     },
 
-    mapInfo: {
-      type: Object,
-      default: () => ({url:'none', name:'none'}) ,
-    },
+
   },
 
   data() {
@@ -257,11 +231,7 @@ export default {
   z-index: 500;
 }
 
-/* .details {
-  display: grid;
-  grid-template-columns: 40% 5% 55%;
-  grid-template-areas: 't . i';
-} */
+
 
 .details {
   display: flex;

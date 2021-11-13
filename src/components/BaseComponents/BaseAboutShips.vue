@@ -1,31 +1,16 @@
 <template>
   <div class="pagelayout">
-    <transition
-      name="drop"
-      appear
-    >
-      <h3
-        v-if="showPrompt"
-      >
-        <v-icon>mdi-arrow-left</v-icon>
-        Just hover over a Card to the left to See more...
-      </h3>
-    </transition>
-
-    <transition
-      name="fade"
-    >
+    <transition name="slide">
       <div
         v-if="show"
-        @click="alert()"
-        v-html="animated"
+        v-html="aboutdata"
       />
     </transition>
   </div>
 </template>
 
 <script>
-import gsap from 'gsap'
+// import gsap from 'gsap'
   export default {
 
   props:{
@@ -41,90 +26,67 @@ import gsap from 'gsap'
 
     data(){
       return{
-       show:true,
+       show:false,
        showdata:this.aboutdata,
        animatedData:'',
        showhelp: this.showhint
       }
     },
 
-    computed:{
-      animated(){
-        return this.animatedData
-      },
 
-      showPrompt(){
-        return this.showhelp
-      }
-
-
-     },
-
-
-
+  // Creates a nice easy transition when new data is received
   watch:{
     aboutdata(old, newval){
     if( newval !== old){
-      this.showhelp=false
-      this.show=false
       this.animatedData=old
-      setTimeout(() => {
-        // console.timeStamp('In timeout')
-        this.show=true
-      },500);
-    // console.timeStamp('Outside timeout')
+      this.show=false
+      setTimeout(()=>{this.show=true}, .001)
     }
-
-    // console.log("In the Watch", newval)
     }
   },
 
-  // mounted(){
-  //   setTimeout(() => {
-  //     this.showhint=true
-  //   },500);
-  // },
 
    methods:{
-     beforeEnter(el){
-       console.log('Enter')
-       el.style.opacity=0
-       el.style.transform="scale(0)"
+  //    beforeEnter(el){
+  //      console.log('Enter')
+  //      el.style.opacity=0
+  //      el.style.transform="scale(0)"
+  //      console.log('beforeEnter')
+  //    },
+  //    enter(el, done){
+  //      console.log('Enter')
+  //     gsap.to(el, {
+  //       opacity:1,
+  //       scale:1,
+  //       x:0,
+  //       duration:3,
+  //       ease:'bounce',
+  //       onComplete:done
+  //     })
+  //    },
 
-     },
-     enter(el, done){
-       console.log('Mikey Enter')
-      gsap.to(el, {
-        opacity:1,
-        scale:1,
-        x:0,
-        duration:3,
-        ease:'bounce',
-        onComplete:done
-      })
-     },
 
+  //    afterEnter(){
+  //      console.log('Mikey After Enter')
+  //    },
 
-     afterEnter(){
-       console.log('Mikey After Enter')
-     },
+  //    leave(el, done){
+  //      console.log('Leave', el)
+  //      gsap.to(el,{
+  //       scale:0,
+  //       opacity:.5,
+  //       duration:3,
+  //      onComplete:done
+  //      })
 
-     leave(el, done){
-       console.log('Leave', el)
-       gsap.to(el,{
-        scale:0,
-        opacity:.5,
-        duration:3,
-       onComplete:done
-       })
+  //    },
 
-     },
+  //    afterLeave(){
+  //      console.log('After Leave')
+  //    }
+  //  }
 
-     afterLeave(){
-       console.log('After Leave')
-     }
-   }
-
+  }
   }
 </script>
 
@@ -163,22 +125,23 @@ import gsap from 'gsap'
 
 /* Animation Starting Point */
 
-.test-enter{
+.slide-enter{
   opacity:0;
   transform:translateX(600px);
 }
 
-.test-leave-to{
+.slide-leave-to{
   transform:translateX(600px);
 }
 
-.test-enter-to{opacity:1; transform:translateX(0px)}
+.slide-enter-to{opacity:1;  transform:translateX(0px)}
 
 /* Timing for enter */
-.test-enter-active{transition:all 1s ease-out }
+.slide-enter-active{transition:all 1s ease-out }
 
 /* Timing for leave */
-.test-leave-active{transition:all 1s ease-in}
+.slide-leave-active{transition:all 1s ease-in}
+
 
 
 </style>

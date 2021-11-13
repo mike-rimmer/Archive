@@ -42,15 +42,6 @@
               </span>
             </p>
           </div>
-          <div
-            v-if="DisplayImage"
-            class="imagearea"
-          >
-            <img
-              :src="$IMGPATH+mapInfo.url"
-              :alt="mapInfo.name"
-            >
-          </div>
         </div>
       </div>
       <v-row justify-lg="center">
@@ -111,10 +102,10 @@ export default {
       default: () => {},
       required: true,
     },
-    mapInfo: {
-      type: Object,
-      default: () => ({url:'none', name:'none'}) ,
-    },
+    // mapInfo: {
+    //   type: Object,
+    //   default: () => ({url:'none', name:'none'}) ,
+    // },
   },
 
   data() {
@@ -125,13 +116,7 @@ export default {
   },
 
   computed:{
-    DisplayImage() {
-      if (this.mapInfo.url == 'none') {
-        return false
-      }else{
-        return true
-      }
-    },
+
   },
 
   methods: {
@@ -143,10 +128,7 @@ export default {
       this.$emit('removeCard')
     },
 
-    // addItem2Store() {
-    //   // alert(this.record.Notis)
-    //   this.loadCSLDetailToCart(this.record)
-    // },
+
 
     printCard() {
       this.$htmlToPaper('printMe')

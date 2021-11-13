@@ -1,89 +1,65 @@
 <template>
-  <div class="pagelayout">
+  <v-container fluid>
     <v-card
-      class="mx-auto"
+      width="95%"
+      class="color lightgrey mx-auto"
     >
+      <!-- TODO:Figure out how or where class museumgreen--text is defined -->
       <v-card-title class="museumgreen--text">
         <h3>
-          General Search
+          Search by Collection by: {{ showSelection }}
         </h3>
       </v-card-title>
 
       <v-card-subtitle>
-        Enter your search items in the field below
+        Enter your search items in the field below, or left mouseclick on one of the images below to target your search.
       </v-card-subtitle>
 
-      <v-row>
+
+      <v-row class="mx-auto justify-center">
         <v-col
+          v-for="photo in collections"
+          :key="photo.title"
           cols="12"
-          md="6"
-        />
-        <div class="collection-photos">
-          <span
-            v-for="photo in collections"
-            :key="photo.title"
-          >
-            <div style="display:flex; flex-direction:column; align-items:center">
-              <img
+          lg="2"
+        >
+          <v-hover v-slot="{ hover }">
+            <div
+              class="img-and-title"
+              :class="{'on-hover' : hover}"
+            >
+              <v-img
                 :src="photo.url"
                 :alt="photo.title"
-                width="300"
-
-                height="300"
-              >
-              <p style="margin-top:5px; font-size:1.5em">{{ photo.title }}</p>
+                height="350"
+                style="margin-top:5px; font-size:1.5em"
+                @click="getCollectionType(photo.title)"
+              />
+              <p>{{ photo.title }}</p>
             </div>
-          </span>
-        </div>
-        <v-col
-          cols="12"
-          md="6"
-          class="d-flex"
-        >
-          <!-- <v-row justify-md="center">
-            <div>
-              <h3>Advanced Search Options</h3>
-              <ul>
-                <li>Archival Items Advanced Search</li>
-                <li>Archival Fonds and Collections</li>
-                <li>Artifacts Advance Search</li>
-              </ul>
-              <p justify-md="center">
-                {{ collectionName }}
-              </p>
-              <v-row class="table">
-                <v-col
-                  cols="12"
-                  md="12"
-                >
-                  <Table
-                    :columns="columns"
-                    :rows="rows"
-                  />
-                </v-col>
-              </v-row>
-            </div>
-          </v-row> -->
+          </v-hover>
         </v-col>
       </v-row>
     </v-card>
-  </div>
+  </v-container>
 </template>
 
 
 <script>
-import Table from "@/components/NewConcepts/scopedslots/table.vue"
+// import Table from "@/components/NewConcepts/scopedslots/table.vue"
 // import List from "@/components/NewConcepts/scopedslots/lists.vue"
 import {mapActions, mapState} from 'vuex'
-const baseURL= 'http://localhost/shiplists2/list-db-server/images/collections/'
+// const baseURL= 'http://localhost/shiplists2/list-db-server/images/collections/'
+const baseURL= 'http://marmuseum.ca/shiplists2/list-db-server/images/collections/'
 export default {
-    name:'GeneralSearch',
+  name:'GeneralSearch',
     components:{
-      Table
+      // Table
     },
 
     data(){
       return{
+        isHovering:false,
         valid:false,
         type:'',
         keyword:'',
@@ -94,9 +70,10 @@ export default {
         collectionName:'',
         option1:'',
         option2:'',
+        showSelection:'',
         collections:[
           {title:'Archives', url: baseURL + 'archivespronis.jpg'},
-          {title:'DSerials',url: baseURL + 'serials.jpg'},
+          {title:'DSerials',url: baseURL + 'serials.png'},
           {title:'Biblio',url: baseURL + 'bibliofatalpassage.jpg'},
           {title:'Artifact', url: baseURL +'artifactscompass.jpg'},
           {title:'Pictorial', url: baseURL + 'pictorialwinch.jpg'}
@@ -115,27 +92,25 @@ export default {
 
 computed:{
   ...mapState('Artifacts',['availableArtifactsLoaded', 'availableArtifacts']),
+  ...mapState('Pictorials',['availablePictorialsLoaded']),
 
   artifactsLoaded(){
     return this.availableArtifactsLoaded
   },
 
-  columns(){
-    return ['Item','Artifact Name']
-  },
 
-  rows(){
-    if(this.availableArtifactsLoaded){
-      return this.availableArtifacts
-  }else{
-    return []
-  }
-  }
+pictorialsLoaded(){
+  return this.availablePictorialsLoaded
+}
+
+
+
 
 
 },
 methods:{
-  ...mapActions('Artifacts',['getAvailableArtifacts']),
+  ...mapActions('Artifacts',['getAvailableArtifacts', 'getArtifactSummary', 'getArtifactData']),
+  ...mapActions('Pictorials',['getAvailablePictorials', ]),
 
   validate(){
     console.log('Validate')
@@ -149,10 +124,50 @@ methods:{
     console.log('Reset')
   },
 
-  getCollectionType(){
+  getCollectionType(collection){
     // alert(this.collectionName +' was Selected')
-    console.log(this.collectionName +' was Selected')
-    this.getAvailableArtifacts()
+    // console.log(collection +' was Selected')
+    switch(collection){
+      case 'Archives':
+         this.notifyCollections('archives')
+          this.showSelection = 'Archives'
+        break;
+      case 'DSerials':
+         this.notifyCollections('dserial')
+          this.showSelection = 'DSerial'
+        break;
+      case 'Biblio':
+         this.notifyCollections('biblio')
+        this.showSelection = 'Biblio'
+        break;
+      case 'Artifact':
+        this.notifyCollections('artifacts')
+        // TODO:Implement Guard
+        if(!this.artifactsLoaded){
+          this.getArtifactSummary()
+          this.getAvailableArtifacts()
+         }
+         else{
+           alert('Artifacts Loaded')
+         }
+        break;
+      case 'Pictorial':
+        this.notifyCollections('pictorial')
+          if(!this.pictorialsLoaded){
+          this.getAvailablePictorials()
+        }else{
+          alert('Pictorials Loaded')
+        }
+
+
+        break;
+
+    }
+  },
+
+  notifyCollections(chosen){
+// alert(`${chosen} was selected`)
+this.$emit('selected', chosen)
   }
 
 }
@@ -160,23 +175,23 @@ methods:{
 </script>
 
 <style lang="css" scoped>
-pagelayout{
+.pagelayout{
   height:auto;
+  margin:0 auto;
+  background-color:red;
 }
 
-.collection-photos{
+.img-and-title{
   display:flex;
-  justify-content:center;
-  padding:.5em;
-  margin-left:30px;
-  background-color:lightgrey;
+  flex-direction: column;
+  align-items: center;
 }
 
-img:hover{
-  transition: all .8s ease-out;
+.on-hover{
+  transition: all .6s ease-in-out;
   /* border-style:solid ; */
-  cursor: pointer;
-  filter:brightness(.5)
+  filter:brightness(.5);
+  cursor:pointer;
 }
 
 .view{

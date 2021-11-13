@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import millsData from '@/data/datasource'
+
 
 export default {
   data() {

@@ -1,7 +1,7 @@
 const library={
   title:'<h3>LIBRARY</h3>',
   intro:`
-  <h3 style="color:#39947f; margin-bottom:15px">LIBRARY</h3>
+  <h3 style="color:var(--museum-green); margin-bottom:15px">LIBRARY</h3>
   <p>
     The Museum's library includes:<br>
     •	material pertaining to museums and museology<br>
